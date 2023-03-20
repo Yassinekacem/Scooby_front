@@ -10,7 +10,7 @@ function reducer(state, action) {
       return { count: state.count - 1 };
     default:
       throw new Error();
-  }
+  }bnvb
 }
 function ProductPriceCount({ price }) {
   const [state, dispatch] = useReducer(reducer, initialState);

@@ -1,49 +1,40 @@
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import Breadcrumb from "../components/breadcrumb/Breadcrumb";
 import Layout from "../layout/Layout";
-import { useState } from "react";
+import axios from "axios";
 
-
-function signUpPage() { 
-  const [UserData, setUserData] = useState({
+function signUpPage() {
+  const [userData, setUserData] = useState({
     firstName: "",
-    lastName : "",
+    lastName: "",
+    role: "",
     email: "",
-    password: "", 
-    confirmPassword : ""
+    password: "",
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await registerUser(UserData.firstName,UserData.lastName,UserData.email, UserData.password,UserData.confirmPassword);
+    try {
+      const response = await axios.post(
+        "http://localhost:2005/auth/signUp",
+        userData
+      );
+      console.log(response.data); // afficher la réponse dans la console
+      // Faire quelque chose avec la réponse
+    } catch (error) {
+      console.error(error);
+      // Traiter les erreurs
+    }
   };
 
   const saveData = (e) => {
     let name = e.target.name;
     let value = e.target.value;
-    setUserData({ ...UserData, [name]: value });
-  };
-  const registerUser = async (username, email, password) => {
-    const response = await fetch("/auth/signUP", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, email, password }),
-    });
-    const json = await response.json();
-    if (!response.ok) {
-     // setError(json.error);
-    }
-    if (response.ok) {
-      //save the user to local storage
-      //localStorage.setItem("user", JSON.stringify(json));
-      //update the authContext state
-      //dispatch(loginUser(json));
-    }
+    setUserData({ ...userData, [name]: value });
   };
   return (
     <>
-    {console.log(UserData)}
       <Layout>
         <Breadcrumb pageName="Sign-Up" pageTitle="Sign-Up" />
         <div className="signup-section pt-120 pb-120">
@@ -64,7 +55,7 @@ function signUpPage() {
                       </Link>
                     </p>
                   </div>
-                  <form className="w-100">
+                  <form className="w-100" onSubmit={handleSubmit}>
                     <div className="row">
                       <div className="col-md-6">
                         <div className="form-inner">
@@ -76,6 +67,12 @@ function signUpPage() {
                         <div className="form-inner">
                           <label>Last Name *</label>
                           <input name = "lastName"type="text" placeholder="Last Name"  onChange={saveData}/>
+                        </div>
+                      </div>
+                      <div className="col-md-6">
+                        <div className="form-inner">
+                          <label> Role</label>
+                          <input name = "role "type="text" placeholder="enter your role"  onChange={saveData}/>
                         </div>
                       </div>
                       <div className="col-md-12">
@@ -95,19 +92,6 @@ function signUpPage() {
                             onChange={saveData}
                           />
                           <i className="bi bi-eye-slash" id="togglePassword" />
-                        </div>
-                      </div>
-                      <div className="col-md-12">
-                        <div className="form-inner">
-                          <label>Confirm Password *</label>
-                          <input
-                            type="password"
-                            name="confirmPassword"
-                            id="password2"
-                            placeholder="Confirm Password"
-                            onChange={saveData}
-                          />
-                          <i className="bi bi-eye-slash" id="togglePassword2" />
                         </div>
                       </div>
                       <div className="col-md-12">
@@ -131,14 +115,14 @@ function signUpPage() {
                         className="eg-btn google-btn d-flex align-items-center"
                       >
                         <i className="bx bxl-google" />
-                        <span>signup whit google</span>
+                        <span>signup with google</span>
                       </a>
                       <a
                         href="#"
                         className="eg-btn facebook-btn d-flex align-items-center"
                       >
                         <i className="bx bxl-facebook" />
-                        signup whit facebook
+                        signup with facebook
                       </a>
                     </div>
                   </div>
