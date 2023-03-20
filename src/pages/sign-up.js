@@ -15,17 +15,22 @@ function signUpPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post(
-        "http://localhost:2005/auth/signUp",
-        userData
-      );
-      console.log(response.data); // afficher la réponse dans la console
-      // Faire quelque chose avec la réponse
-    } catch (error) {
-      console.error(error);
-      // Traiter les erreurs
-    }
+ 
+      const response = await fetch("http://localhost:2008/auth/signUp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(userData),
+      });
+      const json = await response.json();
+      if (!response.ok) {
+        console.log(json)
+
+      }
+      if (response.ok) {
+        console.log(json)
+
+      }
+  
   };
 
   const saveData = (e) => {

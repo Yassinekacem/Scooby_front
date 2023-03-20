@@ -2,8 +2,40 @@ import Link from "next/link";
 import React from "react";
 import Breadcrumb from "../components/breadcrumb/Breadcrumb";
 import Layout from "../layout/Layout";
+import  { useState } from "react";
+
 
 function loginPage() {
+    const [userData, setUserData] = useState({
+      email: "",
+      password: "",
+    });
+  
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+   
+        const response = await fetch("http://localhost:2008/auth/signIn", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(userData),
+        });
+        const json = await response.json();
+        if (!response.ok) {
+          console.log(json)
+  
+        }
+        if (response.ok) {
+          console.log(json)
+  
+        }
+    
+    };
+  
+    const saveData = (e) => {
+      let name = e.target.name;
+      let value = e.target.value;
+      setUserData({ ...userData, [name]: value });
+    };
   return (
     <>
       <Layout>
@@ -26,12 +58,12 @@ function loginPage() {
                       </Link>
                     </p>
                   </div>
-                  <form className="w-100">
+                  <form className="w-100" onSubmit={handleSubmit}>
                     <div className="row">
                       <div className="col-12">
                         <div className="form-inner">
                           <label>Enter Your Email *</label>
-                          <input type="email" placeholder="Enter Your Email" />
+                          <input name ="email" type="email" placeholder="Enter Your Email" onChange={saveData}/>
                         </div>
                       </div>
                       <div className="col-12">
@@ -42,6 +74,7 @@ function loginPage() {
                             name="password"
                             id="password"
                             placeholder="Password"
+                            onChange={saveData}
                           />
                           <i className="bi bi-eye-slash" id="togglePassword" />
                         </div>
