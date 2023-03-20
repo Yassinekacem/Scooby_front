@@ -15,22 +15,12 @@ function signUpPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
- 
-      const response = await fetch("http://localhost:2008/auth/signUp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userData),
-      });
-      const json = await response.json();
-      if (!response.ok) {
-        console.log(json)
-
-      }
-      if (response.ok) {
-        console.log(json)
-
-      }
-  
+    try {
+      const response = await axios.post("http://localhost:2008/auth/signUp", userData);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error.response.data);
+    }
   };
 
   const saveData = (e) => {
@@ -64,19 +54,19 @@ function signUpPage() {
                     <div className="row">
                       <div className="col-md-6">
                         <div className="form-inner">
-                          <label>First Name *</label>
-                          <input name="firstName" type="text" placeholder="Frist Name" onChange={saveData} />
+                          <label>First Name </label>
+                          <input name="firstName" type="text" placeholder="First Name" onChange={saveData} />
                         </div>
                       </div>
                       <div className="col-md-6">
                         <div className="form-inner">
-                          <label>Last Name *</label>
+                          <label>Last Name </label>
                           <input name = "lastName"type="text" placeholder="Last Name"  onChange={saveData}/>
                         </div>
                       </div>
                       <div className="col-md-6">
                         <div className="form-inner">
-                          <label> Role</label>
+                          <label> Role </label>
                           <input name = "role "type="text" placeholder="enter your role"  onChange={saveData}/>
                         </div>
                       </div>
@@ -88,7 +78,7 @@ function signUpPage() {
                       </div>
                       <div className="col-md-12">
                         <div className="form-inner">
-                          <label>Password *</label>
+                          <label>Password </label>
                           <input
                             type="password"
                             name="password"
@@ -105,6 +95,7 @@ function signUpPage() {
                             <input type="checkbox" id="html" />
                             <label htmlFor="html">
                               I agree to the Terms &amp; Policy
+
                             </label>
                           </div>
                         </div>
@@ -148,8 +139,5 @@ function signUpPage() {
     </>
   );
 } 
-
-
-
 export default signUpPage; 
 
