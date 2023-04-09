@@ -77,15 +77,15 @@ function Header1() {
               </div>
               <div className="opening-time text-center">
                 <p>
-                  Opening Hours
+                  Email
                   <br />
-                  <span>Mon - Sat 9.00 - 19.00</span>
+                  <span>scoobyDo@gmail.com</span>
                 </p>
               </div>
               <div className="contact-number">
                 <a href="tel:+1(541)754-3020">
-                  +1 (541) 754-3010{" "}
-                  <img src="assets/images/icon/support.svg" alt="" />
+                  +216 95716180{" "}
+                  <img src="../assets/images/icon/support.svg" alt="" />
                 </a>
               </div>
             </div>
@@ -108,7 +108,7 @@ function Header1() {
                 <img
                   alt="image"
                   className="img-fluid"
-                  src="assets/images/header1-logo.svg"
+                  src="../../assets/images/header1-logo.svg"
                 />
               </a>
             </Link>
@@ -125,7 +125,7 @@ function Header1() {
                 <Link legacyBehavior href="/">
                   <a>
                     {" "}
-                    <img alt="image" src="assets/images/header1-logo.svg" />
+                    <img alt="image" src="../assets/images/header1-logo.svg" />
                   </a>
                 </Link>
               </div>
@@ -139,44 +139,49 @@ function Header1() {
               </div>
             </div>
             <ul className="menu-list">
+              <li className={currentRoute === "/" ? "active" : ""}>
+                <Link legacyBehavior href="/">
+                  <a>acceuil</a>
+                </Link>
+              </li>
               <li className="menu-item-has-children">
-                <Link href="#" legacyBehavior>
-                  <a className="drop-down">Home</a>
+                <Link legacyBehavior href="#">
+                  <a>Declarations</a>
                 </Link>
                 <i
                   className="bi bi-plus dropdown-icon"
-                  onClick={() => dispatch({ type: "home" })}
+                  onClick={() => dispatch({ type: "declarations" })}
                 />
                 <ul
                   className={
-                    state.activeMenu === "home"
+                    state.activeMenu === "declarations"
                       ? "sub-menu  d-block"
                       : "sub-menu d-xl-block d-none"
                   }
                 >
                   <li>
-                    <Link className="active" legacyBehavior href="/">
-                      <a className={currentRoute === "/" ? "active" : ""}>
-                        Home One
+                    <Link legacyBehavior href="/declaration/foundDeclarations">
+                      <a
+                        className={
+                          currentRoute === "/declaration/foundDeclarations" ? "active" : ""
+                        }
+                      >
+                        déclaration de trouveille
                       </a>
                     </Link>
                   </li>
                   <li>
-                    <Link legacyBehavior href="/index2">
-                      <a>Home Two</a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link legacyBehavior href="/index3">
-                      <a>Home Three</a>
+                    <Link legacyBehavior href="/declaration/lostDeclarations">
+                    <a
+                        className={
+                          currentRoute === "/declaration/lostDeclarations" ? "active" : ""
+                        }
+                      >
+                        déclaration de perte
+                      </a>
                     </Link>
                   </li>
                 </ul>
-              </li>
-              <li className={currentRoute === "/about" ? "active" : ""}>
-                <Link legacyBehavior href="/about">
-                  <a>About</a>
-                </Link>
               </li>
               <li className="menu-item-has-children">
                 <Link legacyBehavior href="#">
@@ -221,195 +226,27 @@ function Header1() {
                   </li>
                 </ul>
               </li>
-              <li className="menu-item-has-children">
-                <Link href="#" legacyBehavior>
-                  <a className="drop-down">Pages</a>
+              <li className={currentRoute === "/pet/adoptionList" ? "active" : ""}>
+                <Link legacyBehavior href="/pet/adoptionList">
+                  <a>adoption</a>
                 </Link>
-                <i
-                  className="bi bi-plus dropdown-icon"
-                  onClick={() => dispatch({ type: "pages" })}
-                />
-                <ul
-                  className={
-                    state.activeMenu === "pages"
-                      ? "sub-menu  d-block"
-                      : "sub-menu d-xl-block d-none"
-                  }
-                >
-                  <li>
-                    <Link legacyBehavior href="/pricing-plan">
-                      <a
-                        className={
-                          currentRoute === "/pricing-plan" ? "active" : ""
-                        }
-                      >
-                        Pricing Plan
-                      </a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link legacyBehavior href="/login">
-                      <a className={currentRoute === "/login" ? "active" : ""}>
-                        Login
-                      </a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link legacyBehavior href="/sign-up">
-                      <a
-                        className={currentRoute === "/sign-up" ? "active" : ""}
-                      >
-                        sign up
-                      </a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link legacyBehavior href="/team">
-                      <a className={currentRoute === "/team" ? "active" : ""}>
-                        Our Team
-                      </a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link legacyBehavior href="/gallery">
-                      <a
-                        className={currentRoute === "/gallery" ? "active" : ""}
-                      >
-                        Gallery
-                      </a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link legacyBehavior href="/faq">
-                      <a className={currentRoute === "/faq" ? "active" : ""}>
-                        Faq
-                      </a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link legacyBehavior href="/error">
-                      <a>Error</a>
-                    </Link>
-                  </li>
-                </ul>
               </li>
-              <li className="menu-item-has-children">
-                <Link legacyBehavior href="#">
-                  <a>Shop</a>
+              <li className={currentRoute === "/pet/petList" ? "active" : ""}>
+                <Link legacyBehavior href="/pet/petList">
+                  <a>animaux</a>
                 </Link>
-                <i
-                  className="bi bi-plus dropdown-icon"
-                  onClick={() => dispatch({ type: "shop" })}
-                />
-                <ul
-                  className={
-                    state.activeMenu === "shop"
-                      ? "sub-menu  d-block"
-                      : "sub-menu d-xl-block d-none"
-                  }
-                >
-                  <li>
-                    <Link legacyBehavior href="/shop">
-                      <a className={currentRoute === "/shop" ? "active" : ""}>
-                        Shop
-                      </a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link legacyBehavior href="/shop-details">
-                      <a
-                        className={
-                          currentRoute === "/shop-details" ? "active" : ""
-                        }
-                      >
-                        Shop Details
-                      </a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link legacyBehavior href="/cart">
-                      <a className={currentRoute === "/cart" ? "active" : ""}>
-                        Cart
-                      </a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link legacyBehavior href="/check-out">
-                      <a
-                        className={
-                          currentRoute === "/check-out" ? "active" : ""
-                        }
-                      >
-                        Check Out
-                      </a>
-                    </Link>
-                  </li>
-                </ul>
               </li>
-              <li className="menu-item-has-children">
-                <Link legacyBehavior href="#">
-                  <a>Blog</a>
+
+
+              <li className={currentRoute === "/shop" ? "active" : ""}>
+                <Link legacyBehavior href="/shop">
+                  <a>Boutique</a>
                 </Link>
-                <i
-                  className="bi bi-plus dropdown-icon"
-                  onClick={() => dispatch({ type: "blog" })}
-                />
-                <ul
-                  className={
-                    state.activeMenu === "blog"
-                      ? "sub-menu  d-block"
-                      : "sub-menu d-xl-block d-none"
-                  }
-                >
-                  <li>
-                    <Link legacyBehavior href="/blog-grid">
-                      <a
-                        className={
-                          currentRoute === "/blog-grid" ? "active" : ""
-                        }
-                      >
-                        Blog Grid
-                      </a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link legacyBehavior href="/blog-grid-sidebar">
-                      <a
-                        className={
-                          currentRoute === "/blog-grid-sidebar" ? "active" : ""
-                        }
-                      >
-                        blog-grid-sidebar
-                      </a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link legacyBehavior href="/blog-standard">
-                      <a
-                        className={
-                          currentRoute === "/blog-standard" ? "active" : ""
-                        }
-                      >
-                        Blog Standard
-                      </a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link legacyBehavior href="/blog-details">
-                      <a
-                        className={
-                          currentRoute === "/blog-details" ? "active" : ""
-                        }
-                      >
-                        Blog Details
-                      </a>
-                    </Link>
-                  </li>
-                </ul>
               </li>
-              <li className={currentRoute === "/contact" ? "active" : ""}>
-                <Link legacyBehavior href="/contact">
-                  <a>Contact</a>
+
+              <li className={currentRoute === "/about" ? "active" : ""}>
+                <Link legacyBehavior href="/about">
+                  <a>à propos</a>
                 </Link>
               </li>
             </ul>
@@ -496,36 +333,10 @@ function Header1() {
                   </button>
                 </form>
               </li>
+
+
               <li>
-                <Link legacyBehavior href="/">
-                  <a>
-                    <svg
-                      width={14}
-                      height={13}
-                      viewBox="0 0 14 13"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path d="M12.4147 1.51371C11.0037 0.302997 8.92573 0.534835 7.61736 1.87434L7.12993 2.38954L6.61684 1.87434C5.33413 0.534835 3.23047 0.302997 1.81948 1.51371C0.203258 2.90473 0.126295 5.37767 1.56294 6.87174L6.53988 12.0237C6.84773 12.3586 7.38647 12.3586 7.69433 12.0237L12.6713 6.87174C14.1079 5.37767 14.0309 2.90473 12.4147 1.51371Z" />
-                    </svg>
-                  </a>
-                </Link>
-              </li>
-              <li>
-                <Link legacyBehavior href="/">
-                  <a>
-                    <svg
-                      width={16}
-                      height={13}
-                      viewBox="0 0 16 13"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path d="M15.6365 5.46266C15.6365 5.12721 15.3541 4.84336 15.0202 4.84336H13.274L10.5262 1.07601C10.2694 0.688956 9.75576 0.611544 9.39624 0.895386C9.01104 1.15342 8.934 1.6695 9.21648 2.03075L11.2452 4.84336H5.21036L7.2391 2.03075C7.52158 1.6695 7.44454 1.15342 7.05934 0.895386C6.69982 0.611544 6.18621 0.688956 5.92941 1.07601L3.18163 4.84336H1.46105C1.10153 4.84336 0.844727 5.12721 0.844727 5.46266V5.87552C0.844727 6.23677 1.10153 6.49481 1.46105 6.49481H1.66649L2.33418 11.2169C2.41122 11.8362 2.92482 12.2749 3.54115 12.2749H12.9144C13.5308 12.2749 14.0444 11.8362 14.1214 11.2169L14.8148 6.49481H15.0202C15.3541 6.49481 15.6365 6.23677 15.6365 5.87552V5.46266ZM8.85696 10.0041C8.85696 10.3654 8.57447 10.6234 8.24063 10.6234C7.88111 10.6234 7.6243 10.3654 7.6243 10.0041V7.1141C7.6243 6.77865 7.88111 6.49481 8.24063 6.49481C8.57447 6.49481 8.85696 6.77865 8.85696 7.1141V10.0041ZM11.7331 10.0041C11.7331 10.3654 11.4507 10.6234 11.1168 10.6234C10.7573 10.6234 10.5005 10.3654 10.5005 10.0041V7.1141C10.5005 6.77865 10.7573 6.49481 11.1168 6.49481C11.4507 6.49481 11.7331 6.77865 11.7331 7.1141V10.0041ZM5.98077 10.0041C5.98077 10.3654 5.69829 10.6234 5.36445 10.6234C5.00492 10.6234 4.74812 10.3654 4.74812 10.0041V7.1141C4.74812 6.77865 5.00492 6.49481 5.36445 6.49481C5.69829 6.49481 5.98077 6.77865 5.98077 7.1141V10.0041Z" />
-                    </svg>
-                  </a>
-                </Link>
-              </li>
-              <li>
-                <Link legacyBehavior href="/">
+                <Link legacyBehavior href="/authentification/login">
                   <a>
                     <svg
                       width={15}

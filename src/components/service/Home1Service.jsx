@@ -58,7 +58,7 @@ function Home1Service() {
                 Services
                 <img src="assets/images/icon/section-vec-r1.svg" alt="" />
               </span>
-              <h2>Experience our worship</h2>
+              <h2>Les services disponibles ici</h2>
             </div>
           </div>
         </div>
@@ -93,12 +93,11 @@ function Home1Service() {
                   <div className="content">
                     <h3>
                       <Link legacyBehavior href="/service-details">
-                        <a>Daycare</a>
+                        <a>garderie d animaux</a>
                       </Link>
                     </h3>
                     <p>
-                      Pellentesque maximus augue orciquista ut aliquet risus In
-                      hac habitasse.
+                      tu peux trouver quelqu un qui garde ton animal
                     </p>
                   </div>
                   <Link legacyBehavior href="/service-details">
@@ -122,12 +121,11 @@ function Home1Service() {
                   <div className="content">
                     <h3>
                       <Link legacyBehavior href="/service-details">
-                        <a> Grooming</a>
+                        <a> toilettage d'animaux </a>
                       </Link>
                     </h3>
                     <p>
-                      Pellentesque maximus augue orciquista ut aliquet risus In
-                      hac habitasse.
+                      tu peux trouver un professionnel qui vous aide a nettoyer ton animal
                     </p>
                   </div>
                   <Link legacyBehavior href="/service-details">
@@ -151,12 +149,11 @@ function Home1Service() {
                   <div className="content">
                     <h3>
                       <Link legacyBehavior href="/service-details">
-                        <a> Boarding</a>
+                        <a> dressage d'animaux</a>
                       </Link>
                     </h3>
                     <p>
-                      Pellentesque maximus augue orciquista ut aliquet risus In
-                      hac habitasse.
+                    tu peux trouver un professionnel  qui fait le dressage et l education pour ton animal
                     </p>
                   </div>
                   <Link legacyBehavior href="/service-details">
@@ -180,13 +177,11 @@ function Home1Service() {
                   <div className="content">
                     <h3>
                       <Link legacyBehavior href="/service-details">
-                        <a>veterinary</a>
+                        <a>Soignement d'animaux</a>
                       </Link>
                     </h3>
                     <p>
-                      Pellentesque maximus augue orciquista ut aliquet risus In
-                      hac habitasse.
-                    </p>
+                    tu peux trouver un professionnel qui vous aide a soigner ton animal                   </p>
                   </div>
                   <Link legacyBehavior href="/service-details">
                     <a className="more-btn">

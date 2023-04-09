@@ -11,12 +11,11 @@ function AboutPage() {
   return (
     <>
       <Layout>
-        <Breadcrumb pageName="About Me" pageTitle="About Me" />
+        <Breadcrumb pageName="About Us" pageTitle="About Us" />
         <Home1About />
         <AboutService />
-        <Home1Testimonial />
         <ChooseUs />
-        <Home1Team />
+        {/* <Home1Team /> */}
       </Layout>
     </>
   );

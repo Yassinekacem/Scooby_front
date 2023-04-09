@@ -36,6 +36,18 @@ Template Name: Scooby - Petcare HTML Template
   padding: 0;
   scroll-behavior: smooth;
 }
+.modal-header {
+  background-color: transparent;
+  border-bottom: none;
+}
+
+.modal-title {
+  color: #4a4a4a;
+  font-size: 28px;
+  font-weight: bold;
+  text-shadow: 1px 1px #fff;
+}
+
 
 :root {
   --primary-color2: #ff6b55;
@@ -7644,11 +7656,14 @@ footer.style2 .social-area ul li:hover a i {
   border-radius: 10px 0px;
   padding: 3px 14px;
 }
-.collection-card .offer-card.sale span {
+.collection-card .offer-card.oui span {
   background: #05894d;
 }
-.collection-card .offer-card.sold-out span {
-  background: #ffa600;
+.collection-card .offer-card.toSell span {
+  background: #0051ff;
+}
+.collection-card .offer-card.toAdopt span {
+  background: #eeff00;
 }
 .collection-card .collection-img {
   margin: 10px;
@@ -7672,6 +7687,7 @@ footer.style2 .social-area ul li:hover a i {
   transition: 0.5s;
   cursor: pointer;
 }
+
 .collection-card .collection-img .view-dt-btn .plus-icon {
   width: 30px;
   height: 30px;
@@ -12445,7 +12461,7 @@ footer.style2 .social-area ul li:hover a i {
   }
 }
 .hero-style-1 .reservation-review .reservation-btn {
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
 .hero-style-1 .reservation-review .reservation-btn .primary-btn1 {
   padding: 10px 28px;

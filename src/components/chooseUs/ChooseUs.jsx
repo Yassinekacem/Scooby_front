@@ -9,19 +9,21 @@ function ChooseUs() {
             <div className="section-title1">
               <span>
                 <img src="assets/images/icon/section-vec-l1.svg" alt="" />
-                Why Choose Us
+                Pourquoi nous choisir ?
                 <img src="assets/images/icon/section-vec-r1.svg" alt="" />
               </span>
-              <h2>we provide the best care services.</h2>
+              <h2>Trouvez tout ce qu'il vous faut pour votre animal</h2>
             </div>
             <div className="choose-content">
-              <p>
-                Pellentesque maximus augue orci, quis congue purus iaculis id.
-                Maecenas eudocl lorem quis massal molestie vulputate in sit amet
-                diam. Cras eu odio sit amet ont tellus. Cras ut sollicitudin
-                urna. Vivamus blandit,
+              <p style={{ fontSize: "20px" }}>
+              Nous offrons des animaux à vendre ou à adopter, ainsi que des déclarations de perte et de découverte
+              pour aider les propriétaires à retrouver leurs animaux perdus. 
+              Les vendeurs peuvent également poster leurs produits à vendre sur notre site, notamment des aliments pour animaux et des accessoires.
+              Les vétérinaires et les dresseurs peuvent également poster leurs services pour aider les propriétaires à prendre soin de leurs animaux de compagnie.
+              Nous sommes fiers de fournir une plateforme sécurisée et conviviale pour tous les amoureux des animaux, offrant les meilleurs services possibles pour nos utilisateurs.
               </p>
               <div className="accordion" id="accordionExample">
+                
                 <div className="accordion-item">
                   <h2 className="accordion-header" id="headingOne">
                     <button
@@ -32,7 +34,7 @@ function ChooseUs() {
                       aria-expanded="true"
                       aria-controls="collapseOne"
                     >
-                      01. In et finibus lectus. Donec scelerisque tortor?
+                      01. "Vous avez perdu votre animal ? Comment ajouter une déclaration de perte ?"
                     </button>
                   </h2>
                   <div
@@ -42,11 +44,10 @@ function ChooseUs() {
                     data-bs-parent="#accordionExample"
                   >
                     <div className="accordion-body">
-                      Pellentesque maximus augue orci, quis congue purus iaculis
-                      id. Maecenas eudocl lorem quis massal molestie vulputate
-                      in sit amet diam. Cras eu odio sit amet ont tellus. Cras
-                      ut sollicitudin urna. Vivamus blandit,{" "}
-                    </div>
+                      <p style={{ fontSize: "18px" }}>
+                    Pour signaler une perte d'animal sur ScoobyDo,
+                    il suffit d'ouvrir le site et de cliquer sur "Déclaration" dans la barre de navigation, puis sur " Lost Declarations". Ensuite, sélectionnez "I lost my animal" et entrez les coordonnées de votre animal. Vous pouvez également consulter les annonces de découverte en cliquant sur "Found Declarations".{" "}
+                    </p></div>
                   </div>
                 </div>
                 <div className="accordion-item">
@@ -59,7 +60,7 @@ function ChooseUs() {
                       aria-expanded="false"
                       aria-controls="collapseTwo"
                     >
-                      02. rhoncus turpis porta non Curabitur interdum?
+                      02. Vous souhaitez adopter un animal ? Comment procéder ?
                     </button>
                   </h2>
                   <div
@@ -69,11 +70,8 @@ function ChooseUs() {
                     data-bs-parent="#accordionExample"
                   >
                     <div className="accordion-body">
-                      Pellentesque maximus augue orci, quis congue purus iaculis
-                      id. Maecenas eudocl lorem quis massal molestie vulputate
-                      in sit amet diam. Cras eu odio sit amet ont tellus. Cras
-                      ut sollicitudin urna. Vivamus blandit,{" "}
-                    </div>
+                    <p style={{ fontSize: "18px" }}>Pour adopter un animal sur ScoobyDo, il suffit d'ouvrir le site et de cliquer sur "pet" dans la barre de navigation, puis sur "adoption List". et consulter tous les animales a adopter en tunisie . Vous pouvez également proposer ton animal a adopter en cliquant sur "propose your animal".{" "}
+                    </p></div>
                   </div>
                 </div>
                 <div className="accordion-item">
@@ -86,7 +84,7 @@ function ChooseUs() {
                       aria-expanded="false"
                       aria-controls="collapseThree"
                     >
-                      03. Donec ac enim vitae ligula ultrices accum?
+                      03. vous etes une animalerie ou un freelancer ? comment vendez vos produits ?
                     </button>
                   </h2>
                   <div
@@ -96,11 +94,9 @@ function ChooseUs() {
                     data-bs-parent="#accordionExample"
                   >
                     <div className="accordion-body">
-                      Pellentesque maximus augue orci, quis congue purus iaculis
-                      id. Maecenas eudocl lorem quis massal molestie vulputate
-                      in sit amet diam. Cras eu odio sit amet ont tellus. Cras
-                      ut sollicitudin urna. Vivamus blandit,
-                    </div>
+                    <p style={{ fontSize: "18px" }}>Pour vendre vos produits sur ScoobyDo,
+                    il suffit d'ouvrir le site et de cliquer sur "shop" dans la barre de navigation. Ensuite, sélectionnez "add your product "  (il faut que tu es authentifié pour faire ca )
+                    </p></div>
                   </div>
                 </div>
               </div>
@@ -135,10 +131,9 @@ function ChooseUs() {
                       <img src="assets/images/icon/care.svg" alt="" />
                     </div>
                     <div className="content">
-                      <h4>Personalized care</h4>
+                      <h4>soins personnalisés</h4>
                       <p>
-                        Pellentesque maximus augue orci, quisl congue purus
-                        iaculison
+                      Vous trouverez des professionnels qui vous aideront avec beaucoup d'amour
                       </p>
                     </div>
                   </div>
@@ -149,10 +144,9 @@ function ChooseUs() {
                       <img src="assets/images/icon/team.svg" alt="" />
                     </div>
                     <div className="content">
-                      <h4>Trusted Team</h4>
+                      <h4>équipe de confiance</h4>
                       <p>
-                        Pellentesque maximus augue orci, quisl congue purus
-                        iaculison
+                      Faites confiance aux vendeurs, vétérinaires et dresseurs, car nous vérifions leurs profils au préalable
                       </p>
                     </div>
                   </div>
@@ -163,10 +157,9 @@ function ChooseUs() {
                       <img src="assets/images/icon/mind.svg" alt="" />
                     </div>
                     <div className="content">
-                      <h4>Peace of mind</h4>
+                      <h4>Tranquillité d'esprit</h4>
                       <p>
-                        Pellentesque maximus augue orci, quisl congue purus
-                        iaculison
+                      Vous pouvez avoir l'esprit tranquille avec nous
                       </p>
                     </div>
                   </div>

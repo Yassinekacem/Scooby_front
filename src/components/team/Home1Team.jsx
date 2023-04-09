@@ -66,10 +66,10 @@ function Home1Team() {
             <div className="section-title1 text-center">
               <span>
                 <img src="assets/images/icon/section-vec-l1.svg" alt="" />
-                Our Team
+                Our partners
                 <img src="assets/images/icon/section-vec-r1.svg" alt="" />
               </span>
-              <h2>See Our Scooby Team members</h2>
+              <h2>Voir nos partenaires "Scooby"</h2>
             </div>
           </div>
         </div>

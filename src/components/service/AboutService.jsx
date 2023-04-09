@@ -21,14 +21,12 @@ function AboutService() {
             <div className="col-lg-7">
               <div className="services-content">
                 <img src="assets/images/icon/section-sl-no.svg" alt="" />
-                <h2>we are providing pet care service for years.</h2>
-                <p>
-                  Pellentesque maximus augue orci, quis congue purus iaculison
-                  id. Maecenas eu lorem quisesdoi massal molestie vulputate in
-                  sitagi amet diam. Cras eu odio sit amet ipsum cursus for that
-                  gone pellentesquea. thisaton Vestibulum ut aliquet risus. In
-                  hac habitasse plateajoa dictumst. Nuncet posuere scelerisque
-                  justo in accumsan.
+                <h2><center>Le seul site en Tunisie pour les animaux et qui offre cette variété de services</center></h2>
+                <p style={{ fontSize: "24px" }}><center>
+                Nous sommes le premier et le seul site en Tunisie à offrir une variété de services pour les amoureux des animaux,
+                 y compris la recherche d'animaux, de produits, et de professionnels de confiance.
+                </center>
+               
                 </p>
                 <div className="author-area">
                   <div className="author-quat">
@@ -39,15 +37,13 @@ function AboutService() {
                           alt=""
                         />
                       </sup>{" "}
-                      Pllentesque maximus augue orci, quis congue purus
-                      iaculisona ideno joku Maecenas eu lorem quisesdoi massal
-                      molestie jugnute vulputate in sitagajoi amet diam Cras eu
-                      odio sit amet.
+                      En tant que passionné des animaux,
+                      Nous avons créé "ScoobyDo" avec la vision de fournir une plateforme conviviale et sûre pour les amoureux des animaux en Tunisie
                     </p>
                   </div>
                   <div className="author-name-deg">
-                    <h4>Kash Prestonal </h4>
-                    <span>Founder, Scooby</span>
+                    <h4>Yassine Kacem </h4>
+                    <span>fondateur, Scooby</span>
                   </div>
                 </div>
               </div>

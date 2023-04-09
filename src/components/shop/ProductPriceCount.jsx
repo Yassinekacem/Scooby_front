@@ -64,7 +64,7 @@ function ProductPriceCount({ price }) {
               fontWeight: "500",
             }}
           >
-            ${state.count * price}
+            {state.count * price} dt
           </span>
         </strong>
       )}
