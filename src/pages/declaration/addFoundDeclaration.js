@@ -3,48 +3,52 @@ import Breadcrumb from "../../components/breadcrumb/Breadcrumb";
 import Layout from "../../layout/Layout";
 import axios from "axios";
 
-
 function addFoundDeclaration() {
-  const [file , setFile] = useState(null)
+  const [file, setFile] = useState(null)
+  const [imageUrl, setImageUrl] = useState("");
+  const [imageUploading, setImageUploading] = useState(false);
   const [foundDeclarationData, setfoundDeclarationData] = useState({
     animal: "",
-    race :"",
+    race: "",
     description: "",
     image: "",
     dateFound: "",
     placeFound: "",
-    phoneNumber : ""
+    phoneNumber: ""
   });
 
-
-  const uploadImage = async () =>{
-    const form = new FormData();
-    form.append("file",file)
-    form.append("upload_preset","yassinekacem")
-    await axios.post("https://api.cloudinary.com/v1_1/dxurewunb/upload",form)
-    .then((result) => {console.log(result.data.secure_url)
-      setFile(result.data.secure_url)
-    })
-
+  const handleImageSelect = async (e) => {
+    setFile(e.target.files[0]);
+    setImageUploading(true);
+    try {
+      const form = new FormData();
+      form.append("file", e.target.files[0])
+      form.append("upload_preset", "yassinekacem")
+      const result = await axios.post(
+        "https://api.cloudinary.com/v1_1/dxurewunb/upload",
+        form
+      );
+      setImageUrl(result.data.secure_url);
+      setImageUploading(false);
+    } catch (error) {
+      console.error(error);
+    }
   }
+
   const saveData = (e) => {
     let name = e.target.name;
     let value = e.target.value;
     setfoundDeclarationData({ ...foundDeclarationData, [name]: value });
   };
 
-
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log( (foundDeclarationData.dateFound))
       const response = await axios.post(
         "http://localhost:2001/foundDeclarations",
         {
           ...foundDeclarationData,
-          image :file
+          image: imageUrl
         }
       );
 
@@ -54,6 +58,7 @@ function addFoundDeclaration() {
       console.error(error);
     }
   };
+
   return (
     <>
       <Layout>
@@ -70,64 +75,58 @@ function addFoundDeclaration() {
                   <div className="form-title">
                     <h3> announce the finding of an animal </h3>
                   </div>
-                  <form className="w-100" onSubmit={handleSubmit}>
+                  <form
+                    className="w-100"
+                    onSubmit={handleSubmit}
+                    disabled={imageUploading}
+                  >
                     <div className="row">
                       <div className="col-md-6">
                         <div className="form-inner">
                           <label>animal: *</label>
-
                           <input name="animal" type="text" placeholder="species of animal" onChange={saveData} />
                         </div>
                       </div>
                       <div className="col-md-6">
                         <div className="form-inner">
-                          <label>race: *</label>
-                          <input name="race" type="text" placeholder="race of your animal" onChange={saveData} />
+                          <label>race: </label>
+                          <input name="race" type="text" placeholder="race of animal" onChange={saveData} />
                         </div>
                       </div>
                       <div className="col-md-12">
                         <div className="form-inner">
                           <label>description: *</label>
-                          <textarea name="description" rows="5" cols="30" placeholder="Description" onChange={saveData}></textarea>
+                          <textarea name="description" placeholder="description of the animal" onChange={saveData}></textarea>
                         </div>
-                      </div> 
-
+                      </div>
                       <div className="col-md-6">
                         <div className="form-inner">
-                          <label> image of the animal*</label>
-                          <input name="file" type="file" onChange={(e) => setFile(e.target.files[0])} />
+                          <label>image:</label>
+                          <input name="image" type="file" onChange={handleImageSelect} />
                         </div>
                       </div>
-
-
-                      <div className="col-md-12">
+                      <div className="col-md-6">
                         <div className="form-inner">
-                          <label>Enter Your dateFound *</label>
-                          <input name="dateFound" type="date" placeholder="Enter when date of Found" onChange={saveData} />
-                        </div>
-                      </div>
-                      <div className="col-md-12">
-                        <div className="form-inner">
-                          <label>Enter Your placeFound *</label>
-                          <input name="placeFound" type="text"  onChange={saveData} />
+                          <label>date found: *</label>
+                          <input name="dateFound" type="date" onChange={saveData} />
                         </div>
                       </div>
                       <div className="col-md-12">
                         <div className="form-inner">
-                          <label>Enter Your phoneNumber *</label>
-                          <input name="phoneNumber" type="text" placeholder="Enter your phone number" onChange={saveData} />
+                          <label>place found: *</label>
+                          <input name="placeFound" type="text" placeholder="place where the animal was found" onChange={saveData} />
                         </div>
                       </div>
-
-                      
-                     
-
+                      <div className="col-md-12">
+                        <div className="form-inner">
+                          <label>phone number: *</label>
+                          <input name="phoneNumber" type="tel" placeholder="phone number" onChange={saveData} />
+                        </div>
+                      </div>
+                      <button className="account-btn" >Add Declaration</button>
 
                     </div>
-                    <button className="account-btn" onClick={uploadImage}>Add Declaration</button>
                   </form>
-
-
                 </div>
               </div>
             </div>
@@ -137,4 +136,5 @@ function addFoundDeclaration() {
     </>
   );
 }
-export default addFoundDeclaration; 
+
+export default addFoundDeclaration;

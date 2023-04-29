@@ -31,22 +31,164 @@ Template Name: Scooby - Petcare HTML Template
 26. History section
 
 ================================================*/
+/* Style pour le formulaire */
+
+
+/* Style pour les labels */
+label {
+  display: block;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: black;
+}
+
+.navbar-nav .nav-link {
+  font-weight: bold;
+  font-size: 80px;
+  color: black;
+
+}
+.navbar-nav li {
+  margin-right: 80px;
+}
+.navbar-nav li a {
+  font-size: 30px;
+}
+
+.navbar {
+  background-color: #ffffff;
+}
+
+
+
+
+/* Style pour les champs de saisie */
+input[type="text"], input[type="number"], input[type="gender"], input[type="password"], input[type="email"], input[type="tel"], input[type="file"], textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
+
+/* Style pour les checkbox */
+input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+/* Style pour le bouton d'envoi */
+
+
+/* Style pour les messages d'erreur */
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+/* Style pour les messages de succès */
+.success-message {
+  color: green;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
 * {
   margin: 0;
   padding: 0;
   scroll-behavior: smooth;
 }
+
+.btn-close {
+  color: rgb(241, 3, 3) !important;
+}
+.btn-signout {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #fff;
+  font-family: sans-serif;
+  background-color: #dc3545; /* couleur de fond pour la déconnexion */
+  border-color: #dc3545; /* couleur de bordure pour la déconnexion */
+  border-radius: 40px;
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  margin-right: 10px; /* ajoute une marge droite pour espacer les boutons */
+  padding: 5px 10px; /* 5px à gauche et à droite, 10px en haut et en bas */
+}
+
+
+
+.btn-signout::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  border-radius: 50%;
+  z-index: -1;
+  transition: all 0.3s ease;
+}
+
+.btn-signout:hover {
+  background-color: #e74444;
+}
+
+.btn-signout:hover::before {
+}
+
+button[type="submit"] {
+  background-color: #001d23;
+  color: #fff;
+  font-size: 17px;
+  font-weight: bold;
+  padding: 9px 18px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button[type="reset"] {
+  background-color: #001d23;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.btn-primary {
+  background-color: #ff7f18 !important;
+  border-color: #ff7f18 !important;
+}
+.btn-secondary {
+  background-color: rgba(236, 59, 36, 0.788) !important;
+  border-color: rgba(236, 63, 63, 0.699) !important;
+}
+.btn-green {
+  background-color: rgb(53, 150, 53) !important;
+  border-color: green !important;
+}
 .modal-header {
-  background-color: transparent;
+  background-color: #001d23;
   border-bottom: none;
 }
 
 .modal-title {
-  color: #4a4a4a;
-  font-size: 28px;
-  font-weight: bold;
-  text-shadow: 1px 1px #fff;
+  color: white;
+  font-size: 25px;
+  font-weight: bolder;
 }
+
+
 
 
 :root {
@@ -862,6 +1004,38 @@ html .ui-button.ui-state-disabled:active:hover {
 /*=======================================
  3. section-title
 =======================================*/
+.btn-adduser {
+  background-color: #007bff; /* Couleur de fond */
+  border: none; /* Supprime la bordure */
+  color: #fff; /* Couleur de texte */
+  font-size: 22px; /* Taille de police */
+  padding: 10px 20px; /* Espace intérieur du bouton */
+  border-radius: 4px; /* Arrondi les coins */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Ombre portée */
+  cursor: pointer; /* Curseur au survol */
+  transition: all 0.2s ease-in-out; /* Transition fluide */
+}
+td[data-label="Action"] .btn-danger {
+  margin-right: 15px;
+}
+.center-linkss {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+
+}
+
+
+h1 {
+  color: black;
+  font-weight: bold;
+}
+
+.btn-adduser:hover {
+  background-color: #0069d9; /* Couleur de fond au survol */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Ombre portée au survol */
+}
+
 .section-title1 span {
   display: inline-block;
   font-size: 1.375rem;
@@ -891,6 +1065,20 @@ html .ui-button.ui-state-disabled:active:hover {
     font-size: 2.5rem;
   }
 }
+.react-toastify {
+  font-family: "Montserrat", sans-serif;
+}
+
+.toast-success {
+  background-color: #4caf50;
+}
+
+.toast-success .Toastify__close-button {
+  color: #fff;
+}
+.Toastify__progress-bar--animated {
+  background-color: #ffffff !important;
+}
 
 .section-title3 h2 {
   font-size: 2.5rem;
@@ -910,9 +1098,35 @@ html .ui-button.ui-state-disabled:active:hover {
 .btn-lg {
   padding: 8px 50px;
 }
+.btn-suppression {
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn-suppression:hover {
+  background-color: darkred;
+}
+.btn-edition {
+  background-color: green;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn-edition:hover {
+  background-color: darkgreen;
+}
 
 .primary-btn1 {
-  font-size: 1.125rem;
+  font-size: 1.2rem;
   font-weight: 700;
   color: #fff;
   font-family: var(--font-dosis);
@@ -922,6 +1136,7 @@ html .ui-button.ui-state-disabled:active:hover {
   overflow: hidden;
   background: var(--title-color1);
   z-index: 1;
+  white-space: nowrap; /* Empêche le texte de se retourner à la ligne */
 }
 .primary-btn1::before {
   content: "";
@@ -941,6 +1156,47 @@ html .ui-button.ui-state-disabled:active:hover {
 .primary-btn1:hover::before {
   width: 0;
 }
+.primary-btn0 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #fff;
+  font-family: var(--font-dosis);
+  border-radius: 40px;
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  background: var(--gradient-color);
+  z-index: 1;
+  padding: 5px 5px; 
+}
+
+
+
+.primary-btn0::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background: #001d23;
+  z-index: -1;
+  transition: 0.6s;
+  transform-origin: left;
+}
+
+.primary-btn0:hover {
+  color :linear-gradient(90deg, #f86ca7 50%, #ff7f18 50%);
+}
+
+.primary-btn0:hover::before {
+  width: 0;
+}
+
+.primary-btn0 + .primary-btn0 {
+  margin-left: 12px;
+}
+
 
 .primary-btn2 {
   font-size: 1.125rem;
@@ -7718,12 +7974,16 @@ footer.style2 .social-area ul li:hover a i {
   transition: 0.5s;
 }
 .collection-card .collection-img .view-dt-btn:hover {
-  background: var(--primary-color3);
+  background: red;
 }
 .collection-card .collection-img .view-dt-btn:hover a {
   opacity: 1;
   transform: scaleX(1);
 }
+header h1 {
+  color: white;
+}
+
 .collection-card .cart-icon-list {
   margin: 0;
   padding: 0;
@@ -7742,10 +8002,20 @@ footer.style2 .social-area ul li:hover a i {
 .collection-card .cart-icon-list li:last-child {
   margin-bottom: 0;
 }
-.collection-card .cart-icon-list li a {
+.collection-card .cart-icon-list li a.btn.btn-success {
   width: 30px;
   height: 30px;
-  background: var(--primary-color3);
+  background: rgb(24, 156, 68);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.35s;
+}
+.collection-card .cart-icon-list li a.btn.btn-danger {
+  width: 30px;
+  height: 30px;
+  background: rgb(255, 17, 0);
   border-radius: 10px;
   display: flex;
   align-items: center;

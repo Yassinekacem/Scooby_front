@@ -1,33 +1,76 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Breadcrumb from "../../components/breadcrumb/Breadcrumb";
 import Layout from "../../layout/Layout";
 import axios from "axios";
+import jwtDecode from "jwt-decode"
+import { useRouter } from "next/router";
+
 
 
 function CreateProduct() {
+  const router = useRouter();
+  const [connectedUser, setConnectedUser] = useState('')
+  const getConnectedUserData = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setConnectedUser(decodedToken.userId);
+    }
+  };
+  useEffect(() => {
+    getConnectedUserData(), protectRoute()
+  }, [])
+
+  const protectRoute = () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      router.push("/");
+    } else {
+      const decodedToken = jwtDecode(token);
+      if (decodedToken.userRole !== "petShop" && decodedToken.userRole!== "admin") {
+        router.push("/");
+      }
+    }
+  }
+
   const [file, setFile] = useState(null)
-  const [productData, setProductData] = useState({
+  const [imageUrl, setImageUrl] = useState("");
+  const [imageUploading, setImageUploading] = useState(false);
+  const [productData, setProductData] = useState({});
+  const initialState = {
+
     category: "",
     description: "",
     brandProduct: "",
     image: "",
     price: 0,
     isDispo: true,
-    userId: 3,
+    userId: connectedUser,
     animalCible: ""
-  });
+
+  }
+  useEffect(() => {
+    setProductData(initialState)
+  }, [connectedUser])
 
 
-  const uploadImage = async () => {
-    const form = new FormData();
-    form.append("file", file)
-    form.append("upload_preset", "yassinekacem")
-    await axios.post("https://api.cloudinary.com/v1_1/dxurewunb/upload", form)
-      .then((result) => {
-        console.log(result.data.secure_url)
-        setFile(result.data.secure_url)
-      })
+  const handleImageSelect = async (e) => {
+    setFile(e.target.files[0]);
+    setImageUploading(true);
+    try {
+      const form = new FormData();
+      form.append("file", e.target.files[0])
+      form.append("upload_preset", "yassinekacem")
 
+      const result = await axios.post(
+        "https://api.cloudinary.com/v1_1/dxurewunb/upload",
+        form
+      );
+      setImageUrl(result.data.secure_url);
+      setImageUploading(false);
+    } catch (error) {
+      console.error(error);
+    }
   }
   const saveData = (e) => {
     let name = e.target.name;
@@ -47,18 +90,16 @@ function CreateProduct() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await uploadImage(); // call uploadImage function here
-      console.log(typeof Number(productData.price))
       const response = await axios.post(
         "http://localhost:2001/products",
         {
           ...productData,
-          image: file
+          image: imageUrl
         }
       );
 
-      console.log(response.data); // log the response data for debugging purposes
-      // TODO: Redirect to a success page or display a success message to the user
+      console.log(response.data); 
+      router.push('/shop')
     } catch (error) {
       console.error(error);
     }
@@ -66,10 +107,10 @@ function CreateProduct() {
   return (
 
     <>
-        {console.log(productData)}
+      {console.log(productData)}
 
       <Layout>
-        <Breadcrumb pageName="addProduct" pageTitle="addProduct" />
+        <Breadcrumb pageName="ajouter votre produit" pageTitle="ajouter votre produit" />
         <div className="createProduct-section pt-120 pb-120">
           <div className="container">
             <div className="row d-flex justify-content-center">
@@ -80,77 +121,78 @@ function CreateProduct() {
                   data-wow-delay=".2s"
                 >
                   <div className="form-title">
-                    <h3> add your product</h3>
+                    <h3> ajouter votre produit</h3>
                   </div>
-                  <form className="w-100" onSubmit={handleSubmit}>
-                    <div className="row">
+                  <form
+                    className="w-100"
+                    onSubmit={handleSubmit}
+                    disabled={imageUploading}
+                  >                    <div className="row">
 
                       <div className="col-md-9">
                         <div className="form-group">
-                          <label htmlFor="category">Categorie :</label>
+                          <label htmlFor="category">Categorie * <br /></label>
                           <select
                             className="form-control"
                             id="category"
                             name="category"
                             onChange={saveData}
                           >
-                            <option value="">Sélectionnez un rôle</option>
+                            <option disabled selected hidden value="">Sélectionnez une catégorie</option>
                             <option value="food">nourriture</option>
                             <option value="accessory">accessoire</option>
                           </select>
+                          <br />
                         </div>
-                      </div> <br />
+                      </div>
                       <div className="col-md-9">
                         <div className="form-group">
-                          <label htmlFor="category">animal Cible :</label>
-                          <select
-                            className="form-control"
-                            name="animalCible"
-                            onChange={saveData}
-                          >
-                            <option value="">Sélectionnez un cible</option>
+                          <label htmlFor="category">animal destinataire *</label>
+                          <select className="form-control" name="animalCible" onChange={saveData}>
+                            <option disabled selected hidden value="">Sélectionnez un animal</option>
                             <option value="cat">chats</option>
                             <option value="dog">chiens</option>
                             <option value="fish">poissons de décoration</option>
                             <option value="bird">oiseaux</option>
                             <option value="hamster">hamsters</option>
-
                           </select>
                         </div>
-                      </div> <br />
+                        <br />
+                      </div>
+
 
 
 
                       <div className="col-md-9">
                         <div className="form-inner">
-                          <label>Enter Your image *</label>
-                          <input name="file" type="file" onChange={(e) => setFile(e.target.files[0])} />
+                          <label>Importez l'image du produit *</label>
+                          <input name="image" type="file" onChange={handleImageSelect} />
                         </div>
                       </div>
                       <div className="col-md-6">
                         <div className="form-inner">
-                          <label>Description:</label>
+                          <label>Description *</label>
                           <textarea name="description" rows="5" cols="30" placeholder="Description" onChange={saveData}></textarea>
                         </div>
                       </div>
                       <div className="col-md-9">
                         <div className="form-inner">
-                          <label>Enter brand *</label>
+                          <label>marque *</label>
                           <input name="brandProduct" type="text" placeholder="Enter Your price" onChange={saveData} />
                         </div>
                       </div>
 
-                      
+
                       <div className="col-md-9">
                         <div className="form-inner">
-                          <label>Enter Your price *</label>
+                          <label>prix *</label>
                           <input name="price" type="number" placeholder="Enter Your price" onChange={saveData} />
                         </div>
                       </div>
 
                       <div className="col-md-9">
                         <div className="form-inner">
-                          <label>isDispo </label>
+                          <label>disponible ? </label>
                           <input
                             type="checkbox"
                             name="isDispo"
@@ -166,7 +208,7 @@ function CreateProduct() {
 
 
                     </div>
-                    <button className="account-btn" onClick={uploadImage}>Add product</button>
+                    <button className="account-btn" >ajouter produit</button>
                   </form>
 
 

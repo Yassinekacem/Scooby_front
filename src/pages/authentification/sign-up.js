@@ -3,9 +3,15 @@ import React, { useState } from "react";
 import Breadcrumb from "../../components/breadcrumb/Breadcrumb";
 import Layout from "../../layout/Layout";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 function signUpPage() {
   const [file, setFile] = useState(null)
+  const [imageUrl, setImageUrl] = useState("");
+  const router = useRouter();
+  const [imageUploading, setImageUploading] = useState(false);
+  const now = new Date();
+  const formattedDate = now.toLocaleString("fr-FR"); // formatte la date en jj/mm/aaaa hh:mm
   const [userData, setUserData] = useState({
     firstName: "",
     lastName: "",
@@ -13,34 +19,54 @@ function signUpPage() {
     email: "",
     password: "",
     photo: "",
-    phoneNumber: ""
-
+    phoneNumber: "",
+    createdAt: formattedDate,
+    updatedAt: formattedDate,
   });
-  const uploadImage = async () => {
-    const form = new FormData();
-    form.append("file", file)
-    form.append("upload_preset", "yassinekacem")
-    await axios.post("https://api.cloudinary.com/v1_1/dxurewunb/upload", form)
-      .then((result) => {
-        console.log(result.data.secure_url)
-        setFile(result.data.secure_url)
-      })
 
-  }
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+
+
+
+
+  const handleImageSelect = async (e) => {
+    setFile(e.target.files[0]);
+    setImageUploading(true);
     try {
-      const response = await axios.post("http://localhost:2001/auth/signup", userData);
-      console.log(response.data);
+      const form = new FormData();
+      form.append("file", e.target.files[0])
+      form.append("upload_preset", "yassinekacem")
+      const result = await axios.post(
+        "https://api.cloudinary.com/v1_1/dxurewunb/upload",
+        form
+      );
+      setImageUrl(result.data.secure_url);
+      setImageUploading(false);
     } catch (error) {
-      console.log(error.response.data);
+      console.error(error);
     }
-  };
-
+  }
   const saveData = (e) => {
     let name = e.target.name;
     let value = e.target.value;
     setUserData({ ...userData, [name]: value });
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:2001/auth/signup",
+        {
+          ...userData,
+          photo: imageUrl
+        }
+      );
+      console.log(response.data); 
+      router.push("/login");
+
+
+    } catch (error) {
+      console.error(error);
+    }
   };
   return (
     <>
@@ -64,8 +90,11 @@ function signUpPage() {
                       </Link>
                     </p>
                   </div>
-                  <form className="w-100" onSubmit={handleSubmit}>
-                    <div className="row">
+                  <form
+                    className="w-100"
+                    onSubmit={handleSubmit}
+                    disabled={imageUploading}
+                  >                    <div className="row">
                       <div className="col-md-9">
                         <div className="form-inner">
                           <label>First Name </label>
@@ -87,7 +116,7 @@ function signUpPage() {
                       <div class="col-md-9">
                         <div class="form-inner">
                           <label>Role   :</label> <br />
-                          <select name="role" onChange={saveData}>
+                          <select className="form-select" name="role" onChange={saveData}>
                             <option value=""> Sélectionnez un rôle</option>
                             <option value="client">Client</option>
                             <option value="veterinary">Vétérinaire</option>
@@ -95,15 +124,17 @@ function signUpPage() {
                             <option value="petSitter">Garde d'animaux de compagnie</option>
                             <option value="petGroomer">Toiletteur d'animaux de compagnie</option>
                             <option value="petShop">Magasin d'animaux de compagnie</option>
-                            <option value="animalOwner">Propriétaire d'animaux</option>
+                            <option value="animalOwner">Propriétaire d'animal</option>
+                            <option value="petSeller">vendeur d'animaux</option>
+                            
                           </select>
                         </div>
                       </div>
 
                       <div className="col-md-9">
                         <div className="form-inner">
-                          <label> photo :  </label>
-                          <input name="file" type="file" placeholder="enter your role" onChange={(e) => setFile(e.target.files[0])} />
+                          <label> choisissez votre photo :  </label>
+                          <input name="photo" type="file" onChange={handleImageSelect} />
                         </div>
                       </div>
                       <div className="col-md-9">
@@ -118,7 +149,7 @@ function signUpPage() {
                           <input name="password" type="password" placeholder="Enter Your password" onChange={saveData} />
                         </div>
                       </div>
-                      
+
                       <div className="col-md-12">
                         <div className="form-agreement form-inner d-flex justify-content-between flex-wrap">
                           <div className="form-group">
@@ -131,7 +162,7 @@ function signUpPage() {
                         </div>
                       </div>
                     </div>
-                    <button className="account-btn" onClick={uploadImage}>Create Account</button>
+                    <button className="account-btn" >Create Account</button>
                   </form>
                   <div className="alternate-signup-box">
                     <h6>or signup WITH</h6>

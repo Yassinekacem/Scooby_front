@@ -3,21 +3,104 @@ import Breadcrumb from "../../../components/breadcrumb/Breadcrumb";
 import FoundDeclarationCard from "../../../components/declaration/FoundDeclarationCard";
 import Layout from "../../../layout/Layout";
 import Link from "next/link";
+import moment from "moment";
+import axios from 'axios';
+
 
 function FoundDeclaration() {
   const [value, setValue] = React.useState(50);
+  // check animal
+  const [isCatChecked, setIsCatChecked] = useState(false);
+  const [isDogChecked, setIsDogChecked] = useState(false);
+
+ 
+// check date
+  const [isTodayChecked, setIsTodayChecked] = useState(false);
+  const [isWeekChecked, setIsWeekChecked] = useState(false);
+  const [isMonthChecked, setIsmonthChecked] = useState(false);
+  const [isYearChecked, setIsyearChecked] = useState(false);
 
   const [FoundDeclarations, setFoundDeclarations] = useState([])
+
   const getFoundDeclarations = async () => {
-    const response = await fetch("http://localhost:2001/foundDeclarations");
-    const data = await response.json();
-    setFoundDeclarations(data)
+    try {
+      const response = await axios.get("http://localhost:2001/foundDeclarations");
+      setFoundDeclarations(response.data);
+
+    } catch (error) {
+      console.error(error);
+    }
   };
+  
 
   useEffect(() => {
     getFoundDeclarations()
   }, [])
+  const handleCatChange = (event) => {
+    setIsCatChecked(event.target.checked);
+  };
+  const handleDogChange = (event) => {
+    setIsDogChecked(event.target.checked);
+  };
 
+  
+
+  const handleTodayChange = (event) => {
+    setIsTodayChecked(event.target.checked);
+  };
+  const handleMonthChange = (event) => {
+    setIsmonthChecked(event.target.checked);
+  };
+  const handleWeekChange = (event) => {
+    setIsWeekChecked(event.target.checked);
+  };
+  const handleYearChange = (event) => {
+    setIsyearChecked(event.target.checked);
+  };
+  const filteredAnimals = FoundDeclarations.filter((FoundDeclaration) => {
+    let showFoundDeclaration = true;
+    
+    // Filter by animal
+    if ((isCatChecked && FoundDeclaration.animal !== "cat") ||
+        (isDogChecked && FoundDeclaration.animal !== "dog")) {
+      showFoundDeclaration = false;
+    } 
+    // Filter by date
+    if (isTodayChecked && !moment(FoundDeclaration.dateFound).isSame(moment(), "day")) {
+      showFoundDeclaration = false;
+    }
+    if (isWeekChecked && !moment(FoundDeclaration.dateFound).isSame(moment(), "week")) {
+      showFoundDeclaration = false;
+    }
+    if (isMonthChecked && !moment(FoundDeclaration.dateFound).isSame(moment(), "month")) {
+      showFoundDeclaration = false;
+    }
+    if (isYearChecked && !moment(FoundDeclaration.dateFound).isSame(moment(), "year")) {
+      showFoundDeclaration = false;
+    }
+    
+    return showFoundDeclaration;
+  });
+  
+  // pagination 
+  const items = 8;
+  const [current, setCurrent] = useState(1);
+  const nbPages = Math.ceil(filteredAnimals.length / items);
+  const startIndex = (current - 1) * items;
+  const endIndex = startIndex + items;
+  const dataPerPage = filteredAnimals.slice(startIndex, endIndex)
+
+  const goToNextPage = () => {
+    if (current < nbPages) {
+      setCurrent(current + 1);
+    }
+  };
+
+  const goToPrevPage = () => {
+    if (current > 1) {
+      setCurrent(current - 1);
+    }
+  };
   return (
     <Layout>
       {console.log(FoundDeclarations)}
@@ -33,13 +116,13 @@ function FoundDeclaration() {
                     <div className="checkbox-container">
                       <label className="containerss">
                         chat
-                        <input type="checkbox" defaultChecked="checked" />
-                        <span className="checkmark" />
+                        <input type="checkbox" checked={isCatChecked}
+                          onChange={handleCatChange} />                         <span className="checkmark" />
                       </label>
                       <label className="containerss">
                         chien
-                        <input type="checkbox" />
-                        <span className="checkmark" />
+                        <input type="checkbox" checked={isDogChecked}
+                          onChange={handleDogChange} />                         <span className="checkmark" />
                       </label>
                     </div>
                   </div>
@@ -50,22 +133,28 @@ function FoundDeclaration() {
                     <div className="checkbox-container">
                       <label className="containerss">
                         Aujourd'hui
-                        <input type="checkbox" defaultChecked="checked" />
-                        <span className="checkmark" />
+                        <input type="checkbox" checked={isTodayChecked}
+                          onChange={handleTodayChange} />                           
+                          <span className="checkmark" />
                       </label>
                       <label className="containerss">
                         cette semaine
-                        <input type="checkbox" defaultChecked="checked" />
+                        <input type="checkbox" checked={isWeekChecked}
+                          onChange={handleWeekChange} />  
                         <span className="checkmark" />
+  
                       </label>
+
                       <label className="containerss">
                         ce mois
-                        <input type="checkbox" />
+                        <input type="checkbox" checked={isMonthChecked}
+                          onChange={handleMonthChange} /> 
                         <span className="checkmark" />
                       </label>
                       <label className="containerss">
                         cet année
-                        <input type="checkbox" />
+                        <input type="checkbox" checked={isYearChecked}
+                          onChange={handleYearChange} />                 
                         <span className="checkmark" />
                       </label>
                     </div>
@@ -79,14 +168,14 @@ function FoundDeclaration() {
               <div className="row mb-50">
                 <div className="col-lg-12">
                   <div className="multiselect-bar">
-                    <h6>Déclarations de perte </h6>
+                    <h6>Déclarations de trouveille </h6>
                     <div className="multiselect-area">
                       voulez vous aidez quelqu'un a trouver son animal ? cliquez ici :
                       <div className="single-select two">
 
                         <Link legacyBehavior href={`/declaration/addFoundDeclaration`}>
-                          <a>J'ai trouvé un animal
-                          </a>
+                          <button className="primary-btn0">J'ai trouvé un animal
+                          </button>
                         </Link>
                       </div>
                     </div>
@@ -94,7 +183,7 @@ function FoundDeclaration() {
                 </div>
               </div>
               <div className="row g-4 justify-content-center">
-                {FoundDeclarations.map((item, index) =>
+                {dataPerPage.map((item, index) =>
                   <FoundDeclarationCard item={item} key={index} />
                 )}
               </div>
@@ -103,27 +192,20 @@ function FoundDeclaration() {
                   <div className="paginations-area">
                     <nav aria-label="Page navigation example">
                       <ul className="pagination">
-                        <li className="page-item">
+                      <li className="page-item" onClick={goToPrevPage}>
                           <a className="page-link" href="#">
                             <i className="bi bi-arrow-left-short" />
                           </a>
                         </li>
-                        <li className="page-item active">
-                          <a className="page-link" href="#">
-                            01
-                          </a>
-                        </li>
-                        <li className="page-item">
-                          <a className="page-link" href="#">
-                            02
-                          </a>
-                        </li>
-                        <li className="page-item">
-                          <a className="page-link" href="#">
-                            03
-                          </a>
-                        </li>
-                        <li className="page-item">
+                        {Array.from({ length: nbPages }, (_, i) => i + 1).map(page => {
+                          return <li className="page-item">
+                            <a className="page-link" href="#" onClick={() => setCurrent(page)}>
+                              0{page}
+                            </a>
+                          </li>
+                        })}
+                      
+                      <li className="page-item" onClick={goToNextPage}>
                           <a className="page-link" href="#">
                             <i className="bi bi-arrow-right-short" />
                           </a>

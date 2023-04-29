@@ -5,26 +5,36 @@ import axios from "axios";
 
 
 function addLostDeclaration() {
-  const [file , setFile] = useState(null)
+  const [file, setFile] = useState(null);
+  const [imageUrl, setImageUrl] = useState("");
+  const [imageUploading, setImageUploading] = useState(false);
   const [lostDeclarationData, setLostDeclarationData] = useState({
     animal: "",
-    race :"",
+    race: "",
     description: "",
     image: "",
     dateLost: "",
     withReward: false,
     placeLost: "",
-    phoneNumber : ""
+    phoneNumber: ""
   });
 
-
-  const uploadImage = async () =>{
-    const form = new FormData();
-    form.append("file",file)
-    form.append("upload_preset","yassinekacem")
-    const result = await axios.post("https://api.cloudinary.com/v1_1/dxurewunb/upload",form)
-    console.log(result.data.secure_url)
-    setFile(result.data.secure_url)
+  const handleImageSelect = async (e) => {
+    setFile(e.target.files[0]);
+    setImageUploading(true);
+    try {
+      const form = new FormData();
+      form.append("file", e.target.files[0])
+      form.append("upload_preset", "yassinekacem")
+      const result = await axios.post(
+        "https://api.cloudinary.com/v1_1/dxurewunb/upload",
+        form
+      );
+      setImageUrl(result.data.secure_url);
+      setImageUploading(false);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   const saveData = (e) => {
@@ -33,16 +43,15 @@ function addLostDeclaration() {
     setLostDeclarationData({ ...lostDeclarationData, [name]: value });
   };
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log( (lostDeclarationData.dateLost))
-      await uploadImage();
       const response = await axios.post(
-        "http://localhost:2001/lostDeclarations",
+        "http://localhost:2001/LOSTdECLARATIONS",
         {
           ...lostDeclarationData,
-          image: file
+          image: imageUrl
         }
       );
 
@@ -52,6 +61,8 @@ function addLostDeclaration() {
       console.error(error);
     }
   };
+
+
   return (
     <>
       <Layout>
@@ -68,7 +79,11 @@ function addLostDeclaration() {
                   <div className="form-title">
                     <h3> announce the loss of your pet </h3>
                   </div>
-                  <form className="w-100" onSubmit={handleSubmit}>
+                  <form
+                    className="w-100"
+                    onSubmit={handleSubmit}
+                    disabled={imageUploading}
+                  >
                     <div className="row">
                       <div className="col-md-6">
                         <div className="form-inner">
@@ -93,7 +108,7 @@ function addLostDeclaration() {
                       <div className="col-md-12">
                         <div className="form-inner">
                           <label>Enter Your image *</label>
-                          <input name="file" type="file" onChange={(e) => setFile(e.target.files[0])} />
+                          <input name="file" type="file" onChange={handleImageSelect} />
                         </div>
                       </div>
 
@@ -117,7 +132,7 @@ function addLostDeclaration() {
                         </div>
                       </div>
 
-                      
+
                       <div className="col-md-12">
                         <div className="form-inner">
                           <label>withReward</label>
@@ -136,7 +151,7 @@ function addLostDeclaration() {
 
 
                     </div>
-                    <button className="account-btn" onClick={uploadImage}>Add Declaration</button>
+                    <button className="account-btn" >Add Declaration</button>
                   </form>
 
 
@@ -150,3 +165,12 @@ function addLostDeclaration() {
   );
 }
 export default addLostDeclaration; 
+
+
+
+
+
+
+
+
+

@@ -1,7 +1,6 @@
 import Link from "next/link";
 import React from "react";
 import Breadcrumb from "../../../components/breadcrumb/Breadcrumb";
-import ProductDetails from "../../../components/shop/ProductDetails";
 import Layout from "../../../layout/Layout";
 
 function AdoptionDetails(props) {

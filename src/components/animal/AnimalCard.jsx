@@ -1,57 +1,96 @@
-
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
-const deleteAnimal = async (animalIS) => {
-  const response = await fetch(`http://localhost:2001/animals/${animalIS}`, {
-    method: "DELETE",
-  })
-  const data = await response.json()
-  console.log(data)
-}
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import jwtDecode from "jwt-decode"
 
 
 
+const deleteAnimal = async (animalId) => {
+  try {
+    const response = await fetch(`http://localhost:2001/animals/${animalId}`, {
+      method: "DELETE",
+    });
+    const data = await response.json();
+    console.log(data);
+    toast.success("Animal supprimé avec succès!");
+    <ToastContainer  />
+  } catch (error) {
+    console.error(error);
+    toast.error("Une erreur s'est produite lors de la suppression de l'animal.");
+  }
+};
 
 function AnimalCard({ item: { id,
   species, race,
   image,
   age,
-  isVaccinated,
-  isEducated,
   gender,
   price,
   status,
-  userId } }) {
+  isVaccinated,
+  isEducated,
+  userId
+} }) {
   const [file, setFile] = useState(null)
+  const [imageUrl, setImageUrl] = useState("");
+  const [imageUploading, setImageUploading] = useState(false);
   const [animalData, setAnimalData] = useState({
-    species: species,
-    race: race,
-    status: status,
-    age: age,
-    gender: gender,
-    image: "",
-    price: price,
-    userId  : userId ,
-    isVaccinated : isVaccinated,
-    isEducated : isEducated
+    id ,
+    species,
+    race ,
+    status,
+    age,
+    isVaccinated,
+    isEducated,
+    gender,
+    image,
+    price,
+    userId: 3
 
   });
+  const [connectedUser, setConnectedUser] = useState('')
+  const getConnectedUserData = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setConnectedUser(decodedToken.userId);
+    }
+  };
+  useEffect(() => {
+    getConnectedUserData()
+  }, [])
+  const [connectedUser1, setConnectedUser1] = useState('')
+  const getConnectedUserData1 = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setConnectedUser1(decodedToken.userRole);
+    }
+  };
+  useEffect(() => {
+    getConnectedUserData1()
+  }, [])
 
-
-  const uploadImage = async () => {
-    const form = new FormData();
-    form.append("file", file)
-    form.append("upload_preset", "yassinekacem")
-    await axios.post("https://api.cloudinary.com/v1_1/dxurewunb/upload", form)
-      .then((result) => {
-        console.log(result.data.secure_url)
-
-        setFile(result.data.secure_url)
-      })
-
+  const handleImageSelect = async (e) => {
+    setFile(e.target.files[0]);
+    setImageUploading(true);
+    try {
+      const form = new FormData();
+      form.append("file", e.target.files[0])
+      form.append("upload_preset", "yassinekacem")
+      const result = await axios.post(
+        "https://api.cloudinary.com/v1_1/dxurewunb/upload",
+        form
+      );
+      setImageUrl(result.data.secure_url);
+      setImageUploading(false);
+    } catch (error) {
+      console.error(error);
+    }
   }
+
   const saveData = (e) => {
     let name = e.target.name;
     let value = e.target.value;
@@ -65,13 +104,12 @@ function AnimalCard({ item: { id,
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log((animalData.price))
 
       const response = await axios.put(
         `http://localhost:2001/animals/${id}`,
         {
           ...animalData,
-          image: file
+          image: imageUrl
         }
       );
 
@@ -85,16 +123,17 @@ function AnimalCard({ item: { id,
   return (
     <>
       {console.log(animalData)}
-
-
-      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ 
+      <div class="modal fade" id={`detail-${id}`} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title">éditer cet annonce</h1>
+          <div class="modal-header">
+              <h5 class="modal-title"> mis à jour cette annonce</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <form role="form" method="POST" action="" onSubmit={handleSubmit}>
+              <form role="form" method="POST" action="" onSubmit={handleSubmit}
+                    disabled={imageUploading}>
                 <div class="form-group">
                   <label class="control-label">animal</label>
                   <input type="text" class="form-control input-lg" name="species" defaultValue={species} onChange={saveData} />
@@ -107,15 +146,16 @@ function AnimalCard({ item: { id,
                   <label class="control-label">age</label>
                   <input type="number" class="form-control input-lg" name="age" defaultValue={age} onChange={saveData} />
                 </div>
+                
                 <div class="form-group">
-                  <label class="control-label">prix</label>
-                  <input type="number" class="form-control input-lg" name="price" defaultValue={price} onChange={saveData} />
+                  <label class="control-label">gender</label>
+                  <input name="gender" type="text" placeholder="Enter the sex of your animal" class="form-control input-lg" defaultValue={gender} onChange={saveData} />
                 </div>
                 <div class="form-group">
-                  <label class="control-label">sexe</label>
-                  <input name="gender" type="gender" placeholder="Enter when gender" class="form-control input-lg" defaultValue={gender} onChange={saveData} />
+                  <label class="control-label">price</label>
+                  <input name="price" type="number" placeholder="Enter the price of your animal" class="form-control input-lg" defaultValue={price} onChange={saveData} />
                 </div>
-            
+
                 <div class="form-group">
                   <label class="control-label">status</label>
                   <input name="status" type="text" placeholder="Enter your phone Number" class="form-control input-lg" defaultValue={status} onChange={saveData} />
@@ -124,47 +164,46 @@ function AnimalCard({ item: { id,
                 <div class="form-group">
                   <label class="control-label">image</label>
                   <div>
-                    <input name="file" type="file" onChange={(e) => setFile(e.target.files[0])} />
+                  <input name="image" type="file" onChange={handleImageSelect} />                  </div>
+                </div>
+                <div className="form-group">
+                  <div className="form-inner">
+                    <label class="control-label">isVaccinated</label>
+                    <input
+                      type="checkbox"
+                      name="isVaccinated"
+                      onChange={(e) =>
+                        setAnimalData({
+                          ...animalData,
+                          isVaccinated: e.target.checked,
+                        })
+                      }
+                    />
                   </div>
                 </div>
                 <div className="form-group">
-                    <div className="form-inner">
-                      <label class="control-label">isVaccinated</label>
-                      <input
-                        type="checkbox"
-                        name="isVaccinated"
-                        onChange={(e) =>
-                          setAnimalData({
-                            ...animalData,
-                            isVaccinated: e.target.checked,
-                          })
-                        }
-                      />
-                    </div>
+                  <div className="form-inner">
+                    <label class="control-label">isEducated</label>
+                    <input
+                      type="checkbox"
+                      name="isEducated"
+                      onChange={(e) =>
+                        setAnimalData({
+                          ...animalData,
+                          isEducated: e.target.checked,
+                        })
+                      }
+                    />
                   </div>
-                  <div className="form-group">
-                    <div className="form-inner">
-                      <label class="control-label">isEducated</label>
-                      <input
-                        type="checkbox"
-                        name="isEducated"
-                        onChange={(e) =>
-                          setAnimalData({
-                            ...animalData,
-                            isEducated: e.target.checked,
-                          })
-                        }
-                      />
-                    </div>
-                  </div>
+                </div>
 
 
                 <br />
                 <div class="form-group">
                   <div>
-                    <button type="submit" class="btn btn-primary" onClick={uploadImage}>
-                      éditer
-                    </button>
+                    <center><button type="submit" class="primary-btn1" data-bs-dismiss="modal">
+                      enregistrer ces modifications
+                    </button></center>
                   </div>
                 </div>
 
@@ -177,7 +216,7 @@ function AnimalCard({ item: { id,
         <div className="collection-card">
           <div
             className={
-              isEducated && isVaccinated ? "offer-card oui" : isEducated && !isVaccinated ? "offer-card " : isVaccinated && !isEducated ? "offer-card toSell" : "offer-card toAdopt"
+              isEducated && isVaccinated ? "offer-card oui" : isEducated && !isVaccinated ? "offer-card " : isVaccinated && !isEducated ? "offer-card toSell" : ""
             }
           >
             <span>{isEducated && isVaccinated ? "Vacciné et dressé" : isEducated && !isVaccinated ? "Dressé" : isVaccinated && !isEducated ? "vacciné" : ""
@@ -190,39 +229,31 @@ function AnimalCard({ item: { id,
               <div className="plus-icon">
                 <i className="bi bi-plus" />
               </div>
-              {/* <Link legacyBehavior href={{pathname: '/lostDeclarations/[id]', query: {id:id,name:'yassine'}}} >
-                    <a>View Details</a>
-                  </Link> */}
+
               <Link legacyBehavior href={`/pet/petList/${id}`}>
                 <a>View Details</a>
               </Link>
             </div>
-            <ul className="cart-icon-list">
-              <li>
-                <a href="#" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                  <img src="../assets/images/icon/Icon-cart3.svg" alt="" title="edit this product" />
-                </a>
+            {(connectedUser === userId || connectedUser1==="admin")? (<ul className="cart-icon-list">
+            <li>
+            <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target={`#detail-${id}`}><i class="bi bi-pencil text-black"></i></a>
               </li>
 
               <li>
-                <a href="#" onClick={() => deleteAnimal(id)} class="btn btn-primary">
-                  <img src="../assets/images/icon/Icon-favorites3.svg" alt="" title="delete this products" />
-
-                </a>
+              <a href="#" class="btn btn-danger" onClick={() => deleteAnimal(id)}><i class="bi bi-trash"></i></a>
               </li>
-
-            </ul>
+            </ul>) : (<ul></ul>)}
 
           </div>
           <div className="collection-content text-center">
             <h4>
               <Link legacyBehavior href="/shop-details">
-                <a>{species === "cat" ? "chat" : species === "dog" ? "chien" : species === "bird" ? "oiseau" : { species }} {race}</a>
+                <a>{species} {race}</a>
               </Link>
             </h4> <br />
-            <h5>statut : {status === "toSell" ? "à vendre" : "pour adoption"}</h5>
+            <h5>statut : {status === "toAdopt" ? "pour adoption" : "à vendre"}</h5>
             <div className="price">
-              <h6>prix : {price} Dt</h6>
+              <h6>Prix : {price} Dt</h6>
             </div>
             <div>
               agé de : {age} ans
@@ -238,3 +269,4 @@ function AnimalCard({ item: { id,
 }
 
 export default AnimalCard;
+

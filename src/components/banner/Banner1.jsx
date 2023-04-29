@@ -1,8 +1,21 @@
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Morphext from "../morphext/Morphext";
+import jwtDecode from "jwt-decode"
+
 
 function Banner1() {
+  const [connectedUser, setConnectedUser] = useState('')
+  const getConnectedUserData = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setConnectedUser(decodedToken.userRole);
+    }
+  };
+  useEffect(() => {
+    getConnectedUserData()
+  }, [])
   const phrases = [ "chien .", "chat ." ,"oiseau ."];
   return (
     <div className="hero-style-1">
@@ -40,9 +53,18 @@ function Banner1() {
                 </div>
                 <div className="reservation-review">
                   <div className="reservation-btn">
-                    <Link legacyBehavior href="/shop">
+                    {connectedUser==="admin" ? (<Link legacyBehavior href="/dashboard">
+                      <a className="primary-btn1">Accédez au tableau de bord</a>
+                    </Link>) : connectedUser==="petShop" ? 
+                    (
+                      <Link legacyBehavior href="/shop">
                       <a className="primary-btn1">Accédez à la boutique</a>
                     </Link>
+                    ) : connectedUser==="petSeller" ? (<Link legacyBehavior href="/pet/petList">
+                    <a className="primary-btn1">les animaux à vendre</a>
+                  </Link>) : connectedUser==="animalOwner" ? (<Link legacyBehavior href="/pet/adoptionList">
+                      <a className="primary-btn1">les animaux pour adoption</a>
+                    </Link>) : (<div></div>)}
                   </div> 
                   
                   
