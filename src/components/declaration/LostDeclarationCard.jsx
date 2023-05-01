@@ -174,9 +174,7 @@ function LostDeclarationCard({ item: { id,
               <div className="plus-icon">
                 <i className="bi bi-plus" />
               </div>
-              {/* <Link legacyBehavior href={{pathname: '/lostDeclarations/[id]', query: {id:id,name:'yassine'}}} >
-                    <a>View Details</a>
-                  </Link> */}
+           
               <Link legacyBehavior href={`/declaration/lostDeclarations/${id}`}>
                 <a>View Details</a>
               </Link>

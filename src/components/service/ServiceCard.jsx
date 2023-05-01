@@ -1,94 +1,68 @@
-
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
-function ServiceCard() {
+import React from "react";
 
-  const [announcements,setAnnouncements]= useState([])
-
-  const getAnnouncements = async () => {
-    const response = await fetch("http://localhost:2000/announcements");
-    const data = await response.json();
-    setAnnouncements(data)
-  };  
-
-  useEffect(() => {
-    getAnnouncements()
-  }, [])
+function ServiceCard({ announcements }) {
   return (
     <>
       {announcements.map((item) => {
-        const {
-          id,
-          type,
-          animlaCible,
-          description,
-          city,
-          userId,
-        } = item;
+        const { id, type, firstName,lastName,contact,level ,city, ville,userId,image } = item;
         return (
-          <div key={id} className="col-lg-4 col-md-4 col-sm-6">
-            <div className="collection-card">
-              {userId == "" ? (
-                ""
-              ) : (
-                
-                  <span>{userId}</span>
-              )}
-
-                <div className="view-dt-btn">
-                  <div className="plus-icon">
-                    <i className="bi bi-plus" />
-                  </div>
-                  
-                <ul className="cart-icon-list">
-                  <li>
-                    <a href="#">
-                      <img src="assets/images/icon/Icon-cart3.svg" alt="" />
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <img
-                        src="assets/images/icon/Icon-favorites3.svg"
-                        alt=""
-                      />
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <div className="collection-content text-center">
-                <h4>
-                  <Link legacyBehavior href="/shop-details">
-                    <a>{type}</a>
-                  </Link>
-                </h4>
-                <div className="price">
-                  <h6>${city}</h6>
-                  
-                </div>
-                <div className="review">
-                  <ul>
-                    <li>
-                      <i className="bi bi-star-fill" />
-                    </li>
-                    <li>
-                      <i className="bi bi-star-fill" />
-                    </li>
-                    <li>
-                      <i className="bi bi-star-fill" />
-                    </li>
-                    <li>
-                      <i className="bi bi-star-fill" />
-                    </li>
-                    <li>
-                      <i className="bi bi-star-fill" />
-                    </li>
-                  </ul>
-                  <span>({animlaCible})</span>
-                </div>
-              </div>
-            </div>
+          <div key={id} className="col-lg-5 col-md-5 col-sm-6">
+        <div className="collection-card">
+          <div
+            className={
+               "offer-card oui"
+            }
+          >
+            <span>{ville}</span>
           </div>
+
+          <div className="collection-img" >
+          <img className="img-gluid" src={image} alt="" style={{ width: "280px", height: "220px" }} />
+
+            <div className="view-dt-btn">
+              <div className="plus-icon">
+                <i className="bi bi-plus" />
+              </div>
+           
+              <Link legacyBehavior href={`/declaration/lostDeclarations/${id}`}>
+                <a>View Details</a>
+              </Link>
+            </div>
+            <ul className="cart-icon-list">
+            <li>
+              <a href="#" class="btn btn-success" ><i class="bi bi-pencil text-black"></i>
+                </a>
+              </li>
+
+              <li>
+              <a href="#" class="btn btn-danger" ><i class="bi bi-trash"></i></a>
+              </li>
+
+            </ul>
+
+          </div>
+          <div className="collection-content text-center">
+            <h4>
+              <Link legacyBehavior href="/shop-details">
+                <a>{firstName} {lastName}</a>
+              </Link>
+            </h4>
+            <div className="dresseur">
+              <h6>{type==="petSitting" ? "gardeur d'animaux" : "petTraining" ? "dresseur d'animaux" : "veterinaryCaring" ? "véterinaire" : "toiletteur d'animaux"}</h6>
+            </div>
+            <div>
+              <h5>niveau de service : {level}</h5>
+            </div>
+            <div>
+              contact :<br />
+              <u> {contact}</u>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
         );
       })}
     </>

@@ -8053,6 +8053,12 @@ header h1 {
   color: var(--primary-color3);
   font-family: var(--font-cabin);
 }
+.collection-card .collection-content .dresseur h6 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: red ;
+  font-family: var(--font-cabin);
+}
 .collection-card .collection-content .price del {
   font-size: 0.875rem;
   font-weight: 400;

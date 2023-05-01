@@ -64,7 +64,9 @@ function Banner1() {
                     <a className="primary-btn1">les animaux à vendre</a>
                   </Link>) : connectedUser==="animalOwner" ? (<Link legacyBehavior href="/pet/adoptionList">
                       <a className="primary-btn1">les animaux pour adoption</a>
-                    </Link>) : (<div></div>)}
+                    </Link>) : (connectedUser==="veterinary" || connectedUser==="petGroomer" || connectedUser==="petTrainer" || connectedUser==="petSitter") ? (<Link legacyBehavior href="/service-details/addService">
+                      <a className="primary-btn1">annoncer votre service</a>
+                    </Link>) : (<div> </div>)}
                   </div> 
                   
                   

@@ -75,51 +75,7 @@ function Header1() {
         position="top-center"
         autoClose={100}
       />
-      <div className="top-bar">
-        <div className="container-lg container-fluid ">
-          <div className="row">
-            <div className="col-lg-12 d-flex align-items-center justify-content-md-between justify-content-center">
-              <div className="social-area">
-                <ul>
-                  <li>
-                    <a href="https://www.facebook.com/">
-                      <i className="bx bxl-facebook" />
-                    </a>
-                  </li>
-                  <li>
-                    <a href="https://twitter.com/">
-                      <i className="bx bxl-twitter" />
-                    </a>
-                  </li>
-                  <li>
-                    <a href="https://www.pinterest.com/">
-                      <i className="bx bxl-pinterest-alt" />
-                    </a>
-                  </li>
-                  <li>
-                    <a href="https://www.instagram.com/">
-                      <i className="bx bxl-instagram" />
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <div className="opening-time text-center">
-                <p>
-                  Email
-                  <br />
-                  <span>scoobyDo@gmail.com </span>
-                </p>
-              </div>
-              <div className="contact-number">
-                <a href="tel:+1(541)754-3020">
-                  +216 95716180{" "}
-                  <img src="../../assets/images/icon/support.svg" alt="" />
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+ 
 
       <header
         ref={headerRef}
@@ -211,48 +167,10 @@ function Header1() {
                   </li>
                 </ul>
               </li>
-              <li className="menu-item-has-children">
-                <Link legacyBehavior href="#">
-                  <a>Services</a>
+              <li className={currentRoute === "/service-details" ? "active" : ""}>
+                <Link legacyBehavior href="/service-details">
+                  <a>Service</a>
                 </Link>
-                <i
-                  className="bi bi-plus dropdown-icon"
-                  onClick={() => dispatch({ type: "services" })}
-                />
-                <ul
-                  className={
-                    state.activeMenu === "services"
-                      ? "sub-menu  d-block"
-                      : "sub-menu d-xl-block d-none"
-                  }
-                >
-                  <li>
-                    <Link legacyBehavior href="/service-details">
-                      <a
-                        className={
-                          currentRoute === "/service-details" ? "active" : ""
-                        }
-                      >
-                        Daycare
-                      </a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link legacyBehavior href="/service-details">
-                      <a>Grooming</a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link legacyBehavior href="/service-details">
-                      <a>Boarding</a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link legacyBehavior href="/service-details">
-                      <a>Veterinary</a>
-                    </Link>
-                  </li>
-                </ul>
               </li>
               <li className={currentRoute === "/pet/adoptionList" ? "active" : ""}>
                 <Link legacyBehavior href="/pet/adoptionList">
