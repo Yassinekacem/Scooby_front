@@ -172,7 +172,7 @@ function ServiceDetails() {
                                         <div className="row g-4">
                                             <div className="col-lg-12">
                                                 <div className="form-inner">
-                                                    <label>Service</label>
+                                                    <label>Service *</label>
                                                     <select
                                                         id="duration"
                                                         style={{
@@ -195,7 +195,7 @@ function ServiceDetails() {
                                             </div>
                                             <div className="col-lg-12">
                                                 <div className="form-inner">
-                                                    <label>ville</label>
+                                                    <label>Votre ville *</label>
                                                     <select
                                                         id="duration"
                                                         style={{

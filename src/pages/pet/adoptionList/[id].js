@@ -6,72 +6,84 @@ import Layout from "../../../layout/Layout";
 function AdoptionDetails(props) {
   return (
     <Layout>
-      <Breadcrumb pageName="adoption Details" pageTitle="adoption Details" />
+
+      <Breadcrumb pageName="détaille d'une annonce d'animal pour adoption" pageTitle="Détaille animal" />
       <div className="shop-details-page pt-120 mb-120">
         <div className="container">
-        <div className="row g-lg-4 gy-5 mb-120">
-        <div className="col-lg-7">
-          <div className="tab-content tab-content1" id="v-pills-tabContent">
-            <div
-              className="tab-pane fade active show"
-              id="v-pills-img1"
-              role="tabpanel"
-              aria-labelledby="v-pills-img1-tab"
-            >
-              <img
-                className="img-fluid"
-                src={props.animals.image}
-                alt=""
-               style={{ width: "470px", height: "430px" }}
-              />
-            </div>
-            
-            
-            
-          </div>
-          
-        </div>
-        <div className="col-lg-5">
-          <div className="shop-details-content">
-            <h3>{props.animals.species} {props.animals.race}</h3>
-            <ul className="shopuct-review2 d-flex flex-row align-items-center mb-25">
-              
-              <li>
-                <a href="#" className="review-no">
-                 Gender : {props.animals.gender}
-                </a>
-              </li>
-            </ul>
-            <div className="model-number">
-              <span>age:{props.animals.age} ans </span>
-            </div>
-            <div className="price-tag">
-              <h4>
-               FREE(for adoption)
-              </h4>
-            </div>
-            <p>
-              {props.animals.description}.{" "}
-            </p>
-            <div className="shop-quantity d-flex align-items-center justify-content-start mb-20">
-              <div className="quantity d-flex align-items-center">
+          <div className="row g-lg-4 gy-5 mb-120">
+            <div className="col-lg-7">
+              <div
+                className="tab-pane fade active show"
+                id="v-pills-img1"
+                role="tabpanel"
+                aria-labelledby="v-pills-img1-tab"
+              >
+                <img
+                  className="img-fluid rounded-circle"
+                  src={props.animals.image}
+                  alt=""
+                  style={{ width: "500px", height: "500px", borderRadius: "100%" }}
+                />
               </div>
-              
+
+
+
+
+
+
             </div>
-            <div className="buy-now-btn">
-              <Link legacyBehavior href="/cart">
-                <a>Adopt Now</a>
-              </Link>
+            <div className="col-lg-5">
+              <div className="shop-details-content" align="center">
+                <h3 style={{ fontFamily: "Caveat, cursive" }}>
+                  {props.animals.name} 
+
+                </h3>
+                <br />
+                <div className="price-tag">
+                  <h4>
+                   Pour adoption
+                  </h4>
+                </div> <br />
+                <i><h5 style={{ fontWeight: 'bold', color: 'black' }}>
+                  animal : {props.animals.species} {props.animals.race} 
+                </h5></i> <br />
+                <i><h5 style={{ fontWeight: 'bold', color: 'black' }}>
+                  date de naissance : {props.animals.dateOfBirth}
+                </h5></i> <br />
+                <i><h5 style={{ fontWeight: 'bold', color: 'black' }}>
+                  sexe : {props.animals.gender} 
+                </h5></i>
+                <br />
+                <i><h5 style={{ fontWeight: 'bold', color: 'black' }} > age : {props.animals.age} ans </h5> </i><br />
+                <i><h5 style={{ fontWeight: 'bold', color: 'red' }}> {props.animals.isEducated ? "dréssé" : ""}</h5></i>  
+                <i><h5 style={{ fontWeight: 'bold', color: 'red' }}> {props.animals.isVaccinated ? "Vacciné" : ""}</h5></i>  
+
+                <br />
+                <div className="shop-quantity d-flex align-items-center justify-content-start mb-20">
+
+                <h4>
+                  {props.animals.description}.{" "}
+                </h4> <br />
+                </div>
+                <h4 style={{ fontFamily: "Montserrat, sans-serif" }}>
+                  contactez moi pour plus d'informations :
+                </h4>
+                <br />
+                <div className="buy-now-btn">
+                  <Link legacyBehavior href={``}>
+                    <a>
+                      Appelez maintenant  <i className="fa fa-phone"></i>
+                    </a>
+                  </Link>
+                </div>
+
+
+              </div>
             </div>
-            <div className="compare-wishlist-area">
-              
-            </div>
-            
           </div>
         </div>
       </div>
-        </div>
-      </div>
+
     </Layout>
   );
 }
@@ -82,11 +94,11 @@ export default AdoptionDetails;
 
 
 export async function getServerSideProps(context) {
-  const res = await fetch (`http://localhost:2001/animals/${context.params.id}`)
+  const res = await fetch(`http://localhost:2001/animals/${context.params.id}`)
   const data = await res.json()
   return {
-    props : {
-      animals : data
+    props: {
+      animals: data
     }
   }
 }

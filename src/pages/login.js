@@ -60,7 +60,6 @@ function loginPage() {
         autoClose={100}
       />
       <Layout>
-        <Breadcrumb pageName="Login" pageTitle="Login" />
         <div className="login-section pt-120 pb-120">
           <div className="container">
             <div className="row d-flex justify-content-center g-4">
@@ -71,11 +70,11 @@ function loginPage() {
                   data-wow-delay=".2s"
                 >
                   <div className="form-title">
-                    <h3>Log In </h3>
+                    <h3>Connexion </h3>
                     <p>
-                      New Member?{" "}
+                      nouveau membre ?{" "}
                       <Link legacyBehavior href="/sign-up">
-                        <a>signup here</a>
+                        <a>s'inscrire ici</a>
                       </Link>
                     </p>
                   </div>

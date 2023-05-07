@@ -9,12 +9,12 @@ import jwtDecode from "jwt-decode"
 
 
 function animal() {
-  const [connectedUser, setConnectedUser] = useState('')
+  const [connectedUser, setConnectedUser] = useState({})
   const getConnectedUserData = () => {
     const token = localStorage.getItem("token");
     if (token) {
       const decodedToken = jwtDecode(token);
-      setConnectedUser(decodedToken.userRole);
+      setConnectedUser(decodedToken);
     }
   };
   useEffect(() => {
@@ -23,7 +23,8 @@ function animal() {
 
 
 
-
+  const [isYours, setIsYours] = useState(false);
+  const [isNotYours, setIsNotYours] = useState(false);
   const [isCatChecked, setIsCatChecked] = useState(false);
   const [isDogChecked, setIsDogChecked] = useState(false);
   const [isVaccinated, setisVaccinated] = useState(false)
@@ -33,8 +34,6 @@ function animal() {
 
 
   const [animals, setAnimals] = useState([]);
-
-
   const getAnimals = async () => {
     const response = await fetch("http://localhost:2001/animals/toAdopt");
     const data = await response.json();
@@ -57,7 +56,9 @@ function animal() {
 
   }
 
-
+  const handleIsYours = (event) => {
+    setIsYours(event.target.checked);
+  };
   const handleEducatedChange = (event) => {
     setisEducated(event.target.checked);
   };
@@ -136,6 +137,23 @@ function animal() {
           <div className="row">
             <div className="col-lg-3">
               <div className="shop-sidebar">
+              {connectedUser.userRole === "animalOwner" ? (   <div className="shop-widget">
+                  
+                  <div className="check-box-item">
+                    <div className="checkbox-container">
+                      <label className="containerss">
+
+                        <h6 className="shop-widget-title">Vos propres animaux</h6>
+                        <input type="checkbox" checked={isYours}
+                          onChange={handleIsYours} />
+                        <span className="checkmark"></span>
+
+                      </label>
+
+                    </div>
+
+                  </div>
+                </div>) : (<div> </div>)}
                 <div className="shop-widget">
                   <div className="check-box-item">
                     <h5 className="shop-widget-title">animal</h5>
@@ -200,15 +218,13 @@ function animal() {
                 <div className="col-lg-12">
                 <div className="multiselect-bar">
                     <h6>liste des animaux </h6>
-                    { (connectedUser=== "animalOwner" || connectedUser==="admin")? (<div className="multiselect-area">
-                      Vous voulez offrir votre animal ? cliquez ici :
-                      <div className="single-select two">
+                    { (connectedUser.userRole=== "animalOwner" || connectedUser==="admin")? (<div className="multiselect-area">
+                      <h5>Vous voulez offrir votre animal ? cliquez ici :</h5>
 
                         <Link legacyBehavior href={`adoptPet`}>
                         <button className="primary-btn0">offrir mon animal
                           </button>
                         </Link>
-                      </div>
                     </div>) : (<div></div>)}
                   </div>
                 </div>

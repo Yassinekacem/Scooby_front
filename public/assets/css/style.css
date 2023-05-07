@@ -11300,6 +11300,27 @@ header h1 {
   font-weight: 600;
   color: #8494a5;
 }
+
+
+.shop-details-page .shop-details-content .prestataire {
+  border-bottom: 1px solid rgba(0, 29, 35, 0.05);
+  padding-bottom: 20px;
+}
+.shop-details-page .shop-details-content .prestataire h4 {
+  margin-bottom: 0;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: blue;
+  font-family: var(--font-jost);
+  letter-spacing: 0.03em;
+}
+.shop-details-page .shop-details-content .prestataire h4 del {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #8494a5;
+}
+
+
 .shop-details-page .shop-details-content p {
   font-size: 1rem;
   font-weight: 400;
@@ -13204,3 +13225,22 @@ select#duration:focus {
   border: none;
   outline: none;
 }/*# sourceMappingURL=style.css.map */
+
+.buy-now-btn a i {
+  margin-left: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

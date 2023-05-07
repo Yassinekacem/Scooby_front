@@ -46,6 +46,9 @@ function CreatePet() {
     race: "",
     age: 0,
     gender: "",
+    name : "",
+    dateOfBirth : "",
+    description : "",
     status: "toAdopt",
     price: 0,
     image: "",
@@ -162,7 +165,24 @@ function CreatePet() {
                           <input name="race" type="text" placeholder="race of pet" onChange={saveData} />
                         </div>
                       </div>
-
+                      <div className="col-md-9">
+                        <div className="form-inner">
+                          <label>nom animal:</label>
+                          <input name="name" type="text"  onChange={saveData} />
+                        </div>
+                      </div>
+                      <div className="col-md-9">
+                        <div className="form-inner">
+                          <label>date de naissance:</label>
+                          <input name="dateOfBirth" type="date"  onChange={saveData} />
+                        </div>
+                      </div>
+                      <div className="col-md-9">
+                        <div className="form-inner">
+                          <label>description: *</label>
+                          <textarea name="description" placeholder="description of the animal" onChange={saveData}></textarea>
+                        </div>
+                      </div>
                       <div className="col-md-9">
                         <div className="form-inner">
                           <label>Importez l'image de votre animal *</label>

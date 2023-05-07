@@ -17,11 +17,14 @@ function productList() {
   useEffect(() => {
     getConnectedUserData()
   }, [])
-
+  const [is100Checked, setIs100Checked] = useState(false);
+  const [isEntreChecked, setIsEntreChecked] = useState(false);
+  const [is500Checked, setIs500Checked] = useState(false);
   const [isCatChecked, setIsCatChecked] = useState(false);
   const [isDogChecked, setIsDogChecked] = useState(false);
   const [isBirdChecked, setIsBirdChecked] = useState(false);
-
+  const [isFishChecked, setIsFishChecked] = useState(false);
+  const [isHamsterChecked, setIsHamsterChecked] = useState(false);
   const [isFoodChecked, setIsFoodChecked] = useState(false);
   const [isAccessoryChecked, setIsAccessoryChecked] = useState(false);
 
@@ -38,38 +41,73 @@ function productList() {
     getProducts();
   }, []);
 
-  const handleCatChanged = (event) => {
+  const handleCatChange = (event) => {
     setIsCatChecked(event.target.checked);
   };
   const handleFoodChanged = (event) => {
     setIsFoodChecked(event.target.checked);
   };
-  const handleAccessoryChanged = (event) => {
+  const handleAccessoryChange = (event) => {
     setIsAccessoryChecked(event.target.checked);
   };
 
-  const handleDogChanged = (event) => {
+  const handleDogChange = (event) => {
     setIsDogChecked(event.target.checked);
   };
-  const handleBirdChanged = (event) => {
+  const handleBirdChange = (event) => {
     setIsBirdChecked(event.target.checked);
   };
+  const handleFishChange = (event) => {
+    setIsFishChecked(event.target.checked);
+  };
+  const handleHamsterChange = (event) => {
+    setIsHamsterChecked(event.target.checked);
+  };
+  const handle100Change = (event) => {
+    setIs100Checked(event.target.checked);
+  };
+  const handle500Change = (event) => {
+    setIs500Checked(event.target.checked);
+  };
+  const handleEntreChange = (event) => {
+    setIsEntreChecked(event.target.checked);
+  };
+
   const filtredProducts = products.filter((product) => {
-    let showProduct = true;
+    let showProduct = false;
 
-    if (isCatChecked && product.animalCible !== "cat") {
-      showProduct = false;
-    } else if (isDogChecked && product.animalCible !== "dog") {
-      showProduct = false;
-    } else if (isBirdChecked && product.animalCible !== "bird") {
-      showProduct = false;
+    if (isAccessoryChecked) {
+      showProduct =  product.category === "accessory";
+    } else if (isFoodChecked) {
+      showProduct = product.category === "food"
+    } else if (!isFoodChecked && !isAccessoryChecked) {
+      showProduct = true;
     }
 
-    if (isFoodChecked && product.category !== "food") {
-      showProduct = false;
-    } else if (isAccessoryChecked && product.category !== "accessory") {
-      showProduct = false;
+    if (isCatChecked) {
+      showProduct =  showProduct && product.animalCible !== "chat";
+    } else if (isDogChecked && product.animalCible === "chien") {
+      showProduct = showProduct && true;
+    } else if (isBirdChecked && product.animalCible === "oiseau") {
+      showProduct = true;
+    } else if (isFishChecked && product.animalCible === "poisson") {
+      showProduct = showProduct && true;
+    } else if (isHamsterChecked && product.animalCible === "hamster") {
+      showProduct = showProduct && true;
+    } else if (!isCatChecked && !isDogChecked && !isBirdChecked && !isFishChecked && !isHamsterChecked) {
+      showProduct = showProduct && true;
     }
+
+    if (is100Checked) {
+      showProduct = showProduct && product.price < 100;
+    } else if (isEntreChecked) {
+      showProduct = showProduct && 500 > product.price > 100
+    } else if (is500Checked) {
+      showProduct = showProduct && product.price > 500;
+    }
+
+
+   
 
     return showProduct;
   });
@@ -104,31 +142,6 @@ function productList() {
               <div className="shop-sidebar">
                 <div className="shop-widget">
                   <div className="check-box-item">
-                    <h5 className="shop-widget-title">animal</h5>
-                    <div className="checkbox-container">
-                      <label className="containerss">
-                        chat
-                        <input type="checkbox" checked={isCatChecked}
-                          onChange={handleCatChanged} />
-                        <span className="checkmark"></span>
-                      </label>
-                      <label className="containerss">
-                        chien
-                        <input type="checkbox" checked={isDogChecked}
-                          onChange={handleDogChanged} />
-                        <span className="checkmark"></span>
-                      </label>
-                      <label className="containerss">
-                        oiseau
-                        <input type="checkbox" checked={isBirdChecked}
-                          onChange={handleBirdChanged} />
-                        <span className="checkmark"></span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-                <div className="shop-widget">
-                  <div className="check-box-item">
                     <h5 className="shop-widget-title">Catégorie</h5>
                     <div className="checkbox-container">
                       <label className="containerss">
@@ -140,10 +153,73 @@ function productList() {
                       <label className="containerss">
                         accessoires
                         <input type="checkbox" checked={isAccessoryChecked}
-                          onChange={handleAccessoryChanged} />
+                          onChange={handleAccessoryChange} />
                         <span className="checkmark"></span>
                       </label>
 
+                    </div>
+                  </div>
+                </div>
+                <div className="shop-widget">
+                  <div className="check-box-item">
+                    <h5 className="shop-widget-title">cible animal</h5>
+                    <div className="checkbox-container">
+                      <label className="containerss">
+                        chat
+                        <input type="checkbox" checked={isCatChecked}
+                          onChange={handleCatChange} />
+                        <span className="checkmark"></span>
+                      </label>
+                      <label className="containerss">
+                        chien
+                        <input type="checkbox" checked={isDogChecked}
+                          onChange={handleDogChange} />
+                        <span className="checkmark"></span>
+                      </label>
+                      <label className="containerss">
+                        oiseau
+                        <input type="checkbox" checked={isBirdChecked}
+                          onChange={handleBirdChange} />
+                        <span className="checkmark"></span>
+                      </label>
+                      <label className="containerss">
+                        poisson de décoration
+                        <input type="checkbox" checked={isFishChecked}
+                          onChange={handleFishChange} />
+                        <span className="checkmark"></span>
+                      </label>
+                      <label className="containerss">
+                        Hamster                        <input type="checkbox" checked={isHamsterChecked}
+                          onChange={handleHamsterChange} />
+                        <span className="checkmark"></span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div className="shop-widget">
+                  <div className="check-box-item">
+                    <h5 className="shop-widget-title">Prix </h5>
+                    <div className="checkbox-container">
+                      <label className="containerss">
+                        {"<"} 100 Dt
+                        <input type="checkbox" checked={is100Checked}
+                          onChange={handle100Change} />
+                        <span className="checkmark" />
+                      </label>
+                      <label className="containerss" checked={isEntreChecked}
+                          onChange={handleEntreChange}>
+                        entre 100 et 500 Dt
+                        <input type="checkbox" />
+                        <span className="checkmark" />
+                      </label>
+                      <label className="containerss">
+                        {">"} 500 Dt
+                        <input type="checkbox"  checked={is500Checked}
+                          onChange={handle500Change} />
+                        <span className="checkmark" />
+                      </label>
+                      
+                      
                     </div>
                   </div>
                 </div>
@@ -155,15 +231,13 @@ function productList() {
                 <div className="col-lg-12">
                   <div className="multiselect-bar">
                     <h6>liste des produits </h6>
-                    { (connectedUser=== "petShop" || connectedUser==="admin") ? (<div className="multiselect-area">
-                      Vous voulez vendre votre article ? cliquez ici :
-                      <div className="single-select two">
+                    {(connectedUser === "petShop" || connectedUser === "admin") ? (<div className="multiselect-area">
+                      <h5>Vous voulez vendre votre article ? cliquez ici :</h5>
 
                         <Link legacyBehavior href={`shop/createProducts`}>
                           <button className="primary-btn0">vendre mon article
                           </button>
                         </Link>
-                      </div>
                     </div>) : (<div></div>)}
                   </div>
                 </div>

@@ -64,19 +64,19 @@ function lostDeclaration() {
 
   const filteredAnimals = lostDeclarations.filter((LostDeclaration) => {
     let showLostDeclaration = true;
-    
+
     // Filter by animal
-    if ((isCatChecked && LostDeclaration.animal !== "cat") ||
-        (isDogChecked && LostDeclaration.animal !== "dog")) {
+    if ((isCatChecked && LostDeclaration.animal !== "chat") ||
+      (isDogChecked && LostDeclaration.animal !== "chien")) {
       showLostDeclaration = false;
     }
-    
+
     // Filter by reward
     if ((isRewarded && !LostDeclaration.withReward) ||
-        (isNotRewarded && LostDeclaration.withReward)) {
+      (isNotRewarded && LostDeclaration.withReward)) {
       showLostDeclaration = false;
     }
-    
+
     // Filter by date
     if (isTodayChecked && !moment(LostDeclaration.dateLost).isSame(moment(), "day")) {
       showLostDeclaration = false;
@@ -90,13 +90,13 @@ function lostDeclaration() {
     if (isYearChecked && !moment(LostDeclaration.dateLost).isSame(moment(), "year")) {
       showLostDeclaration = false;
     }
-    
+
     return showLostDeclaration;
   });
-  
-  
-  
-  
+
+
+
+
   // pagination 
   const items = 8;
   const [current, setCurrent] = useState(1);
@@ -165,7 +165,7 @@ function lostDeclaration() {
                     <div className="checkbox-container">
                       <label className="containerss">
                         Aujourd'hui
-<input type="checkbox" checked={isTodayChecked}
+                        <input type="checkbox" checked={isTodayChecked}
                           onChange={handleTodayChange} />                           <span className="checkmark" />
                       </label>
                       <label className="containerss">
@@ -186,7 +186,7 @@ function lostDeclaration() {
                     </div>
                   </div>
                 </div>
-                
+
 
               </div>
             </div>
@@ -196,13 +196,11 @@ function lostDeclaration() {
                   <div className="multiselect-bar">
                     <h6>Déclarations de perte </h6>
                     <div className="multiselect-area">
-                      Vous avez perdu votre animal cliquez ici :
-                      <div className="single-select two">
+                      <h5>Vous avez perdu votre animal cliquez ici :</h5>
 
                         <Link legacyBehavior href={`/declaration/addLostDeclaration`}>
                           <button className="primary-btn0">J'ai perdu mon animal</button>
                         </Link>
-                      </div>
                     </div>
                   </div>
                 </div>

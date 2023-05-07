@@ -26,6 +26,7 @@ function AnimalCard({ item: { id,
   species, race,
   image,
   age,
+  name,
   gender,
   price,
   status,
@@ -125,7 +126,7 @@ function AnimalCard({ item: { id,
       {console.log(animalData)}
  
       <div class="modal fade" id={`detail-${id}`} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
           <div class="modal-header">
               <h5 class="modal-title"> mis à jour cette annonce</h5>
@@ -224,7 +225,7 @@ function AnimalCard({ item: { id,
           </div>
 
           <div className="collection-img" >
-            <img className="img-gluid" src={image} alt="" style={{ width: "480px", height: "190px" }} />
+            <img className="img-gluid" src={image} alt="" style={{ width: "310px", height: "270px" }} />
             <div className="view-dt-btn">
               <div className="plus-icon">
                 <i className="bi bi-plus" />
@@ -247,16 +248,20 @@ function AnimalCard({ item: { id,
           </div>
           <div className="collection-content text-center">
             <h4>
-              <Link legacyBehavior href="/shop-details">
+              <Link legacyBehavior href={`/pet/petList/${id}`}>
                 <a>{species} {race}</a>
               </Link>
-            </h4> <br />
+            </h4>
+            <h5>nom  : {name} </h5>
             <h5>statut : {status === "toAdopt" ? "pour adoption" : "à vendre"}</h5>
             <div className="price">
               <h6>Prix : {price} Dt</h6>
             </div>
             <div>
               agé de : {age} ans
+            </div>
+            <div>
+              sexe : {gender}
             </div>
 
 

@@ -170,14 +170,12 @@ function FoundDeclaration() {
                   <div className="multiselect-bar">
                     <h6>Déclarations de trouveille </h6>
                     <div className="multiselect-area">
-                      voulez vous aidez quelqu'un a trouver son animal ? cliquez ici :
-                      <div className="single-select two">
+                      <h5>voulez vous aidez quelqu'un a trouver son animal ? cliquez ici :</h5>
 
                         <Link legacyBehavior href={`/declaration/addFoundDeclaration`}>
                           <button className="primary-btn0">J'ai trouvé un animal
                           </button>
                         </Link>
-                      </div>
                     </div>
                   </div>
                 </div>

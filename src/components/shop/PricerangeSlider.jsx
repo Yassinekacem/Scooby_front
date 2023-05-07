@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Slider from "react-rangeslider";
+import Slider from "react-range-slider";
 
 function PricerangeSlider() {
   const [value, setValue] = useState(10);

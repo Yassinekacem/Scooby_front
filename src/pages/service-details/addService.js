@@ -61,8 +61,8 @@ function CreatePet() {
         city: "",
         image: "",
         userId: connectedUser,
-        type: connectedUser1==="petTrainer" ? "petTraining" : connectedUser1==="petGroomer" ? "petGrooming": connectedUser1==="petSitter" ? "petSitting" : "veterinaryCare",
-        level: "basique"
+        type: "",
+        level: ""
 
     }
     useEffect(() => {
@@ -159,6 +159,7 @@ function CreatePet() {
                                                         <option value="petSitting">gardeur d 'animaux</option>
                                                         <option value="petTraining">dresseur d'animaux</option>
                                                         <option value="petGrooming">toiletteur d'animaux</option>
+                                                        <option value="veterinaryCaring">Véterinaire</option>
 
                                                     </select>
                                                     <br />

@@ -1,66 +1,19 @@
 import React from "react";
-import Layout from "../../../layout/Layout";
-import Breadcrumb from "../../../components/breadcrumb/Breadcrumb";
-import ServiceCard from "../../../components/service/ServiceCard";
+import Layout from "../../../../layout/Layout";
+import Breadcrumb from "../../../../components/breadcrumb/Breadcrumb";
+import ServiceCard from "../../../../components/service/ServiceCard";
 
 function ServiceByCityAndType(props) {
   return (
-    
       <Layout>
-      <Breadcrumb pageName="Shop" pageTitle="Shop" />
+{            console.log(props)
+}
+      <Breadcrumb pageName="liste des annonces de service a votre choix" pageTitle="liste des annonces" src="" src1="" />
       <div className="shop-page pt-120 mb-120">
         <div className="container">
           <div className="row">
             <div className="col-lg-3">
-              <div className="shop-sidebar">
-                <div className="shop-widget">
-                  <div className="check-box-item">
-                    <h5 className="shop-widget-title">niveau de service </h5>
-                    <div className="checkbox-container">
-                      <label className="containerss">
-                        basique
-                        <input type="checkbox" defaultChecked="checked" />
-                        <span className="checkmark" />
-                      </label>
-                      <label className="containerss">
-                        intermédiaire
-                        <input type="checkbox" />
-                        <span className="checkmark" />
-                      </label>
-                      <label className="containerss">
-                        personnalisé
-                        <input type="checkbox" />
-                        <span className="checkmark" />
-                      </label>
-                    </div>
-                  </div>
-                </div>
-                <div className="shop-widget">
-                  <div className="check-box-item">
-                    <h5 className="shop-widget-title">Expérience</h5>
-                    <div className="checkbox-container">
-                      <label className="containerss">
-                        Plus de 3 ans
-                        <input type="checkbox" defaultChecked="checked" />
-                        <span className="checkmark" />
-                      </label>
-                      <label className="containerss">
-                        Plus de 5 ans
-                        <input type="checkbox" />
-                        <span className="checkmark" />
-                      </label>
-                      <label className="containerss">
-                        Plus de 10 ans
-                        <input type="checkbox" />
-                        <span className="checkmark" />
-                      </label>
-            
-                    </div>
-                  </div>
-                </div>
-              
-              
-              </div>
+             
             </div>
             <div className="col-lg-9">
               <div className="row mb-50">

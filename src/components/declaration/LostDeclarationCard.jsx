@@ -169,7 +169,7 @@ function LostDeclarationCard({ item: { id,
           </div>
 
           <div className="collection-img" >
-            <img className="img-gluid" src={image} alt="" style={{ width: "480px", height: "190px" }} />
+            <img className="img-gluid" src={image} alt="" style={{ width: "420px", height: "250px" }} />
             <div className="view-dt-btn">
               <div className="plus-icon">
                 <i className="bi bi-plus" />
@@ -195,7 +195,7 @@ function LostDeclarationCard({ item: { id,
           <div className="collection-content text-center">
             <h4>
               <Link legacyBehavior href="/shop-details">
-                <a>{animal === "cat" ? "chat" : "chien"} {race}</a>
+                <a>{animal === "chat" ? "chat" : "chien"} {race}</a>
               </Link>
             </h4>
             <div className="price">

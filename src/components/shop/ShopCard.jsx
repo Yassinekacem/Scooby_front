@@ -176,7 +176,7 @@ function ShopCard({ item: {
           </div>
 
           <div className="collection-img" >
-            <img className="img-gluid" src={image} alt="" style={{ width: "480px", height: "190px" }} />
+            <img className="img-gluid" src={image} alt="" />
             <div className="view-dt-btn">
               <div className="plus-icon">
                 <i className="bi bi-plus" />

@@ -93,19 +93,14 @@ function Home1Service() {
                   <div className="content">
                     <h3>
                       <Link legacyBehavior href="/service-details">
-                        <a>garderie d animaux</a>
+                        <a>"garderie d'animaux"</a>
                       </Link>
                     </h3>
                     <p>
                       tu peux trouver quelqu un qui garde ton animal
                     </p>
                   </div>
-                  <Link legacyBehavior href="/service-details">
-                    <a className="more-btn">
-                      More Details
-                      <img src="assets/images/icon/btn-arrow1.svg" alt="" />
-                    </a>
-                  </Link>
+                 
                 </div>
               </SwiperSlide>
               <SwiperSlide className="swiper-slide">
@@ -121,19 +116,14 @@ function Home1Service() {
                   <div className="content">
                     <h3>
                       <Link legacyBehavior href="/service-details">
-                        <a> toilettage d'animaux </a>
+                        <a> "toilettage d'animaux" </a>
                       </Link>
                     </h3>
                     <p>
                       tu peux trouver un professionnel qui vous aide a nettoyer ton animal
                     </p>
                   </div>
-                  <Link legacyBehavior href="/service-details">
-                    <a className="more-btn">
-                      More Details
-                      <img src="assets/images/icon/btn-arrow1.svg" alt="" />
-                    </a>
-                  </Link>
+                  
                 </div>
               </SwiperSlide>
               <SwiperSlide className="swiper-slide">
@@ -149,19 +139,14 @@ function Home1Service() {
                   <div className="content">
                     <h3>
                       <Link legacyBehavior href="/service-details">
-                        <a> dressage d'animaux</a>
+                        <a> "dressage d'animaux"</a>
                       </Link>
                     </h3>
                     <p>
-                    tu peux trouver un professionnel  qui fait le dressage et l education pour ton animal
+                    tu peux trouver un professionnel  qui fait le dressage pour ton animal
                     </p>
                   </div>
-                  <Link legacyBehavior href="/service-details">
-                    <a className="more-btn">
-                      More Details
-                      <img src="assets/images/icon/btn-arrow1.svg" alt="" />
-                    </a>
-                  </Link>
+                  
                 </div>
               </SwiperSlide>
               <SwiperSlide className="swiper-slide">
@@ -177,18 +162,13 @@ function Home1Service() {
                   <div className="content">
                     <h3>
                       <Link legacyBehavior href="/service-details">
-                        <a>Soignement d'animaux</a>
+                        <a>"Soignement d'animaux"</a>
                       </Link>
                     </h3>
                     <p>
                     tu peux trouver un professionnel qui vous aide a soigner ton animal                   </p>
                   </div>
-                  <Link legacyBehavior href="/service-details">
-                    <a className="more-btn">
-                      More Details
-                      <img src="assets/images/icon/btn-arrow1.svg" alt="" />
-                    </a>
-                  </Link>
+                  
                 </div>
               </SwiperSlide>
             </div>

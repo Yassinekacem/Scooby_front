@@ -9,6 +9,7 @@ function AnimalAdoptCard({ item: { id,
   species, race,
   image,
   age,
+  name,
   gender,
   price,
   status,
@@ -202,7 +203,7 @@ function AnimalAdoptCard({ item: { id,
           </div>
 
           <div className="collection-img" >
-            <img className="img-gluid" src={image} alt="" style={{ width: "480px", height: "190px" }} />
+            <img className="img-gluid" src={image} alt="" style={{ width: "420px", height: "250px" }} />
             <div className="view-dt-btn">
               <div className="plus-icon">
                 <i className="bi bi-plus" />
@@ -229,16 +230,20 @@ function AnimalAdoptCard({ item: { id,
           </div>
           <div className="collection-content text-center">
             <h4>
-              <Link legacyBehavior href="/shop-details">
+              <Link legacyBehavior  href={`/pet/adoptionList/${id}`}>
                 <a>{species==="cat" ? "chat" : species==="dog" ? "chien" : species==="fish" ? "poisson" : species==="bird" ? "oiseau" : species} {race}</a>
               </Link>
-            </h4> <br />
-            <h5>statut : {status === "toAdopt" ? "pour adoption" : "à vendre"}</h5>
+            </h4> 
             <div className="price">
-              <h6>{status === "toAdopt" ? "free" : ""}</h6>
+              <h6>Pour adoption</h6>
+            </div>
+            <h5>nom animal : {name}</h5>
+          
+            <div>
+              <h5>sexe : {gender}</h5>
             </div>
             <div>
-              agé de : {age} ans
+             <h5> agé de : {age} ans</h5>
             </div>
 
 

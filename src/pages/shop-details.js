@@ -12,7 +12,8 @@ function ShopDetails() {
       <Breadcrumb pageName="Shop Details" pageTitle="Shop Details" />
       <div className="shop-details-page pt-120 mb-120">
         <div className="container">
-          <ProductDetails  />
+          <ProductDetails />
+          <SingleProductDescription  />
         </div>
       </div>
     </Layout>
