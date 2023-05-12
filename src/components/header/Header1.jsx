@@ -241,7 +241,7 @@ function Header1() {
                 <button class="primary-btn0">connexion</button>
               </Link>
             </div></li></ul>) : (<ul>
-              <li>
+              <li >
               <Link legacyBehavior href="/check-out">
                 <a >
                   <svg
@@ -257,6 +257,7 @@ function Header1() {
                   </svg>
                 </a>
               </Link>
+              
             </li><li className="search-btn">
               <div><button className="btn-signout" onClick={() => {
                 localStorage.removeItem("token");

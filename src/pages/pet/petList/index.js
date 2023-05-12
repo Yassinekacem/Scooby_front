@@ -141,7 +141,7 @@ function animalAvendre() {
     return showAnimal;
   });
   // pagination 
-  const items = 10;
+  const items = 8;
   const [current, setCurrent] = useState(1);
   const nbPages = Math.ceil(filteredAnimals.length / items);
   const startIndex = (current - 1) * items;

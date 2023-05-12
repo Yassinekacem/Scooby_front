@@ -55,10 +55,25 @@ function ServiceDetail(props) {
         getComments()
     }, [])
 
-    return (
-        <Layout>
-            <Breadcrumb pageName="Détaille d'une annonce pour un service" pageTitle="Détaille annonce" />
 
+    const [avgStars, setAvgStars] = useState([])
+
+    const getAvgStars = async () => {
+        const response = await fetch(`http://localhost:2001/announcements/review/avg-stars/${props.announcement.id}`);
+        const data = await response.json();
+        setAvgStars(data)
+    };
+    useEffect(() => {
+        getAvgStars()
+    }, [])
+
+    return (
+
+
+        <Layout>
+            <Breadcrumb pageName="Détaille d'une annonce pour un service" pageTitle="Détaille annonce" src="" src1="" />
+            {console.log(avgStars)
+            }
 
             <div className="shop-details-page pt-120 mb-120">
                 <div className="container">
@@ -74,7 +89,7 @@ function ServiceDetail(props) {
                                     className="img-fluid rounded-circle"
                                     src={props.announcement.image}
                                     alt=""
-                                    style={{ width: "500px", height: "500px", borderRadius: "100%" }}
+                                    style={{ width: "500px", height: "550px", borderRadius: "50%" }}
                                 />
                             </div>
 
@@ -84,18 +99,36 @@ function ServiceDetail(props) {
 
 
                         </div>
+
                         <div className="col-lg-5">
-                            <div className="shop-details-content" align="center">
+                            <div className="shop-details-content" >
                                 <h3 style={{ fontFamily: "Caveat, cursive" }}>
                                     {props.announcement.firstName} {props.announcement.lastName}
-
                                 </h3>
+
+                                <ul className="shopuct-review2 d-flex flex-row align-items-left mb-25">
+                                    {[...Array(avgStars?.avgStars?.avgStars)].map((_, i) => (
+                                        <li key={i} className="d-flex align-items-left justify-content-left">
+                                            <i className="bi bi-star-fill" />
+                                        </li>
+                                    ))}
+                                    <li>
+                                            <h5>  ( {avgStars?.avgStars?.commentCount} avis d'utilisateurs ) </h5>
+                                    </li>
+                                </ul>
+
+
+
+
+
+
                                 <br />
                                 <div className="price-tag">
                                     <h4>
                                         {props.announcement.type === "veterinaryCaring" ? "Véterinaire" : props.announcement.type === "petSitting" ? "gardeur d'animaux" : props.announcement.type === "petGrooming" ? "Toiletteur d'animaux" : props.announcement.type === "petTraining" ? "Dresseur d'animaux" : ""}
                                     </h4>
-                                </div> <br />
+                                </div>
+                                <br />
                                 <i><h5 style={{ fontWeight: 'bold', color: 'black' }}>
                                     Ville : {props.announcement.ville}-{props.announcement.city}
                                 </h5></i>
@@ -156,7 +189,7 @@ function ServiceDetail(props) {
                                         <div className="row g-lg-4 gy-5">
                                             <div className="col-lg-8">
                                                 <div className="number-of-review">
-                                                    <h3>les commentaires pour cette annonce</h3>
+                                                    <h3>les avis pour cette annonce</h3>
                                                 </div>
                                                 {comments.map((item) => {
                                                     const {
@@ -261,7 +294,7 @@ function ServiceDetail(props) {
                                             <div className="col-lg-4">
                                                 <div className="review-form">
                                                     <div className="number-of-review">
-                                                        <h3>ajouter votre commentaire ici</h3>
+                                                        <h3>donner votre avis </h3>
                                                     </div>
                                                     <form onSubmit={handleSubmit}
                                                     >

@@ -87,10 +87,10 @@ function LostDeclarationCard({ item: { id,
 
 
       <div class="modal fade" id={`detail-${id}`} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+      <div class="modal-dialog modal-xl" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title"> mis à jour cette annonce</h5>
+              <h5 class="modal-title"> mis à jour cette déclaration</h5>
             </div>
             <div class="modal-body">
               <form role="form" method="POST" action="" onSubmit={handleSubmit}

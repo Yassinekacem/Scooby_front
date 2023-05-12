@@ -23,7 +23,7 @@ function ServiceDetails() {
 
     return (
         <Layout>
-            <Breadcrumb pageName="Services pour animaux" pageTitle="Services pour animaux" />
+            <Breadcrumb pageName="Services pour animaux" pageTitle="Services pour animaux" src="" />
             <div className="services-details-area pt-120 mb-120">
                 <div className="container">
                     <div className="row g-lg-4 gy-5 mb-120">
@@ -195,7 +195,7 @@ function ServiceDetails() {
                                             </div>
                                             <div className="col-lg-12">
                                                 <div className="form-inner">
-                                                    <label>Votre ville *</label>
+                                                    <label>Votre gouvernerat *</label>
                                                     <select
                                                         id="duration"
                                                         style={{

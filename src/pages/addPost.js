@@ -24,10 +24,7 @@ function addPostPage() {
   const [imageUploading, setImageUploading] = useState(false);
   const now = new Date();
   const formattedDate = now.toLocaleString("fr-FR");
-  const [postData, setPostData] = useState({
-
-
-  });
+  const [postData, setPostData] = useState({});
   const initialState = {
     firstName: connectedUser.firstName,
     lastName: connectedUser.lastName,
