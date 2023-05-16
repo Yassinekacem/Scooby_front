@@ -194,7 +194,7 @@ function gestionDeclarations() {
                 </div>
                 <br />
                 <div className="d-flex justify-content-center mb-3">
-                  <button className="btn btn-adduser" data-bs-toggle="modal" data-bs-target={`#lost`}>Ajouter  déclaration</button>
+                  <button className="btn btn-adduser" data-bs-toggle="modal" data-bs-target={`#lost`}>Ajouter  déclaration de perte</button>
                 </div>
                 <div class="modal fade" id={`lost`} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg" role="document">
@@ -495,17 +495,17 @@ function gestionDeclarations() {
               <div className="table-wrapper" style={{ backgroundColor: '#fef5f0' }}>
                 <div className="d-flex justify-content-center mb-3">
 
-                  <h1>gestion des déclarations de trouveille d'animaux</h1> </div> <br />
+                  <h1>gestion des déclarations de trouvaille d'animaux</h1> </div> <br />
                 <div className="d-flex justify-content-center mb-3">
                   <button className="btn btn-adduser" data-bs-toggle="modal" data-bs-target={`#found`}>
-                    Ajouter  déclaration
+                    Ajouter  déclaration de trouvaille
                   </button>
                 </div>
                 <div class="modal fade" id={`found`} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg" role="document">
                               <div class="modal-content">
                                 <div class="modal-header">
-                                  <h5 class="modal-title"> ajouter une déclaration de trouveille</h5>
+                                  <h5 class="modal-title"> ajouter une déclaration de trouvaille</h5>
                                 </div>
                                 <div class="modal-body">
                                   <form role="form" method="POST" action="" onSubmit={handleSubmit}
@@ -523,11 +523,11 @@ function gestionDeclarations() {
                                       <textarea name="description" rows="5" cols="30" placeholder="description" class="form-control input-lg" onChange={saveData}></textarea>
                                     </div>
                                     <div class="form-group">
-                                      <label class="control-label">date de trouveille</label>
-                                      <input name="dateFound" type="date" placeholder="date de trouveille" class="form-control input-lg"  onChange={saveData} />
+                                      <label class="control-label">date de trouvaille</label>
+                                      <input name="dateFound" type="date" placeholder="date de trouvaille" class="form-control input-lg"  onChange={saveData} />
                                     </div>
                                     <div class="form-group">
-                                      <label class="control-label">place de trouveille</label>
+                                      <label class="control-label">place de trouvaille</label>
                                       <input name="placeFound" type="text" placeholder="place de" class="form-control input-lg"  onChange={saveData} />
 
                                     </div>
@@ -565,8 +565,8 @@ function gestionDeclarations() {
                       <th>Id</th>
                       <th>image</th>
                       <th>animal</th>
-                      <th>lieu de trouveille</th>
-                      <th>date de trouveille</th>
+                      <th>lieu de trouvaille</th>
+                      <th>date de trouvaille</th>
                       <th>contact</th>
                       <th>Action</th>
                     </tr>
@@ -637,7 +637,7 @@ function gestionDeclarations() {
                         const data = await response.json()
                         console.log(data)
                         setLostDeclarations(lostDeclarations.filter(declaration => declaration.id !== declarationId))
-                        toast.success(`declaration de trouveille ${id} supprimé`);
+                        toast.success(`declaration de trouvaille ${id} supprimé`);
                       }
                       return (
                         <tr>
@@ -650,10 +650,10 @@ function gestionDeclarations() {
                           <td data-label="Animal">
                             {animal} {race}
                           </td>
-                          <td data-label="Place de trouveille">
+                          <td data-label="Place de trouvaille">
                             {placeFound}
                           </td>
-                          <td data-label="date de trouveille">
+                          <td data-label="date de trouvaille">
                             {dateFound}
                           </td>
                           <td data-label="contact">{phoneNumber}</td>
@@ -680,11 +680,11 @@ function gestionDeclarations() {
                                       <textarea name="description" rows="5" cols="30" placeholder="description" class="form-control input-lg" defaultValue={description} onChange={saveData}></textarea>
                                     </div>
                                     <div class="form-group">
-                                      <label class="control-label">date de trouveille</label>
-                                      <input name="dateFound" type="date" placeholder="date de trouveille" class="form-control input-lg" defaultValue={dateFound} onChange={saveData} />
+                                      <label class="control-label">date de trouvaille</label>
+                                      <input name="dateFound" type="date" placeholder="date de trouvaille" class="form-control input-lg" defaultValue={dateFound} onChange={saveData} />
                                     </div>
                                     <div class="form-group">
-                                      <label class="control-label">place de trouveille</label>
+                                      <label class="control-label">place de trouvaille</label>
                                       <input name="placeFound" type="text" placeholder="place de" class="form-control input-lg" defaultValue={placeFound} onChange={saveData} />
 
                                     </div>

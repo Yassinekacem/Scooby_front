@@ -104,7 +104,7 @@ function FoundDeclaration() {
   return (
     <Layout>
       {console.log(FoundDeclarations)}
-      <Breadcrumb pageName="Déclarations de trouvaille" pageTitle="Déclarations de trouvaille" />
+      <Breadcrumb pageName="Toutes les déclarations de trouvaille d'animaux" pageTitle="Déclarations de trouvaille" src1="" src="" />
       <div className="shop-page pt-120 mb-120">
         <div className="container">
           <div className="row">

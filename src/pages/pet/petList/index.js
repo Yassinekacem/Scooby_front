@@ -162,7 +162,7 @@ function animalAvendre() {
   return (
     <Layout>
       {console.log(animals)}
-      <Breadcrumb pageName="liste des animaux à vendre" pageTitle="liste des animaux" />
+      <Breadcrumb pageName="liste des animaux à vendre" pageTitle="liste des animaux"  src1=""/>
       <div className="shop-page pt-120 mb-120">
         <div className="container">
           <div className="row">
@@ -296,7 +296,7 @@ function animalAvendre() {
                 <div className="col-lg-12">
                   <div className="multiselect-bar">
                     <h6>liste des animaux </h6>
-                    {(connectedUser.userRole === "petSeller" || connectedUser.userRole === "admin") ? (<div className="multiselect-area">
+                    {(connectedUser.userRole === "petSeller" ) ? (<div className="multiselect-area">
                       <h5>Vous voulez vendre votre animal ? cliquez ici :</h5>
 
                       <Link legacyBehavior href={`sellPet`}>

@@ -28,7 +28,7 @@ function CreatePet() {
       router.push("/");
     } else {
       const decodedToken = jwtDecode(token);
-      if (decodedToken.userRole !== "animalOwner" && decodedToken.userRole !== "admin") {
+      if (decodedToken.userRole !== "petSeller") {
         router.push("/");
       }
     }

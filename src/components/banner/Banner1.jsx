@@ -16,7 +16,7 @@ function Banner1() {
   useEffect(() => {
     getConnectedUserData()
   }, [])
-  const phrases = [ "chien .", "chat ." ,"oiseau ."];
+  const phrases = [ "chien", "chat" ,"oiseau"];
   return (
     <div className="hero-style-1">
       <div className="container-fluid">
@@ -33,8 +33,8 @@ function Banner1() {
                     </ul>
                   </div>
                   <h1>
-                  offrez un petit cadeau 
-                    <br /> a votre {" "}
+                  Vous pouvez trouver ici 
+                    <br /> votre futur {" "}
                     <Morphext
                       animation="fadeInLeft"
                       speed="3000"
@@ -55,17 +55,6 @@ function Banner1() {
                   <div className="reservation-btn">
                     {connectedUser==="admin" ? (<Link legacyBehavior href="/dashboard">
                       <a className="primary-btn1">Accédez au tableau de bord</a>
-                    </Link>) : connectedUser==="petShop" ? 
-                    (
-                      <Link legacyBehavior href="/shop">
-                      <a className="primary-btn1">Accédez à la boutique</a>
-                    </Link>
-                    ) : connectedUser==="petSeller" ? (<Link legacyBehavior href="/pet/petList">
-                    <a className="primary-btn1">les animaux à vendre</a>
-                  </Link>) : connectedUser==="animalOwner" ? (<Link legacyBehavior href="/pet/adoptionList">
-                      <a className="primary-btn1">les animaux pour adoption</a>
-                    </Link>) : (connectedUser==="veterinary" || connectedUser==="petGroomer" || connectedUser==="petTrainer" || connectedUser==="petSitter") ? (<Link legacyBehavior href="/service-details/addService">
-                      <a className="primary-btn1">annoncer votre service</a>
                     </Link>) : (<div> </div>)}
                   </div> 
                   

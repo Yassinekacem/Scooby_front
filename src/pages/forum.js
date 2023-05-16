@@ -5,10 +5,12 @@ import Layout from "../layout/Layout";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import jwtDecode from "jwt-decode"
-
+import { useRouter } from "next/router";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function BlogDetailsPage() {
-
+  const router = useRouter();
   const [connectedUser, setConnectedUser] = useState({})
   const getConnectedUserData = () => {
     const token = localStorage.getItem("token");
@@ -86,11 +88,20 @@ function BlogDetailsPage() {
   useEffect(() => {
     setReplyData(initialState1)
   }, [connectedUser])
+
+
+
+
   return (
+
     <Layout>
       {console.log(responseData)}
       {console.log(replyData)
       }
+      <ToastContainer
+        position="top-center"
+        autoClose={100}
+      />
       <Breadcrumb pageName="forum de communication entre les passionnées des animaux" pageTitle="Forum de communication" src="" />
       <div className="blog-details-pages pt-120 mb-120">
         <div className="container">
@@ -100,11 +111,21 @@ function BlogDetailsPage() {
                 <h6> </h6>
                 <div className="multiselect-area">
                   <h5>Partagez vos informations et questions sur les animaux en publiant ici ! :</h5>
+                  {connectedUser.userId ? (
+                    <Link legacyBehavior href={`/addPost`}>
+                      <button className="primary-btn0">Créer un post</button>
+                    </Link>
+                  ) : (
+                    <button
+                      className="primary-btn0"
+                      onClick={() => {
+                        toast.error("Veuillez vous connectez pour ajouter un post");
+                      }}
 
-                  <Link legacyBehavior href={`/addPost`}>
-                    <button className="primary-btn0">Créer un post
-                    </button>
-                  </Link>
+
+                    >
+                      Créer un post
+                    </button>)}
                 </div>
               </div>
             </div>
@@ -122,22 +143,25 @@ function BlogDetailsPage() {
               } = item;
               const handleSubmit = async (e) => {
                 e.preventDefault();
-                try {
-                  const response = await axios.post(
-                    "http://localhost:2001/responses",
-                    {
-                      ...responseData,
-                      postId: parseInt(id),
-                    }
-                  );
-                  console.log(response.data);
-                  setResponses([...responses, response.data])
-
-
-                } catch (error) {
-                  console.error(error);
+                if (connectedUser.userId) {
+                  try {
+                    const response = await axios.post(
+                      "http://localhost:2001/responses",
+                      {
+                        ...responseData,
+                        postId: parseInt(id),
+                      }
+                    );
+                    console.log(response.data);
+                    setResponses([...responses, response.data])
+                  } catch (error) {
+                    console.error(error);
+                  }
+                } else {
+                  toast.error("Veuillez vous connecter pour écrire un commentaire");
                 }
               };
+
               const saveData = (e) => {
                 let name = e.target.name;
                 let value = e.target.value;
@@ -207,22 +231,25 @@ function BlogDetailsPage() {
                           } = item;
                           const handleSubmit = async (e) => {
                             e.preventDefault();
-                            try {
-                              const response = await axios.post(
-                                "http://localhost:2001/reply",
-                                {
-                                  ...replyData,
-                                  responseId: parseInt(id),
-                                }
-                              );
-                              console.log(response.data);
-                              setReplys([...replys, response.data])
-
-
-                            } catch (error) {
-                              console.error(error);
+                            if ( connectedUser.userId) {
+                              try {
+                                const response = await axios.post(
+                                  "http://localhost:2001/reply",
+                                  {
+                                    ...replyData,
+                                    responseId: parseInt(id),
+                                  }
+                                );
+                                console.log(response.data);
+                                setReplys([...replys, response.data])
+                              } catch (error) {
+                                console.error(error);
+                              }
+                            } else {
+                              toast.error("Veuillez vous connecter pour répondre a un commentaire");
                             }
                           };
+
                           const saveData = (e) => {
                             let name = e.target.name;
                             let value = e.target.value;
@@ -335,7 +362,7 @@ function BlogDetailsPage() {
                                               </p>
                                             </div>
                                             <br />
-                                       <br />
+                                            <br />
                                           </div>
                                         </div>
                                       </li>
@@ -348,8 +375,8 @@ function BlogDetailsPage() {
                                 })}
 
                                 <br />
-                             
-                              
+
+
 
 
 

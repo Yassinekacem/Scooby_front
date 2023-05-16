@@ -2,12 +2,13 @@ import Link from "next/link";
 import React from "react";
 import Breadcrumb from "../components/breadcrumb/Breadcrumb";
 import Layout from "../layout/Layout";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
-import UserService from "./Services/UserService";
+import UserService from "./userServices/UserService";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import jwtDecode from 'jwt-decode';
 
 
 
@@ -21,7 +22,8 @@ function loginPage() {
     const token = localStorage.getItem("token");
     if (token) {
       router.push("/");
-    } }
+    }
+  }
   const [userData, setUserData] = useState({
     email: "",
     password: "",
@@ -33,7 +35,7 @@ function loginPage() {
   };
   const login = async (e) => {
     e.preventDefault();
-      const data = {
+    const data = {
       email: userData.email,
       password: userData.password,
     };
@@ -42,20 +44,38 @@ function loginPage() {
       const response = await UserService.login(data)
       console.log(response);
 
-      localStorage.setItem('token',response.data.token)
-     await  router.push('/');
-       toast.success('vous avez connecté')
-      setUserData.email=('')
-      setUserData.password=('')
+      localStorage.setItem('token', response.data.token)
+      const decodedToken1 = jwtDecode(response.data.token);
+      if (decodedToken1.userRole === "admin") {
+        router.push("/dashboard");
+      } else if (decodedToken1.userRole === "petSeller") {
+        router.push("/pet/petList");
+      }
+      else if (decodedToken1.userRole === "petShop") {
+        router.push("/shop");
+      }
+      else if (decodedToken1.userRole === "veterinary" || decodedToken1.userRole === "petTrainer" || decodedToken1.userRole === "petGroomer" || decodedToken1.userRole === "petSitter") {
+        router.push("/service-details");
+      } else {
+        router.push("/");
+
+      }
+
+      toast.success('vous avez connecté')
+      setUserData.email = ('')
+      setUserData.password = ('')
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data)   }
+      toast.error(error.response.data)
+    }
   };
- 
+  const [showPassword, setShowPassword] = useState(false);
+
+  const toggleShowPassword = () => setShowPassword(!showPassword)
   return (
     <>
-    
-    <ToastContainer
+
+      <ToastContainer
         position="top-center"
         autoClose={100}
       />
@@ -72,7 +92,7 @@ function loginPage() {
                   <div className="form-title">
                     <h3>Connexion </h3>
                     <p>
-                      nouveau membre ?{" "}
+                      Vous êtes un nouveau membre ?{" "}
                       <Link legacyBehavior href="/sign-up">
                         <a>s'inscrire ici</a>
                       </Link>
@@ -95,49 +115,25 @@ function loginPage() {
                         <div className="form-inner">
                           <label>Password *</label>
                           <input
-                            type="password"
+                            type={showPassword ? "text" : "password"}
                             name="password"
                             id="password"
                             placeholder="Password"
                             onChange={saveData}
                           />
-                          <i className="bi bi-eye-slash" id="togglePassword" />
-                        </div>
+                          <i
+                            className={`bi bi-${showPassword ? "eye" : "eye-slash"}`}
+                            onClick={toggleShowPassword}
+                          />                        </div>
                       </div>
                       <div className="col-12">
                         <div className="form-agreement form-inner d-flex justify-content-between flex-wrap">
                         </div>
                       </div>
                     </div>
-                    <button className="account-btn">Log in</button>
+                    <button className="account-btn">Connexion</button>
                   </form>
-                  <div className="alternate-signup-box">
-                    <h6>or signup WITH</h6>
-                    <div className="btn-group gap-4">
-                      <a
-                        className="eg-btn google-btn d-flex align-items-center"
-                        onClick={() => signIn("github")}
-                      >
-                        <i className="bx bxl-google" />
-                        <span>signup whit google</span>
-                      </a>
-                      <a
-                        onClick={() => signOut()}
-                        className="eg-btn facebook-btn d-flex align-items-center"
-                      >
-                        <i className="bx bxl-facebook" />
-                        signup whit facebook
-                      </a>
-                    </div>
-                  </div>
-                  <div className="form-poicy-area">
-                    <p>
-                      By clicking the "signup" button, you create a Cobiro
-                      account, and you agree to Cobiro's{" "}
-                      <a href="#">Terms &amp; Conditions</a> &amp;{" "}
-                      <a href="#">Privacy Policy.</a>
-                    </p>
-                  </div>
+               
                 </div>
               </div>
             </div>

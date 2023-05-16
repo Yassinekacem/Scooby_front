@@ -26,6 +26,21 @@ function ServiceDetails() {
             <Breadcrumb pageName="Services pour animaux" pageTitle="Services pour animaux" src="" />
             <div className="services-details-area pt-120 mb-120">
                 <div className="container">
+                <div className="row mb-50">
+            <div className="col-lg-12">
+              <div className="multiselect-bar">
+                <h6> </h6>
+                <div className="multiselect-area">
+                  <h5> Si vous offrez des services pour les animaux, nous vous invitons à annoncer vos services en cliquant ici. :</h5>
+
+                  <Link legacyBehavior href={`/service/addService`}>
+                    <button className="primary-btn0">annoncer votre service
+                    </button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
                     <div className="row g-lg-4 gy-5 mb-120">
                         <div className="col-lg-7">
                             <div className="tab-content tab-content1" id="v-pills-tabContent">

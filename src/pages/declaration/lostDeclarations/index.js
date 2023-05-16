@@ -119,7 +119,7 @@ function lostDeclaration() {
   return (
     <Layout>
       {console.log(lostDeclarations)}
-      <Breadcrumb pageName="Déclarations de perte" pageTitle="Déclarations de perte" />
+      <Breadcrumb pageName="Toutes les déclarations de perte d'animaux" pageTitle="Déclarations de perte" src1="" src="" />
       <div className="shop-page pt-120 mb-120">
         <div className="container">
           <div className="row">

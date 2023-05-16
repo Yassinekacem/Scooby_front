@@ -134,7 +134,7 @@ function productList() {
   return (
     <Layout>
       {console.log(products)}
-      <Breadcrumb pageName="liste des produits" pageTitle="liste des produits" />
+      <Breadcrumb pageName="liste des produits pour animaux" pageTitle=" produits pour animaux"  src=""/>
       <div className="shop-page pt-120 mb-120">
         <div className="container">
           <div className="row">

@@ -1,4 +1,4 @@
-import {React , useEffect} from "react";
+import { React, useEffect } from "react";
 import GestionUsers from "../components/dashbordAdmin/GestionUsers";
 import Gestionanimals from "../components/dashbordAdmin/GestionPets";
 import Header1 from "../components/header/Header1";
@@ -22,34 +22,35 @@ function dashbordAdminPage() {
       if (decodedToken.userRole !== "admin") {
         router.push("/");
       }
-    }}
+    }
+  }
 
   return (
     <>
       <Header1 />
       <div className="inner-page-banner" id="a">
-  <div className="breadcrumb-vec-btm"></div>
-  <div className="container">
-    <div className="row justify-content-center align-items-center text-center">
-      <div className="col-lg-12 align-items-center text-center">
-        <div className="banner-content">
-          <h1 style={{ textAlign: 'center' }}>Tableau de bord</h1>
-          <h1 style={{ textAlign: 'center' }}>"Admin"</h1> 
-          <nav aria-label="breadcrumb">
-            <ol className="breadcrumb">
-              <li className="breadcrumb-item active" aria-current="page"></li>
-            </ol>
-          </nav>
+        <div className="breadcrumb-vec-btm"></div>
+        <div className="container">
+          <div className="row justify-content-center align-items-center text-center">
+            <div className="col-lg-12 align-items-center text-center">
+              <div className="banner-content">
+                <h1 style={{ textAlign: 'center' }}>Tableau de bord</h1>
+                <h1 style={{ textAlign: 'center' }}>"Admin"</h1>
+                <nav aria-label="breadcrumb">
+                  <ol className="breadcrumb">
+                    <li className="breadcrumb-item active" aria-current="page"></li>
+                  </ol>
+                </nav>
+              </div>
+            </div>
+          </div>
+          <div className="row justify-content-center">
+            <div className="col-lg-6">
+              <div className="banner-img d-lg-block d-none"></div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div className="row justify-content-center">
-      <div className="col-lg-6">
-        <div className="banner-img d-lg-block d-none"></div>
-      </div>
-    </div>
-  </div>
-</div>
 
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
@@ -59,19 +60,34 @@ function dashbordAdminPage() {
           <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item active">
-                <a class="nav-link font-weight-bold" href="#gestion-aautilisateurs" style={{ fontSize: "20px" }}>Gestion Utilisateurs</a>
+                <a class="nav-link font-weight-bold" href="#gestion-aautilisateurs" style={{ fontSize: "21px", color: "black", textDecoration: "none" }}
+                  onMouseOver={(e) => e.target.style.color = "#FF7F50"}
+                  onMouseOut={(e) => e.target.style.color = "black"}
+                >Gestion Utilisateurs</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link font-weight-bold" href="#gestion-animaux" style={{ fontSize: "20px" }}>Gestion Animaux</a>
+                <a  class="nav-link font-weight-bold" href="#gestion-animaux" style={{ fontSize: "21px", color: "black", textDecoration: "none" }}
+                  onMouseOver={(e) => e.target.style.color = "#FF7F50"}
+                  onMouseOut={(e) => e.target.style.color = "black"}
+                >Gestion Animaux</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link font-weight-bold" href="#gestion-produits" style={{ fontSize: "20px" }}>Gestion Produits</a>
+                <a class="nav-link font-weight-bold" href="#gestion-produits" style={{ fontSize: "21px", color: "black", textDecoration: "none" }}
+                  onMouseOver={(e) => e.target.style.color = "#FF7F50"}
+                  onMouseOut={(e) => e.target.style.color = "black"}
+                >Gestion Produits</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link font-weight-bold" href="#gestion-declarations" style={{ fontSize: "20px" }}>Gestion Déclarations</a>
+                <a class="nav-link font-weight-bold" href="#gestion-declarations" style={{ fontSize: "21px", color: "black", textDecoration: "none" }}
+                  onMouseOver={(e) => e.target.style.color = "#FF7F50"}
+                  onMouseOut={(e) => e.target.style.color = "black"}
+                >Gestion Déclarations</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link font-weight-bold" style={{ fontSize: "20px" }}>services</a>
+                <a class="nav-link font-weight-bold" href="#gestion-produits" style={{ fontSize: "21px", color: "black", textDecoration: "none" }}
+                  onMouseOver={(e) => e.target.style.color = "#FF7F50"}
+                  onMouseOut={(e) => e.target.style.color = "black"}
+                >Gestion  services</a>
               </li>
             </ul>
           </div>
@@ -82,6 +98,9 @@ function dashbordAdminPage() {
       </div>
       <div>
         <Gestionanimals />
+      </div>
+      <div>
+        {/* <GestionServices /> */}
       </div>
       <div>
         <GestionProduitss />

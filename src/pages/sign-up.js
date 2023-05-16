@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React, { useState } from "react";
-import Breadcrumb from "../../components/breadcrumb/Breadcrumb";
-import Layout from "../../layout/Layout";
+import Breadcrumb from "../components/breadcrumb/Breadcrumb";
+import Layout from "../layout/Layout";
 import axios from "axios";
 import { useRouter } from "next/router";
 
@@ -15,7 +15,7 @@ function signUpPage() {
   const [userData, setUserData] = useState({
     firstName: "",
     lastName: "",
-    role: "admin",
+    role: "",
     email: "",
     password: "",
     photo: "",
@@ -60,7 +60,7 @@ function signUpPage() {
           photo: imageUrl
         }
       );
-      console.log(response.data); 
+      console.log(response.data);
       router.push("/login");
 
 
@@ -68,6 +68,10 @@ function signUpPage() {
       console.error(error);
     }
   };
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const toggleShowPassword = () => setShowPassword(!showPassword)
   return (
     <>
       <Layout>
@@ -97,35 +101,33 @@ function signUpPage() {
                       <div className="col-md-9">
                         <div className="form-inner">
                           <label> Votre nom </label>
-                          <input name="firstName" type="text"  onChange={saveData} />
+                          <input name="firstName" type="text" onChange={saveData} />
                         </div>
                       </div>
                       <div className="col-md-9">
                         <div className="form-inner">
                           <label>Votre prénom </label>
-                          <input name="lastName" type="text"  onChange={saveData} />
+                          <input name="lastName" type="text" onChange={saveData} />
                         </div>
                       </div>
                       <div className="col-md-9">
                         <div className="form-inner">
                           <label> Numéro de téléphone </label>
-                          <input name="phoneNumber" type="text"  onChange={saveData} />
+                          <input name="phoneNumber" type="text" onChange={saveData} />
                         </div>
                       </div>
                       <div class="col-md-9">
                         <div class="form-inner">
                           <label> Statut  :</label> <br />
                           <select className="form-select" name="role" onChange={saveData}>
-                            <option value=""> Sélectionnez un rôle</option>
-                            <option value="client">Client</option>
+                            <option disabled selected hidden value="" > Sélectionnez votre statut </option>
                             <option value="veterinary">Vétérinaire</option>
                             <option value="petTrainer">Dresseur d'animaux de compagnie</option>
                             <option value="petSitter">Garde d'animaux de compagnie</option>
                             <option value="petGroomer">Toiletteur d'animaux de compagnie</option>
                             <option value="petShop">Magasin d'animaux de compagnie</option>
-                            <option value="animalOwner">Propriétaire d'animal</option>
-                            <option value="petSeller">vendeur d'animaux</option>
-                            
+                            <option value="petSeller">éleveur d'animaux </option>
+                            <option value="client">passionné d animaux</option>
                           </select>
                         </div>
                       </div>
@@ -139,22 +141,27 @@ function signUpPage() {
                       <div className="col-md-9">
                         <div className="form-inner">
                           <label>Email *</label>
-                          <input name="email" type="email"  onChange={saveData} />
+                          <input name="email" type="email" onChange={saveData} />
                         </div>
                       </div>
                       <div className="col-md-9">
                         <div className="form-inner">
                           <label>mot de passe *</label>
-                          <input name="password" type="password"  onChange={saveData} />
+                          <input name="password" type={showPassword ? "text" : "password"}
+                            onChange={saveData} />
+                          <i
+                            className={`bi bi-${showPassword ? "eye" : "eye-slash"}`}
+                            onClick={toggleShowPassword}
+                          />
                         </div>
                       </div>
 
-                      
+
                     </div>
                     <button className="account-btn" >Créer compte</button>
                   </form>
-                 
-                 
+
+
                 </div>
               </div>
             </div>

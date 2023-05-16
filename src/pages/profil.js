@@ -104,7 +104,7 @@ function checOutPage() {
           <ul className="added-products">
             <li className="single-product d-flex justify-content-start">
               <div className="product-img">
-                <img src={user.photo} alt="" style={{ borderRadius: '50%', overflow: 'hidden', width: '100px', height: '100px' }} />
+                <img src={user.photo !== "" ? (user.photo) : ("assets/images/bg/team/unkown.png" )} alt="" style={{ borderRadius: '50%', overflow: 'hidden', width: '100px', height: '100px' }} />
               </div>
 
               <div className="product-info">
