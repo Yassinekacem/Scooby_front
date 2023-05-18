@@ -3,7 +3,6 @@ import { useState, useEffect, React } from "react";
 import axios from "axios";
 import Layout from "../../../../layout/Layout";
 import Breadcrumb from "../../../../components/breadcrumb/Breadcrumb";
-import SingleProductDescription from "../../../../components/shop/SingleProductDescription";
 function ServiceDetail(props) {
 
     const now = new Date();

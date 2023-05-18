@@ -33,7 +33,7 @@ function AnimalCard({ item: { id,
   isVaccinated,
   isEducated,
   userId
-} }) {
+} , handleDelete }) {
   const [file, setFile] = useState(null)
   const [imageUrl, setImageUrl] = useState("");
   const [imageUploading, setImageUploading] = useState(false);
@@ -241,7 +241,7 @@ function AnimalCard({ item: { id,
               </li>
 
               <li>
-              <a href="#" class="btn btn-danger" onClick={() => deleteAnimal(id)}><i class="bi bi-trash"></i></a>
+              <a href="#" class="btn btn-danger" onClick={() => handleDelete(id)}><i class="bi bi-trash"></i></a>
               </li>
             </ul>) : (<ul></ul>)}
 

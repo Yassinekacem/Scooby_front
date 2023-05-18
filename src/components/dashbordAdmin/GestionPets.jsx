@@ -248,7 +248,7 @@ function gestionanimals() {
                   </button>
                 </div>
                 <div class="modal fade" id={`adoptAnimal`} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog modal-lg" role="document">
+                  <div class="modal-dialog modal-xl" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
                         <h5 class="modal-title"> ajouter un animal pour adoption</h5>
@@ -258,29 +258,26 @@ function gestionanimals() {
                           disabled={imageUploading}>
                           <div class="form-group">
                             <label class="control-label">animal</label>
-                            <input type="text" class="form-control input-lg" name="species" onChange={saveData1} />
+                            <input type="text" class="form-control input-lg" name="species" placeholder="animal pour adoption" onChange={saveData1} />
                           </div>
                           <div class="form-group">
                             <label class="control-label">race</label>
-                            <input type="text" class="form-control input-lg" name="race" onChange={saveData1} />
+                            <input type="text" class="form-control input-lg" name="race" placeholder="race de l'animal" onChange={saveData1} />
                           </div>
                           <div class="form-group">
                             <label class="control-label">age</label>
-                            <input type="number" class="form-control input-lg" name="age" onChange={saveData1} />
+                            <input type="number" class="form-control input-lg" name="age" placeholder="age de l'animal" onChange={saveData1} />
                           </div>
 
                           <div class="form-group">
-                            <label class="control-label">gender</label>
-                            <input name="gender" type="text" placeholder="Enter the sex of your animal" class="form-control input-lg" onChange={saveData1} />
+                            <label class="control-label">sexe</label>
+                            <input name="gender" type="text" placeholder="sexe de l'animal" class="form-control input-lg" onChange={saveData1} />
                           </div>
-                          <div class="form-group">
-                            <label class="control-label">price</label>
-                            <input name="price" type="number" placeholder="Enter the price of your animal" class="form-control input-lg" onChange={saveData1} />
-                          </div>
+                         
 
                           <div class="form-group">
-                            <label class="control-label">status</label>
-                            <input name="status" type="text" placeholder="Enter your phone Number" class="form-control input-lg" onChange={saveData1} />
+                            <label class="control-label">statut de l'animal</label>
+                            <input name="status" type="text" placeholder="Entrer le statut de l'animal (toSell ou toAdopt)" class="form-control input-lg" onChange={saveData1} />
                           </div>
 
                           <div class="form-group">
@@ -290,7 +287,7 @@ function gestionanimals() {
                           </div>
                           <div className="form-group">
                             <div className="form-inner">
-                              <label class="control-label">isVaccinated</label>
+                              <label class="control-label">Vacciné ou non ? </label>
                               <input
                                 type="checkbox"
                                 name="isVaccinated"
@@ -305,7 +302,7 @@ function gestionanimals() {
                           </div>
                           <div className="form-group">
                             <div className="form-inner">
-                              <label class="control-label">isEducated</label>
+                              <label class="control-label">dressé ou non ?</label>
                               <input
                                 type="checkbox"
                                 name="isEducated"
@@ -439,10 +436,10 @@ function gestionanimals() {
                           <td data-label="id utilisateur Price">{userId}</td>
 
                           <div class="modal fade" id={`exampleModal-${id}`} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-dialog modal-xl" role="document">
                               <div class="modal-content">
                                 <div class="modal-header">
-                                  <h5 class="modal-title"> mis à jour cette annonce</h5>
+                                  <h5 class="modal-title"> Mis à jour de cet animal</h5>
                                 </div>
                                 <div class="modal-body">
                                   <form role="form" method="POST" action="" onSubmit={handleSubmit1}
@@ -461,16 +458,13 @@ function gestionanimals() {
                                     </div>
 
                                     <div class="form-group">
-                                      <label class="control-label">gender</label>
+                                      <label class="control-label">sexe</label>
                                       <input name="gender" type="text" placeholder="Enter the sex of your animal" class="form-control input-lg" defaultValue={gender} onChange={saveData1} />
                                     </div>
-                                    <div class="form-group">
-                                      <label class="control-label">price</label>
-                                      <input name="price" type="number" placeholder="Enter the price of your animal" class="form-control input-lg" defaultValue={price} onChange={saveData1} />
-                                    </div>
+                                 
 
                                     <div class="form-group">
-                                      <label class="control-label">status</label>
+                                      <label class="control-label">statut</label>
                                       <input name="status" type="text" placeholder="Enter your phone Number" class="form-control input-lg" defaultValue={status} onChange={saveData1} />
                                     </div>
 
@@ -481,7 +475,7 @@ function gestionanimals() {
                                     </div>
                                     <div className="form-group">
                                       <div className="form-inner">
-                                        <label class="control-label">isVaccinated</label>
+                                        <label class="control-label">Vacciné ?</label>
                                         <input
                                           type="checkbox"
                                           name="isVaccinated"
@@ -496,7 +490,7 @@ function gestionanimals() {
                                     </div>
                                     <div className="form-group">
                                       <div className="form-inner">
-                                        <label class="control-label">isEducated</label>
+                                        <label class="control-label">dressé ?</label>
                                         <input
                                           type="checkbox"
                                           name="isEducated"
@@ -585,39 +579,39 @@ function gestionanimals() {
                   </button>
                 </div>
                 <div class="modal fade" id={`sellAnimal`} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog modal-lg" role="document">
+                  <div class="modal-dialog modal-xl" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title"> ajouter un animal à vendre</h5>
+                        <h5 class="modal-title"> Ajouter un animal à vendre</h5>
                       </div>
                       <div class="modal-body">
                         <form role="form" method="POST" action="" onSubmit={handleSubmit}
                           disabled={imageUploading}>
                           <div class="form-group">
                             <label class="control-label">animal</label>
-                            <input type="text" class="form-control input-lg" name="species" onChange={saveData} />
+                            <input type="text" class="form-control input-lg" placeholder="animal à vendre" name="species" onChange={saveData} />
                           </div>
                           <div class="form-group">
                             <label class="control-label">race</label>
-                            <input type="text" class="form-control input-lg" name="race" onChange={saveData} />
+                            <input type="text" class="form-control input-lg" placeholder="race de l'animal" name="race" onChange={saveData} />
                           </div>
                           <div class="form-group">
                             <label class="control-label">age</label>
-                            <input type="number" class="form-control input-lg" name="age" onChange={saveData} />
+                            <input type="number" class="form-control input-lg" placeholder="age de l'animal" name="age" onChange={saveData} />
                           </div>
 
                           <div class="form-group">
-                            <label class="control-label">gender</label>
-                            <input name="gender" type="text" placeholder="Enter the sex of your animal" class="form-control input-lg" onChange={saveData} />
+                            <label class="control-label">sexe</label>
+                            <input name="gender" type="text" placeholder="sexe de l'animal" class="form-control input-lg" onChange={saveData} />
                           </div>
                           <div class="form-group">
-                            <label class="control-label">price</label>
-                            <input name="price" type="number" placeholder="Enter the price of your animal" class="form-control input-lg" onChange={saveData} />
+                            <label class="control-label">prix</label>
+                            <input name="price" type="number" placeholder="prix de cet animal" class="form-control input-lg" onChange={saveData} />
                           </div>
 
                           <div class="form-group">
-                            <label class="control-label">status</label>
-                            <input name="status" type="text" placeholder="Enter your phone Number" class="form-control input-lg" onChange={saveData} />
+                            <label class="control-label">statut</label>
+                            <input name="status" type="text" placeholder="à vendre ou pour adoption" class="form-control input-lg" onChange={saveData} />
                           </div>
 
                           <div class="form-group">
@@ -627,7 +621,7 @@ function gestionanimals() {
                           </div>
                           <div className="form-group">
                             <div className="form-inner">
-                              <label class="control-label">isVaccinated</label>
+                              <label class="control-label">Vacciné ? </label>
                               <input
                                 type="checkbox"
                                 name="isVaccinated"
@@ -642,7 +636,7 @@ function gestionanimals() {
                           </div>
                           <div className="form-group">
                             <div className="form-inner">
-                              <label class="control-label">isEducated</label>
+                              <label class="control-label">Dressé ?</label>
                               <input
                                 type="checkbox"
                                 name="isEducated"
@@ -776,10 +770,10 @@ function gestionanimals() {
                           <td data-label="Age">{age}</td>
                           <td data-label="Prix">{price}</td>
                           <div class="modal fade" id={`exempleModal-${id}`} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-dialog modal-xl" role="document">
                               <div class="modal-content">
                                 <div class="modal-header">
-                                  <h5 class="modal-title"> mis à jour cette annonce</h5>
+                                  <h5 class="modal-title"> Mis à jour cet animal</h5>
                                 </div>
                                 <div class="modal-body">
                                   <form role="form" method="POST" action="" onSubmit={handleSubmit}
@@ -798,16 +792,16 @@ function gestionanimals() {
                                     </div>
 
                                     <div class="form-group">
-                                      <label class="control-label">gender</label>
+                                      <label class="control-label">sexe</label>
                                       <input name="gender" type="text" placeholder="Enter the sex of your animal" class="form-control input-lg" defaultValue={gender} onChange={saveData} />
                                     </div>
                                     <div class="form-group">
-                                      <label class="control-label">price</label>
+                                      <label class="control-label">prix</label>
                                       <input name="price" type="number" placeholder="Enter the price of your animal" class="form-control input-lg" defaultValue={price} onChange={saveData} />
                                     </div>
 
                                     <div class="form-group">
-                                      <label class="control-label">status</label>
+                                      <label class="control-label">statut</label>
                                       <input name="status" type="text" placeholder="Enter your phone Number" class="form-control input-lg" defaultValue={status} onChange={saveData} />
                                     </div>
 
@@ -818,7 +812,7 @@ function gestionanimals() {
                                     </div>
                                     <div className="form-group">
                                       <div className="form-inner">
-                                        <label class="control-label">isVaccinated</label>
+                                        <label class="control-label">Vacciné ? </label>
                                         <input
                                           type="checkbox"
                                           name="isVaccinated"
@@ -833,7 +827,7 @@ function gestionanimals() {
                                     </div>
                                     <div className="form-group">
                                       <div className="form-inner">
-                                        <label class="control-label">isEducated</label>
+                                        <label class="control-label">Dressé ?</label>
                                         <input
                                           type="checkbox"
                                           name="isEducated"

@@ -16,18 +16,10 @@ function CreatePet() {
         }
     };
 
-    const [connectedUser1, setConnectedUser1] = useState('')
-    const getConnectedUserData1 = () => {
-        const token = localStorage.getItem("token");
-        if (token) {
-            const decodedToken = jwtDecode(token);
-            setConnectedUser1(decodedToken.userRole);
-        }
-    };
 
 
     useEffect(() => {
-        getConnectedUserData(),getConnectedUserData1,protectRoute()
+        getConnectedUserData(),protectRoute()
     }, [])
 
 
@@ -67,7 +59,7 @@ function CreatePet() {
     }
     useEffect(() => {
         setServiceData(initialState)
-    }, [connectedUser],[connectedUser1])
+    }, [connectedUser])
 
 
 

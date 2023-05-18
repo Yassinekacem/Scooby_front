@@ -22,23 +22,13 @@ function AnimalAdoptCard({ item: { id,
     const token = localStorage.getItem("token");
     if (token) {
       const decodedToken = jwtDecode(token);
-      setConnectedUser(decodedToken.userId);
+      setConnectedUser(decodedToken);
     }
   };
   useEffect(() => {
     getConnectedUserData()
   }, [])
-  const [connectedUser1, setConnectedUser1] = useState('')
-  const getConnectedUserData1 = () => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      const decodedToken = jwtDecode(token);
-      setConnectedUser1(decodedToken.userRole);
-    }
-  };
-  useEffect(() => {
-    getConnectedUserData1()
-  }, [])
+
 
   const [file, setFile] = useState(null)
   const [imageUrl, setImageUrl] = useState("");
@@ -195,7 +185,7 @@ function AnimalAdoptCard({ item: { id,
         <div className="collection-card">
           <div
             className={
-              isEducated && isVaccinated ? "offer-card oui" : isEducated && !isVaccinated ? "offer-card " : isVaccinated && !isEducated ? "offer-card toSell" : "offer-card toAdopt"
+              isEducated && isVaccinated ? "offer-card oui" : isEducated && !isVaccinated ? "offer-card " : isVaccinated && !isEducated ? "offer-card toSell" : ""
             }
           >
             <span>{isEducated && isVaccinated ? "Vacciné et dressé" : isEducated && !isVaccinated ? "Dressé" : isVaccinated && !isEducated ? "vacciné" : ""
@@ -217,7 +207,7 @@ function AnimalAdoptCard({ item: { id,
             </div>
 
             
-            {(connectedUser === userId || connectedUser1==="admin") ? (<ul className="cart-icon-list">
+            {(connectedUser.userId === userId || connectedUser.userRole ==="admin") ? (<ul className="cart-icon-list">
             <li>
             <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target={`#detail-${id}`}><i class="bi bi-pencil text-black"></i></a>
               </li>

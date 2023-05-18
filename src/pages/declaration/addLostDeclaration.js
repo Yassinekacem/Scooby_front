@@ -1,24 +1,45 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import Breadcrumb from "../../components/breadcrumb/Breadcrumb";
 import Layout from "../../layout/Layout";
 import axios from "axios";
+import { useRouter } from "next/router";
+import jwtDecode from "jwt-decode"
 
 
 function addLostDeclaration() {
+  const router = useRouter();
+  const [connectedUser, setConnectedUser] = useState('')
+  const getConnectedUserData = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setConnectedUser(decodedToken.userId);
+    }
+  };
+
+  useEffect(() => {
+    getConnectedUserData()
+  }, [])
   const [file, setFile] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
   const [imageUploading, setImageUploading] = useState(false);
-  const [lostDeclarationData, setLostDeclarationData] = useState({
-    animal: "",
-    race: "",
-    description: "",
-    image: "",
-    dateLost: "",
-    withReward: false,
-    placeLost: "",
-    phoneNumber: ""
-  });
+  const [lostDeclarationData, setLostDeclarationData] = useState({});
 
+const initialState = {
+  animal: "",
+  race: "",
+  description: "",
+  image: "",
+  dateLost: "",
+  withReward: false,
+  placeLost: "",
+  phoneNumber: "",
+  userId : connectedUser
+}
+
+  useEffect(() => {
+    setLostDeclarationData(initialState)
+    }, [connectedUser])
   const handleImageSelect = async (e) => {
     setFile(e.target.files[0]);
     setImageUploading(true);
@@ -55,8 +76,8 @@ function addLostDeclaration() {
         }
       );
 
-      console.log(response.data); // log the response data for debugging purposes
-      // TODO: Redirect to a success page or display a success message to the user
+      console.log(response.data); 
+      router.push("/declaration/lostDeclarations")
     } catch (error) {
       console.error(error);
     }
@@ -66,7 +87,7 @@ function addLostDeclaration() {
   return (
     <>
       <Layout>
-        <Breadcrumb pageName="addLostDeclaration" pageTitle="addLostDeclaration" />
+        <Breadcrumb pageName="déclarer la perte de votre animal" pageTitle="déclarer une perte" src="" src1="" />
         <div className="addLostDeclaration-section pt-120 pb-120">
           <div className="container">
             <div className="row d-flex justify-content-center">
@@ -77,7 +98,7 @@ function addLostDeclaration() {
                   data-wow-delay=".2s"
                 >
                   <div className="form-title">
-                    <h3> announce the loss of your pet </h3>
+                    <h3> déclarer la perte de votre animal </h3>
                   </div>
                   <form
                     className="w-100"
@@ -118,7 +139,7 @@ function addLostDeclaration() {
 
                       <div className="col-md-9">
                         <div className="form-inner">
-                          <label>Enter Your image *</label>
+                          <label> image de l'animal*</label>
                           <input name="file" type="file" onChange={handleImageSelect} />
                         </div>
                       </div>
@@ -126,19 +147,19 @@ function addLostDeclaration() {
 
                       <div className="col-md-9">
                         <div className="form-inner">
-                          <label>Enter Your dateLost *</label>
+                          <label>Date de perte *</label>
                           <input name="dateLost" type="date" placeholder="Enter when dateLost" onChange={saveData} />
                         </div>
                       </div>
                       <div className="col-md-9">
                         <div className="form-inner">
-                          <label>Enter Your placeLost *</label>
+                          <label>lieu de perte *</label>
                           <input name="placeLost" type="text" placeholder="Enter where you Lost" onChange={saveData} />
                         </div>
                       </div>
                       <div className="col-md-9">
                         <div className="form-inner">
-                          <label>Enter Your phoneNumber *</label>
+                          <label>Votre Num telephone *</label>
                           <input name="phoneNumber" type="text" placeholder="Enter your phone Number" onChange={saveData} />
                         </div>
                       </div>
@@ -146,7 +167,7 @@ function addLostDeclaration() {
 
                       <div className="col-md-9">
                         <div className="form-inner">
-                          <label>withReward</label>
+                          <label>Avec Récomponse ? </label>
                           <input
                             type="checkbox"
                             name="withReward"
@@ -162,7 +183,7 @@ function addLostDeclaration() {
 
 
                     </div>
-                    <button className="account-btn" >Add Declaration</button>
+                    <button className="account-btn" >Déclarer</button>
                   </form>
 
 

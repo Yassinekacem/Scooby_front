@@ -100,7 +100,7 @@ function BlogDetailsPage() {
       }
       <ToastContainer
         position="top-center"
-        autoClose={100}
+        autoClose={900}
       />
       <Breadcrumb pageName="forum de communication entre les passionnées des animaux" pageTitle="Forum de communication" src="" />
       <div className="blog-details-pages pt-120 mb-120">
@@ -216,8 +216,9 @@ function BlogDetailsPage() {
                     <div className="comment-area">
                       <div className="blog-comments mb-120">
                         <div className="comments-title">
-                          <h2 style={{ fontSize: "25px" }}>commentaires  <i class="fas fa-comment"></i>  </h2>
+                          <h2 style={{ fontSize: "25px" }}>commentaires&nbsp;&nbsp;&nbsp;<i className="fas fa-comment"></i></h2>
                         </div>
+
                         {responses.filter(response => response.postId === id).map((item) => {
                           const {
                             id,
@@ -231,7 +232,7 @@ function BlogDetailsPage() {
                           } = item;
                           const handleSubmit = async (e) => {
                             e.preventDefault();
-                            if ( connectedUser.userId) {
+                            if (connectedUser.userId) {
                               try {
                                 const response = await axios.post(
                                   "http://localhost:2001/reply",
@@ -294,7 +295,7 @@ function BlogDetailsPage() {
                                   <div class="modal-dialog modal-sm" role="document">
                                     <div class="modal-content">
                                       <div class="modal-header">
-                                        <h5 class="modal-title"> repondre</h5>
+                                        <h5 class="modal-title"> Répond cet utilisateur</h5>
                                       </div>
                                       <div class="modal-body">
                                         <form role="form" method="POST" action=""
@@ -303,8 +304,8 @@ function BlogDetailsPage() {
                                         >
 
                                           <div class="form-group">
-                                            <label class="control-label">réponse</label>
-                                            <textarea type="text" name="reply" class="form-control input-lg" onChange={saveData} />
+                                            <label class="control-label">Votre rponse : </label>
+                                            <textarea type="text" name="reply" class="form-control input-lg" placeholder="écrivez votre réponse" onChange={saveData} />
 
                                           </div>
 

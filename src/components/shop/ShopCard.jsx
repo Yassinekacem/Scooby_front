@@ -2,6 +2,8 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import jwtDecode from "jwt-decode"
+
 
 const deleteProduct = async (ProductId) => {
   const response = await fetch(`http://localhost:2001/products/${ProductId}`, {
@@ -87,7 +89,17 @@ function ShopCard({ item: {
       console.error(error);
     }
   };
-
+  const [connectedUser, setConnectedUser] = useState({})
+  const getConnectedUserData = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setConnectedUser(decodedToken);
+    }
+  };
+  useEffect(() => {
+    getConnectedUserData()
+  }, [])
   return (
     <>
       {console.log(productData)}
@@ -188,8 +200,9 @@ function ShopCard({ item: {
                 <a>View Details</a>
               </Link>
             </div>
-            <ul className="cart-icon-list">
-              <li>
+           
+            {(connectedUser.userId === userId || connectedUser.userRole ==="admin")? (<ul className="cart-icon-list">
+            <li>
                 <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target={`#detail-${id}`}><i class="bi bi-pencil text-black"></i>
                 </a>
               </li>
@@ -197,9 +210,7 @@ function ShopCard({ item: {
               <li>
                 <a href="#" class="btn btn-danger" onClick={() => deleteProduct(id)}><i class="bi bi-trash"></i></a>
               </li>
-
-            </ul>
-
+            </ul>) : (<ul></ul>)}
           </div>
           <div className="collection-content text-center">
             <h4>

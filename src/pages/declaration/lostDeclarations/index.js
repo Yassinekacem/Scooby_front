@@ -4,9 +4,25 @@ import LostDeclarationCard from "../../../components/declaration/LostDeclaration
 import Layout from "../../../layout/Layout";
 import Link from "next/link";
 import moment from "moment";
+import jwtDecode from "jwt-decode"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function lostDeclaration() {
+  const [connectedUser, setConnectedUser] = useState({})
+  const getConnectedUserData = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setConnectedUser(decodedToken);
+    }
+  };
+  useEffect(() => {
+    getConnectedUserData()
+  }, [])
+
+
   const [value, setValue] = React.useState(50);
   const [isCatChecked, setIsCatChecked] = useState(false);
   const [isDogChecked, setIsDogChecked] = useState(false);
@@ -18,7 +34,8 @@ function lostDeclaration() {
   const [isWeekChecked, setIsWeekChecked] = useState(false);
   const [isMonthChecked, setIsmonthChecked] = useState(false);
   const [isYearChecked, setIsyearChecked] = useState(false);
-
+  const [isYours, setIsYours] = useState(false);
+  const [isNotYours, setIsNotYours] = useState(false);
 
 
 
@@ -33,7 +50,9 @@ function lostDeclaration() {
     getlostDeclarations()
   }, [])
 
-
+  const handleIsYours = (event) => {
+    setIsYours(event.target.checked);
+  };
   const handleCatChange = (event) => {
     setIsCatChecked(event.target.checked);
   };
@@ -74,6 +93,10 @@ function lostDeclaration() {
     // Filter by reward
     if ((isRewarded && !LostDeclaration.withReward) ||
       (isNotRewarded && LostDeclaration.withReward)) {
+      showLostDeclaration = false;
+    }
+    const yourDeclaration = LostDeclaration.userId === connectedUser.userId
+    if (isYours && !yourDeclaration) {
       showLostDeclaration = false;
     }
 
@@ -125,6 +148,23 @@ function lostDeclaration() {
           <div className="row">
             <div className="col-lg-3">
               <div className="shop-sidebar">
+                <div className="shop-widget">
+
+                  <div className="check-box-item">
+                    <div className="checkbox-container">
+                      <label className="containerss">
+
+                        <h6 className="shop-widget-title">Vos propres déclarations</h6>
+                        <input type="checkbox" checked={isYours}
+                          onChange={handleIsYours} />
+                        <span className="checkmark"></span>
+
+                      </label>
+
+                    </div>
+
+                  </div>
+                </div>
                 <div className="shop-widget">
                   <div className="check-box-item">
                     <h5 className="shop-widget-title">animal : </h5>
@@ -195,12 +235,23 @@ function lostDeclaration() {
                 <div className="col-lg-12">
                   <div className="multiselect-bar">
                     <h6>Déclarations de perte </h6>
+
+
+
                     <div className="multiselect-area">
                       <h5>Vous avez perdu votre animal cliquez ici :</h5>
-
-                        <Link legacyBehavior href={`/declaration/addLostDeclaration`}>
+                      {connectedUser.userId ? (
+                        <Link legacyBehavior href={`/declaration/addLostDeclaration`} >
                           <button className="primary-btn0">J'ai perdu mon animal</button>
                         </Link>
+                      ) : (
+                        <button
+                          className="primary-btn0"
+                          onClick={() => {
+                            toast.error("Veuillez vous connectez pour déclarer une perte");
+                          }}
+                        >
+                          J'ai perdu mon animal                    </button>)}
                     </div>
                   </div>
                 </div>

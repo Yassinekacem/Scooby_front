@@ -5,13 +5,31 @@ import Layout from "../../../layout/Layout";
 import Link from "next/link";
 import moment from "moment";
 import axios from 'axios';
+import jwtDecode from "jwt-decode"
 
 
 function FoundDeclaration() {
+  const [connectedUser, setConnectedUser] = useState({})
+  const getConnectedUserData = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setConnectedUser(decodedToken);
+    }
+  };
+  useEffect(() => {
+    getConnectedUserData()
+  }, [])
+
+
   const [value, setValue] = React.useState(50);
   // check animal
   const [isCatChecked, setIsCatChecked] = useState(false);
   const [isDogChecked, setIsDogChecked] = useState(false);
+  
+
+  const [isYours, setIsYours] = useState(false);
+  const [isNotYours, setIsNotYours] = useState(false);
 
  
 // check date
@@ -43,7 +61,9 @@ function FoundDeclaration() {
     setIsDogChecked(event.target.checked);
   };
 
-  
+  const handleIsYours = (event) => {
+    setIsYours(event.target.checked);
+  };
 
   const handleTodayChange = (event) => {
     setIsTodayChecked(event.target.checked);
@@ -65,6 +85,12 @@ function FoundDeclaration() {
         (isDogChecked && FoundDeclaration.animal !== "dog")) {
       showFoundDeclaration = false;
     } 
+    
+    const  yourDeclaration = FoundDeclaration.userId === connectedUser.userId
+    if (isYours && !yourDeclaration)  {
+      showFoundDeclaration = false ; 
+    }
+
     // Filter by date
     if (isTodayChecked && !moment(FoundDeclaration.dateFound).isSame(moment(), "day")) {
       showFoundDeclaration = false;
@@ -110,6 +136,23 @@ function FoundDeclaration() {
           <div className="row">
             <div className="col-lg-3">
               <div className="shop-sidebar">
+              <div className="shop-widget">
+                  
+                  <div className="check-box-item">
+                    <div className="checkbox-container">
+                      <label className="containerss">
+
+                        <h6 className="shop-widget-title">Vos propres déclarations</h6>
+                        <input type="checkbox" checked={isYours}
+                          onChange={handleIsYours} />
+                        <span className="checkmark"></span>
+
+                      </label>
+
+                    </div>
+
+                  </div>
+                </div>
                 <div className="shop-widget">
                   <div className="check-box-item">
                     <h5 className="shop-widget-title">animal</h5>

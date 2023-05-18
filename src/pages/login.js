@@ -55,7 +55,7 @@ function loginPage() {
         router.push("/shop");
       }
       else if (decodedToken1.userRole === "veterinary" || decodedToken1.userRole === "petTrainer" || decodedToken1.userRole === "petGroomer" || decodedToken1.userRole === "petSitter") {
-        router.push("/service-details");
+        router.push("/service");
       } else {
         router.push("/");
 

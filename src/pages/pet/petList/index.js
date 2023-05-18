@@ -3,11 +3,22 @@ import Breadcrumb from "../../../components/breadcrumb/Breadcrumb";
 import AnimalCard from "../../../components/animal/AnimalCard";
 import Layout from "../../../layout/Layout";
 import Link from "next/link";
-import jwtDecode from "jwt-decode"
+import jwtDecode from "jwt-decode" ; 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function animalAvendre() {
+  const deleteAnimal = async (animalId) => {
+    const response = await fetch(`http://localhost:2001/animals/${animalId}`, {
+      method: "DELETE",
+    })
+    const data = await response.json() 
+    console.log(data)
+    setAnimals(animals.filter(animal => animal.id !== animalId))
+    toast.success(`animal supprimé`);
 
+  }
 
   const [connectedUser, setConnectedUser] = useState({})
   const getConnectedUserData = () => {
@@ -161,6 +172,10 @@ function animalAvendre() {
   };
   return (
     <Layout>
+        <ToastContainer
+        position="top-center"
+        autoClose={100}
+      />
       {console.log(animals)}
       <Breadcrumb pageName="liste des animaux à vendre" pageTitle="liste des animaux"  src1=""/>
       <div className="shop-page pt-120 mb-120">
@@ -309,7 +324,7 @@ function animalAvendre() {
               </div>
               <div className="row">
                 {dataPerPage.filter((item) => item.status === "toSell")
-                  .map((item, index) => <AnimalCard item={item} key={index} />)}
+                  .map((item, index) => <AnimalCard item={item} key={index} handleDelete={deleteAnimal} />)}
               </div>
               <div className="row pt-70">
                 <div className="col-lg-12 d-flex justify-content-center">

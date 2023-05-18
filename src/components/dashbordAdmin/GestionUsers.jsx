@@ -148,29 +148,29 @@ function gestionutilisateurs() {
                           disabled={imageUploading}
                         >
                           <div class="form-group">
-                            <label class="control-label">nom </label>
-                            <input type="text" class="form-control input-lg" name="firstName" onChange={saveData1}  />
+                            <label class="control-label">Nom </label>
+                            <input type="text" class="form-control input-lg" placeholder="entrer le nom" name="firstName" onChange={saveData1}  />
                           </div>
                           <div class="form-group">
-                            <label class="control-label">prénom</label>
-                            <input type="text" class="form-control input-lg" name="lastName" onChange={saveData1}  />
+                            <label class="control-label">Prénom</label>
+                            <input type="text" class="form-control input-lg" placeholder="entrer le prénom" name="lastName" onChange={saveData1}  />
                           </div>
 
                           <div class="form-group">
-                            <label class="control-label">email</label>
-                            <input name="email" type="text" class="form-control input-lg"  onChange={saveData1} />
+                            <label class="control-label">Email</label>
+                            <input name="email" type="text" placeholder="entrer l'email" class="form-control input-lg"  onChange={saveData1} />
                           </div>
                           <div class="form-group">
-                            <label class="control-label">password </label>
-                            <input name="password" type="text" onChange={saveData1} class="form-control input-lg" />
+                            <label class="control-label">Mot de passe </label>
+                            <input name="password" type="text" placeholder="entrer le mot de passe" onChange={saveData1} class="form-control input-lg" />
                           </div>
                           <div class="form-group">
                             <label class="control-label">numero de telephone </label>
-                            <input name="phoneNumber" type="text" onChange={saveData1} class="form-control input-lg" />
+                            <input name="phoneNumber" type="text" placeholder="entrer son contact" onChange={saveData1} class="form-control input-lg" />
                           </div>
                           <div class="form-group">
-                            <label class="control-label">rôle</label>
-                            <input name="role" type="text"  class="form-control input-lg" onChange={saveData1} />
+                            <label class="control-label">statut</label>
+                            <input name="role" type="text" placeholder="entrer le statut de cet utilisateur" class="form-control input-lg" onChange={saveData1} />
 
                           </div>
 

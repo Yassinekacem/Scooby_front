@@ -1,21 +1,45 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import Breadcrumb from "../../components/breadcrumb/Breadcrumb";
 import Layout from "../../layout/Layout";
 import axios from "axios";
+import { useRouter } from "next/router";
+import jwtDecode from "jwt-decode"
 
 function addFoundDeclaration() {
+  const router = useRouter();
+  const [connectedUser, setConnectedUser] = useState('')
+  const getConnectedUserData = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setConnectedUser(decodedToken.userId);
+    }
+  };
+
+  useEffect(() => {
+    getConnectedUserData()
+  }, [])
+ 
   const [file, setFile] = useState(null)
   const [imageUrl, setImageUrl] = useState("");
   const [imageUploading, setImageUploading] = useState(false);
   const [foundDeclarationData, setfoundDeclarationData] = useState({
+  });
+  const initialState = {
     animal: "",
     race: "",
     description: "",
     image: "",
     dateFound: "",
     placeFound: "",
-    phoneNumber: ""
-  });
+    phoneNumber: "",
+    userId : connectedUser
+  }
+  useEffect(() => {
+  setfoundDeclarationData(initialState)
+  }, [connectedUser])
+
+
 
   const handleImageSelect = async (e) => {
     setFile(e.target.files[0]);
@@ -52,8 +76,8 @@ function addFoundDeclaration() {
         }
       );
 
-      console.log(response.data); // log the response data for debugging purposes
-      // TODO: Redirect to a success page or display a success message to the user
+      console.log(response.data); 
+      router.push("/declaration/foundDeclarations")
     } catch (error) {
       console.error(error);
     }
@@ -62,7 +86,8 @@ function addFoundDeclaration() {
   return (
     <>
       <Layout>
-        <Breadcrumb pageName="addFoundDeclaration" pageTitle="addFoundDeclaration" />
+{        console.log(foundDeclarationData)
+}        <Breadcrumb pageName="déclarer une trouvaille d'un animal perdu " pageTitle="Déclarer une trouvaille" src1="" src=""/>
         <div className="addFoundDeclaration-section pt-120 pb-120">
           <div className="container">
             <div className="row d-flex justify-content-center">
@@ -73,7 +98,7 @@ function addFoundDeclaration() {
                   data-wow-delay=".2s"
                 >
                   <div className="form-title">
-                    <h3> announce the finding of an animal </h3>
+                    <h3> Déclarer une trouveille d'un animal </h3>
                   </div>
                   <form
                     className="w-100"
@@ -89,7 +114,7 @@ function addFoundDeclaration() {
                       </div>
                       <div className="col-md-6">
                         <div className="form-inner">
-                          <label>race: </label>
+                          <label>race: * </label>
                           <input name="race" type="text" placeholder="race of animal" onChange={saveData} />
                         </div>
                       </div>
@@ -101,29 +126,29 @@ function addFoundDeclaration() {
                       </div>
                       <div className="col-md-6">
                         <div className="form-inner">
-                          <label>image:</label>
+                          <label>image de l'animal: *</label>
                           <input name="image" type="file" onChange={handleImageSelect} />
                         </div>
                       </div>
                       <div className="col-md-6">
                         <div className="form-inner">
-                          <label>date found: *</label>
+                          <label>date de trouvaille: *</label>
                           <input name="dateFound" type="date" onChange={saveData} />
                         </div>
                       </div>
                       <div className="col-md-12">
                         <div className="form-inner">
-                          <label>place found: *</label>
+                          <label>lieu de trouvaille: *</label>
                           <input name="placeFound" type="text" placeholder="place where the animal was found" onChange={saveData} />
                         </div>
                       </div>
                       <div className="col-md-12">
                         <div className="form-inner">
-                          <label>phone number: *</label>
+                          <label>Votre num telephone: *</label>
                           <input name="phoneNumber" type="tel" placeholder="phone number" onChange={saveData} />
                         </div>
                       </div>
-                      <button className="account-btn" >Add Declaration</button>
+                      <button className="account-btn" >Déclarer</button>
 
                     </div>
                   </form>

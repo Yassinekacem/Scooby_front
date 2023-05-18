@@ -1,14 +1,17 @@
-import { React, useEffect } from "react";
+import { React, useEffect , useState } from "react";
 import GestionUsers from "../components/dashbordAdmin/GestionUsers";
 import Gestionanimals from "../components/dashbordAdmin/GestionPets";
 import Header1 from "../components/header/Header1";
 import GestionProduitss from "../components/dashbordAdmin/gestionProduits";
 import GestionDeclarations from "../components/dashbordAdmin/GestionDeclarations";
+import GestionServices from "../components/dashbordAdmin/GestionService"
 import jwtDecode from "jwt-decode"
 import { useRouter } from "next/router";
 
 
 function dashbordAdminPage() {
+  const [activeComponent, setActiveComponent] = useState('utilisateurs');
+
   const router = useRouter();
   useEffect(() => {
     protectRoute()
@@ -60,31 +63,37 @@ function dashbordAdminPage() {
           <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item active">
-                <a class="nav-link font-weight-bold" href="#gestion-aautilisateurs" style={{ fontSize: "21px", color: "black", textDecoration: "none" }}
+                <a className={`nav-link font-weight-bold ${activeComponent === 'utilisateurs' ? 'active' : ''}`}
+                  onClick={() => setActiveComponent('utilisateurs')} href="#" style={{ fontSize: "22px", color: "black", textDecoration: "none" }}
                   onMouseOver={(e) => e.target.style.color = "#FF7F50"}
                   onMouseOut={(e) => e.target.style.color = "black"}
+                  
                 >Gestion Utilisateurs</a>
               </li>
               <li class="nav-item">
-                <a  class="nav-link font-weight-bold" href="#gestion-animaux" style={{ fontSize: "21px", color: "black", textDecoration: "none" }}
+                <a className={`nav-link font-weight-bold ${activeComponent === 'animaux' ? 'active' : ''}`}
+                  onClick={() => setActiveComponent('animaux')} href="#" style={{ fontSize: "22px", color: "black", textDecoration: "none" }}
                   onMouseOver={(e) => e.target.style.color = "#FF7F50"}
                   onMouseOut={(e) => e.target.style.color = "black"}
                 >Gestion Animaux</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link font-weight-bold" href="#gestion-produits" style={{ fontSize: "21px", color: "black", textDecoration: "none" }}
+                <a className={`nav-link font-weight-bold ${activeComponent === 'produits' ? 'active' : ''}`}
+                  onClick={() => setActiveComponent('produits')} href="#" style={{ fontSize: "22px", color: "black", textDecoration: "none" }}
                   onMouseOver={(e) => e.target.style.color = "#FF7F50"}
                   onMouseOut={(e) => e.target.style.color = "black"}
                 >Gestion Produits</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link font-weight-bold" href="#gestion-declarations" style={{ fontSize: "21px", color: "black", textDecoration: "none" }}
+                <a className={`nav-link font-weight-bold ${activeComponent === 'declarations' ? 'active' : ''}`}
+                  onClick={() => setActiveComponent('declarations')} href="#" style={{ fontSize: "22px", color: "black", textDecoration: "none" }}
                   onMouseOver={(e) => e.target.style.color = "#FF7F50"}
                   onMouseOut={(e) => e.target.style.color = "black"}
                 >Gestion Déclarations</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link font-weight-bold" href="#gestion-produits" style={{ fontSize: "21px", color: "black", textDecoration: "none" }}
+                <a className={`nav-link font-weight-bold ${activeComponent === 'services' ? 'active' : ''}`}
+                  onClick={() => setActiveComponent('services')} href="#" style={{ fontSize: "22px", color: "black", textDecoration: "none" }}
                   onMouseOver={(e) => e.target.style.color = "#FF7F50"}
                   onMouseOut={(e) => e.target.style.color = "black"}
                 >Gestion  services</a>
@@ -94,19 +103,21 @@ function dashbordAdminPage() {
         </div>
       </nav>
       <div className="row g-4 justify-content-center">
-        <GestionUsers id="#gestion-aautilisateurs" />
+        {activeComponent === 'utilisateurs' && <GestionUsers />}
       </div>
       <div>
-        <Gestionanimals />
+      {activeComponent === 'animaux' && <Gestionanimals />}
       </div>
       <div>
-        {/* <GestionServices /> */}
+
+      {activeComponent === 'services' && <GestionServices />}
       </div>
       <div>
-        <GestionProduitss />
+         {activeComponent === 'produits' && <GestionProduitss />}
+
       </div>
       <div>
-        <GestionDeclarations />
+      {activeComponent === 'declarations' && <GestionDeclarations />}
       </div>
 
     </>

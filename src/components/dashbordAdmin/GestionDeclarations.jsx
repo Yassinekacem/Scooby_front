@@ -197,21 +197,21 @@ function gestionDeclarations() {
                   <button className="btn btn-adduser" data-bs-toggle="modal" data-bs-target={`#lost`}>Ajouter  déclaration de perte</button>
                 </div>
                 <div class="modal fade" id={`lost`} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-dialog modal-xl" role="document">
                               <div class="modal-content">
                                 <div class="modal-header">
-                                  <h5 class="modal-title"> ajouter une déclarationde perte</h5>
+                                  <h5 class="modal-title"> ajouter une déclaration de perte d'un animal</h5>
                                 </div>
                                 <div class="modal-body">
                                   <form role="form" method="POST" action="" onSubmit={handleSubmit1}
                                     disabled={imageUploading}>
                                     <div class="form-group">
                                       <label class="control-label">animal</label>
-                                      <input type="text" class="form-control input-lg" name="animal"  onChange={saveData1} />
+                                      <input type="text" class="form-control input-lg" placeholder="animal perdu" name="animal"  onChange={saveData1} />
                                     </div>
                                     <div class="form-group">
                                       <label class="control-label">race</label>
-                                      <input type="text" class="form-control input-lg" name="race"  onChange={saveData1} />
+                                      <input type="text" class="form-control input-lg" name="race" placeholder="race de cet animal"  onChange={saveData1} />
                                     </div>
                                     <div class="form-group">
                                       <label class="control-label">description</label>
@@ -219,17 +219,17 @@ function gestionDeclarations() {
                                     </div>
                                     <div class="form-group">
                                       <label class="control-label">date de perte</label>
-                                      <input name="dateLost" type="date" placeholder="Enter when dateLost" class="form-control input-lg"  onChange={saveData1} />
+                                      <input name="dateLost" type="date" placeholder="date de perte" class="form-control input-lg"  onChange={saveData1} />
                                     </div>
                                     <div class="form-group">
-                                      <label class="control-label">place de perte</label>
-                                      <input name="placeLost" type="text" placeholder="Enter where you Lost" class="form-control input-lg"  onChange={saveData1} />
+                                      <label class="control-label">lieu de perte</label>
+                                      <input name="placeLost" type="text" placeholder="lieu de perte" class="form-control input-lg"  onChange={saveData1} />
 
                                     </div>
 
                                     <div class="form-group">
                                       <label class="control-label">contact </label>
-                                      <input name="phoneNumber" type="text" placeholder="Enter your phone Number" class="form-control input-lg"  onChange={saveData1} />
+                                      <input name="phoneNumber" type="text" placeholder="contact" class="form-control input-lg"  onChange={saveData1} />
                                     </div>
 
                                     <div class="form-group">
@@ -368,11 +368,11 @@ function gestionDeclarations() {
                           <td data-label="contact">{phoneNumber}</td>
                           <td data-label="avec récompense">{withReward ? "oui" : "non"}</td>
 
-                          <div class="modal fade" id={`detail-${id}`} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg" role="document">
+                          <div class="modal fade" id={`updateLost-${id}`} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-xl" role="document">
                               <div class="modal-content">
                                 <div class="modal-header">
-                                  <h5 class="modal-title"> mis à jour cette annonce</h5>
+                                  <h5 class="modal-title"> mis à jour cette déclaration de perte</h5>
                                 </div>
                                 <div class="modal-body">
                                   <form role="form" method="POST" action="" onSubmit={handleSubmit}
@@ -391,17 +391,17 @@ function gestionDeclarations() {
                                     </div>
                                     <div class="form-group">
                                       <label class="control-label">date de perte</label>
-                                      <input name="dateLost" type="date" placeholder="Enter when dateLost" class="form-control input-lg" defaultValue={dateLost} onChange={saveData} />
+                                      <input name="dateLost" type="date"  class="form-control input-lg" defaultValue={dateLost} onChange={saveData} />
                                     </div>
                                     <div class="form-group">
-                                      <label class="control-label">place de perte</label>
-                                      <input name="placeLost" type="text" placeholder="Enter where you Lost" class="form-control input-lg" defaultValue={placeLost} onChange={saveData} />
+                                      <label class="control-label">lieu de perte</label>
+                                      <input name="placeLost" type="text"  class="form-control input-lg" defaultValue={placeLost} onChange={saveData} />
 
                                     </div>
 
                                     <div class="form-group">
                                       <label class="control-label">contact </label>
-                                      <input name="phoneNumber" type="text" placeholder="Enter your phone Number" class="form-control input-lg" defaultValue={phoneNumber} onChange={saveData} />
+                                      <input name="phoneNumber" type="text"  class="form-control input-lg" defaultValue={phoneNumber} onChange={saveData} />
                                     </div>
 
                                     <div class="form-group">
@@ -445,7 +445,7 @@ function gestionDeclarations() {
                             <a href="#" className="btn btn-danger" onClick={() => deleteLostDeclaration(id)}>
                               <i className="bi bi-trash"></i>
                             </a>
-                            <a className="btn btn-success p-1.5" data-bs-toggle="modal" data-bs-target={`#detail-${id}`}>
+                            <a className="btn btn-success p-1.5" data-bs-toggle="modal" data-bs-target={`#updateLost-${id}`}>
                               <i className="bi bi-pencil text-black"></i>
                             </a>
                           </td>
@@ -497,12 +497,12 @@ function gestionDeclarations() {
 
                   <h1>gestion des déclarations de trouvaille d'animaux</h1> </div> <br />
                 <div className="d-flex justify-content-center mb-3">
-                  <button className="btn btn-adduser" data-bs-toggle="modal" data-bs-target={`#found`}>
+                  <button className="btn btn-adduser" data-bs-toggle="modal" data-bs-target={`#foundDeclaration`}>
                     Ajouter  déclaration de trouvaille
                   </button>
                 </div>
-                <div class="modal fade" id={`found`} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal fade" id={`foundDeclaration`} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-xl" role="document">
                               <div class="modal-content">
                                 <div class="modal-header">
                                   <h5 class="modal-title"> ajouter une déclaration de trouvaille</h5>
@@ -512,11 +512,11 @@ function gestionDeclarations() {
                                     disabled={imageUploading}>
                                     <div class="form-group">
                                       <label class="control-label">animal</label>
-                                      <input type="text" class="form-control input-lg" name="animal"  onChange={saveData} />
+                                      <input type="text" class="form-control input-lg" name="animal" placeholder="animal trouvé"  onChange={saveData} />
                                     </div>
                                     <div class="form-group">
                                       <label class="control-label">race</label>
-                                      <input type="text" class="form-control input-lg" name="race"  onChange={saveData} />
+                                      <input type="text" class="form-control input-lg" name="race" placeholder="la race de cet animal"  onChange={saveData} />
                                     </div>
                                     <div class="form-group">
                                       <label class="control-label">description</label>
@@ -527,14 +527,14 @@ function gestionDeclarations() {
                                       <input name="dateFound" type="date" placeholder="date de trouvaille" class="form-control input-lg"  onChange={saveData} />
                                     </div>
                                     <div class="form-group">
-                                      <label class="control-label">place de trouvaille</label>
-                                      <input name="placeFound" type="text" placeholder="place de" class="form-control input-lg"  onChange={saveData} />
+                                      <label class="control-label">lieu de trouvaille</label>
+                                      <input name="placeFound" type="text" placeholder="lieu de trouvaille" class="form-control input-lg"  onChange={saveData} />
 
                                     </div>
 
                                     <div class="form-group">
                                       <label class="control-label">contact </label>
-                                      <input name="phoneNumber" type="text" placeholder="Enter your phone Number" class="form-control input-lg" onChange={saveData} />
+                                      <input name="phoneNumber" type="text" placeholder="Votre contact" class="form-control input-lg" onChange={saveData} />
                                     </div>
 
                                     <div class="form-group">
@@ -650,7 +650,7 @@ function gestionDeclarations() {
                           <td data-label="Animal">
                             {animal} {race}
                           </td>
-                          <td data-label="Place de trouvaille">
+                          <td data-label="lieu de trouvaille">
                             {placeFound}
                           </td>
                           <td data-label="date de trouvaille">
@@ -658,11 +658,11 @@ function gestionDeclarations() {
                           </td>
                           <td data-label="contact">{phoneNumber}</td>
 
-                          <div class="modal fade" id={`details-${id}`} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg" role="document">
+                          <div class="modal fade" id={`updateFound-${id}`} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-xl" role="document">
                               <div class="modal-content">
                                 <div class="modal-header">
-                                  <h5 class="modal-title"> mis à jour cette annonce</h5>
+                                  <h5 class="modal-title"> mis à jour cette déclaration de trouvaille</h5>
                                 </div>
                                 <div class="modal-body">
                                   <form role="form" method="POST" action="" onSubmit={handleSubmit}
@@ -684,14 +684,14 @@ function gestionDeclarations() {
                                       <input name="dateFound" type="date" placeholder="date de trouvaille" class="form-control input-lg" defaultValue={dateFound} onChange={saveData} />
                                     </div>
                                     <div class="form-group">
-                                      <label class="control-label">place de trouvaille</label>
-                                      <input name="placeFound" type="text" placeholder="place de" class="form-control input-lg" defaultValue={placeFound} onChange={saveData} />
+                                      <label class="control-label">lieu de trouvaille</label>
+                                      <input name="placeFound" type="text" placeholder="lieu de trouvaille" class="form-control input-lg" defaultValue={placeFound} onChange={saveData} />
 
                                     </div>
 
                                     <div class="form-group">
                                       <label class="control-label">contact </label>
-                                      <input name="phoneNumber" type="text" placeholder="Enter your phone Number" class="form-control input-lg" defaultValue={phoneNumber} onChange={saveData} />
+                                      <input name="phoneNumber" type="text" placeholder="Contact" class="form-control input-lg" defaultValue={phoneNumber} onChange={saveData} />
                                     </div>
 
                                     <div class="form-group">
@@ -719,7 +719,7 @@ function gestionDeclarations() {
 
                           <td data-label="Action">
                             <a  class="btn btn-danger" onClick={() => deleteFoundDeclaration(id)}><i class="bi bi-trash"></i></a>
-                            <a  class="btn btn-success p-1.5" data-bs-toggle="modal" data-bs-target={`#details-${id}`}><i class="bi bi-pencil text-black"></i></a>
+                            <a  class="btn btn-success p-1.5" data-bs-toggle="modal" data-bs-target={`#updateFound-${id}`}><i class="bi bi-pencil text-black"></i></a>
                           </td>
 
 

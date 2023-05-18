@@ -37,7 +37,7 @@ function GestionProduitss() {
 
 
 
-  // pagination lost declarations 
+  // pagination produits 
   const items = 5;
   const [current, setCurrent] = useState(1);
   const nbPages = Math.ceil(products.length / items);
@@ -151,7 +151,7 @@ function GestionProduitss() {
                   </button>
                 </div>
                 <div class="modal fade" id={`exampleModal1`} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog modal-lg" role="document">
+                  <div class="modal-dialog modal-xl" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
                         <h5 class="modal-title"> Ajout d'un nouvel produit </h5>
@@ -188,16 +188,16 @@ function GestionProduitss() {
                           <br />
                           <div class="form-group">
                             <label class="control-label">description</label>
-                            <textarea name="description" rows="5" cols="30" class="form-control input-lg" onChange={saveData1}></textarea>
+                            <textarea name="description" rows="5" cols="30"  placeholder="description du produit" class="form-control input-lg" onChange={saveData1}></textarea>
                           </div>
                           <div class="form-group">
                             <label class="control-label">marque</label>
-                            <input type="text" class="form-control input-lg" name="brandProduct" onChange={saveData1} />
+                            <input type="text" class="form-control input-lg" placeholder="marque du produit" name="brandProduct" onChange={saveData1} />
                           </div>
 
                           <div class="form-group">
                             <label class="control-label">prix</label>
-                            <input name="price" type="number" class="form-control input-lg" onChange={saveData1} />
+                            <input name="price" type="number" placeholder="prix du produit" class="form-control input-lg" onChange={saveData1} />
                           </div>
 
 
@@ -212,6 +212,7 @@ function GestionProduitss() {
                             <div className="form-inner">
                               <label class="control-label">disponible ?</label>
                               <input
+                              defaultChecked
                                 type="checkbox"
                                 name="isDispo"
                                 onChange={(e) =>
@@ -346,11 +347,11 @@ function GestionProduitss() {
                           </td>
                           <td data-label="Id annonceur">{userId}</td>
 
-                          <div class="modal fade" id={`exampleModal-${id}`} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg" role="document">
+                          <div class="modal fade" id={`produit-${id}`} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-xl" role="document">
                               <div class="modal-content">
                                 <div class="modal-header">
-                                  <h5 class="modal-title"> mis à jour cette annonce </h5>
+                                  <h5 class="modal-title"> mis à jour ce de produit </h5>
                                 </div>
                                 <div class="modal-body">
                                   <form role="form" method="POST" action="" onSubmit={handleSubmit}
@@ -438,7 +439,7 @@ function GestionProduitss() {
 
                           <td data-label="Action">
                             <a class="btn btn-danger" onClick={() => deleteProduct(id)}><i class="bi bi-trash"></i></a>
-                            <a className="btn btn-success p-1.5" data-bs-toggle="modal" data-bs-target={`#exampleModal-${id}`} > <i class="bi bi-pencil text-black"></i></a>
+                            <a className="btn btn-success p-1.5" data-bs-toggle="modal" data-bs-target={`#produit-${id}`} > <i class="bi bi-pencil text-black"></i></a>
                           </td>
                         </tr>
 

@@ -6,17 +6,18 @@ import Link from "next/link"
 import jwtDecode from "jwt-decode"
 
 function productList() {
-  const [connectedUser, setConnectedUser] = useState('')
+  const [connectedUser, setConnectedUser] = useState({})
   const getConnectedUserData = () => {
     const token = localStorage.getItem("token");
     if (token) {
       const decodedToken = jwtDecode(token);
-      setConnectedUser(decodedToken.userRole);
+      setConnectedUser(decodedToken);
     }
   };
   useEffect(() => {
     getConnectedUserData()
   }, [])
+
   const [is100Checked, setIs100Checked] = useState(false);
   const [isEntreChecked, setIsEntreChecked] = useState(false);
   const [is500Checked, setIs500Checked] = useState(false);
@@ -27,6 +28,7 @@ function productList() {
   const [isHamsterChecked, setIsHamsterChecked] = useState(false);
   const [isFoodChecked, setIsFoodChecked] = useState(false);
   const [isAccessoryChecked, setIsAccessoryChecked] = useState(false);
+  const [isYours, setIsYours] = useState(false);
 
 
   const [products, setProducts] = useState([]);
@@ -41,6 +43,10 @@ function productList() {
     getProducts();
   }, []);
 
+  
+  const handleIsYours = (event) => {
+    setIsYours(event.target.checked);
+  };
   const handleCatChange = (event) => {
     setIsCatChecked(event.target.checked);
   };
@@ -107,6 +113,11 @@ function productList() {
     }
 
 
+    const  yourProduct = product.userId === connectedUser.userId
+    if (isYours && !yourProduct)  {
+      showProduct = false ; 
+    }
+
    
 
     return showProduct;
@@ -140,6 +151,23 @@ function productList() {
           <div className="row">
             <div className="col-lg-3">
               <div className="shop-sidebar">
+              <div className="shop-widget">
+                  
+                  <div className="check-box-item">
+                    <div className="checkbox-container">
+                      <label className="containerss">
+
+                        <h6 className="shop-widget-title">Vos propres articles</h6>
+                        <input type="checkbox" checked={isYours}
+                          onChange={handleIsYours} />
+                        <span className="checkmark"></span>
+
+                      </label>
+
+                    </div>
+
+                  </div>
+                </div>
                 <div className="shop-widget">
                   <div className="check-box-item">
                     <h5 className="shop-widget-title">Catégorie</h5>
@@ -231,7 +259,7 @@ function productList() {
                 <div className="col-lg-12">
                   <div className="multiselect-bar">
                     <h6>liste des produits </h6>
-                    {(connectedUser === "petShop" || connectedUser === "admin") ? (<div className="multiselect-area">
+                    {(connectedUser.userRole === "petShop" || connectedUser.userRole === "admin") ? (<div className="multiselect-area">
                       <h5>Vous voulez vendre votre article ? cliquez ici :</h5>
 
                         <Link legacyBehavior href={`shop/createProducts`}>

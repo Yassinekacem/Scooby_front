@@ -15,7 +15,7 @@ function signUpPage() {
   const [userData, setUserData] = useState({
     firstName: "",
     lastName: "",
-    role: "",
+    role: "admin",
     email: "",
     password: "",
     photo: "",

@@ -103,7 +103,13 @@ function animal() {
     } else if (!isEducated && !isNotEducated) {
       showAnimal = showAnimal && true;
     }
+
+    const  yourAnimals = animal.userId === connectedUser.userId
+    if (isYours && !yourAnimals)  {
+      showAnimal = false ; 
+    }
     return showAnimal;
+    
   });
   // pagination 
   const items = 8;

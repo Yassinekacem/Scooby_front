@@ -1,14 +1,25 @@
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import DatePicker from "react-datepicker";
 import Breadcrumb from "../../components/breadcrumb/Breadcrumb";
 import Layout from "../../layout/Layout";
 import "react-datepicker/dist/react-datepicker.css";
 import Home1Service from "../../components/service/Home1Service";
 import ItemCounter from "../../components/shop/ProductCount";
+import jwtDecode from "jwt-decode"
 
 function ServiceDetails() {
-
+    const [connectedUser, setConnectedUser] = useState({})
+    const getConnectedUserData = () => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        const decodedToken = jwtDecode(token);
+        setConnectedUser(decodedToken);
+      }
+    };
+    useEffect(() => {
+      getConnectedUserData()
+    }, [])
     const [selectedService, setSelectedService] = useState("");
     const [selectedCity, setSelectedCity] = useState("");
 
@@ -28,7 +39,7 @@ function ServiceDetails() {
                 <div className="container">
                 <div className="row mb-50">
             <div className="col-lg-12">
-              <div className="multiselect-bar">
+              {connectedUser.userRole === "veterinary" || connectedUser.userRole === "petTrainer"  || connectedUser.userRole === "petGroomer" || connectedUser.userRole === "petSitter" ? (<div className="multiselect-bar">
                 <h6> </h6>
                 <div className="multiselect-area">
                   <h5> Si vous offrez des services pour les animaux, nous vous invitons à annoncer vos services en cliquant ici. :</h5>
@@ -38,7 +49,7 @@ function ServiceDetails() {
                     </button>
                   </Link>
                 </div>
-              </div>
+              </div>) : (<div> </div>)}
             </div>
           </div>
                     <div className="row g-lg-4 gy-5 mb-120">
@@ -231,7 +242,7 @@ function ServiceDetails() {
                                                 </div>
                                             </div>
                                             <div className="shop-quantity d-flex flex-wrap align-items-center justify-content-start mb-5">
-                                                <Link legacyBehavior href={`/service-details/${selectedService}/${selectedCity}`}>
+                                                <Link legacyBehavior href={`/service/${selectedService}/${selectedCity}`}>
                                                     <a className="primary-btn3">Voir les disponibilités</a>
                                                 </Link>
                                             </div>
