@@ -102,23 +102,26 @@ function loginPage() {
                     <div className="row">
                       <div className="col-12">
                         <div className="form-inner">
-                          <label>Enter Your Email *</label>
+                          <label style={{ fontSize: "21px" }}>Entrez votre adresse e-mail *</label>
                           <input
+                            style={{ fontSize: "17px" }}
+
                             name="email"
                             type="email"
-                            placeholder="Enter Your Email"
+                            placeholder="Email"
                             onChange={saveData}
                           />
                         </div>
                       </div>
                       <div className="col-12">
                         <div className="form-inner">
-                          <label>Password *</label>
+                          <label style={{ fontSize: "21px" }}>Entrer votre mot de passe *</label>
                           <input
+                            style={{ fontSize: "17px" }}
                             type={showPassword ? "text" : "password"}
                             name="password"
                             id="password"
-                            placeholder="Password"
+                            placeholder="mot de passe"
                             onChange={saveData}
                           />
                           <i
@@ -133,7 +136,7 @@ function loginPage() {
                     </div>
                     <button className="account-btn">Connexion</button>
                   </form>
-               
+
                 </div>
               </div>
             </div>

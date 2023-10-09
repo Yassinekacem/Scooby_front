@@ -94,7 +94,7 @@ function gestionServices() {
           image: imageUrl,
         }
       );
-
+getAnnouncements()
       console.log(response.data); // log the response data for debugging purposes
     } catch (error) {
       console.error(error);
@@ -104,14 +104,14 @@ function gestionServices() {
 
 
 
-  const deleteAnnouncement = async () => {
+  const deleteAnnouncement = async (announcementID) => {
     const response = await fetch(`http://localhost:2001/announcements/${announcementID}`, {
       method: "DELETE",
     })
     const data = await response.json()
     console.log(data)
     setAnnouncements(announcements.filter(announcement => announcement.id !== announcementID))
-    toast.success(`annonce de service ${id} supprimé`);
+    toast.success(`annonce de service supprimé`);
   }
 
 
@@ -153,7 +153,8 @@ function gestionServices() {
               <div className="table-wrapper" style={{ backgroundColor: '#fef5ff' }}>
                 <div className="d-flex justify-content-center mb-3">
 
-                  <h1 id="gestionServices">gestion des services pour animaux</h1> </div> <br />
+                  <h1 id="gestionServices">
+                  Gestion des services pour animaux</h1> </div> <br />
                 <div className="d-flex justify-content-center mb-3">
                   <button className="btn btn-adduser" data-bs-toggle="modal" data-bs-target={`#AjoutService`} >
                     Ajouter  service
@@ -271,10 +272,10 @@ function gestionServices() {
                       <th>Id</th>
                       <th>photo</th>
                       <th>Nom prestataire</th>
-                      <th>nature service</th>
-                      <th>gouvernement</th>
+                      <th>Nature du service</th>
+                      <th>Gouvernerart</th>
                       <th>Ville</th>
-                      <th> action</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -286,6 +287,8 @@ function gestionServices() {
                         type,
                         image,
                         ville,
+                        description,
+                        contact,
                         experience,
                         city,
                         userId
@@ -330,7 +333,8 @@ function gestionServices() {
                               image: imageUrl,
                             }
                           );
-
+                          getAnnouncements()
+                           toast.success("Annonce de service éditée avec succées")
                           console.log(response.data); // log the response data for debugging purposes
                         } catch (error) {
                           console.error(error);
@@ -339,7 +343,7 @@ function gestionServices() {
                       return (
                         <tr>
                           <td data-label="ID">
-                            <div className="delete-icon">
+                            <div >
                               {id}
                             </div>
                           </td>
@@ -350,18 +354,18 @@ function gestionServices() {
                             {firstName} {lastName}
                           </td>
 
-                          <td data-label="statut">{type}</td>
+                          <td data-label="statut">{type ==="veterinaryCaring" ? "Vétérinaire" : type==="petSitting" ? "Gardeur des animaux" : type==="petGrooming" ? "Toiletteur des animaux" : "Dresseur des animaux"}</td>
 
                           <td data-label="date de création">{city}</td>
                           <td data-label="dernière mise à jour">{ville}</td>
 
-
+                         
 
                           <div class="modal fade" id={`updateService-${id}`} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-xl" role="document">
                               <div class="modal-content">
                                 <div class="modal-header">
-                                  <h5 class="modal-title"> mis à jour cette annonce de service </h5>
+                                  <h5 class="modal-title"> Mis à jour cette annonce de service </h5>
                                 </div>
                                 <div class="modal-body">
 
@@ -414,26 +418,26 @@ function gestionServices() {
 
                             <div className="form-inner">
                               <label class="control-label"> nom *</label>
-                              <input name="firstName" type="text" placeholder="nom de prestatatire" onChange={saveData} />
+                              <input name="firstName" type="text" placeholder="nom de prestatatire" defaultValue={firstName} onChange={saveData} />
                             </div>
 
                             <div className="form-inner">
                               <label class="control-label"> prénom  *</label>
-                              <input name="lastName" type="text" placeholder="prénom de prestataire" onChange={saveData} />
+                              <input name="lastName" type="text" placeholder="prénom de prestataire" defaultValue={lastName} onChange={saveData} />
                             </div>
 
                             <div className="form-inner">
                               <label class="control-label"> numéro de téléphone *</label>
-                              <input name="contact" type="text" placeholder="contact de prestataire" onChange={saveData} />
+                              <input name="contact" type="text" placeholder="contact de prestataire" defaultValue={contact} onChange={saveData} />
                             </div>
 
                             <div className="form-inner">
                               <label class="control-label"> gouvernement *</label>
-                              <input name="city" type="text" placeholder="Son gouvernerart" onChange={saveData} />
+                              <input name="city" type="text" placeholder="Son gouvernerart" defaultValue={city} onChange={saveData} />
                             </div>
                             <div className="form-inner">
                               <label class="control-label"> ville *</label>
-                              <input name="ville" type="text" placeholder=" sa ville" onChange={saveData} />
+                              <input name="ville" type="text" placeholder=" sa ville" defaultValue={ville} onChange={saveData} />
                             </div>
                             <div className="form-inner">
                               <label class="control-label">Importez  image *</label>
@@ -441,12 +445,12 @@ function gestionServices() {
                             </div>
                             <div className="form-inner">
                               <label class="control-label">Description *</label>
-                              <textarea name="description" rows="5" cols="30" placeholder="Description" onChange={saveData}></textarea>
+                              <textarea name="description" rows="5" cols="30" placeholder="Description" defaultValue={description} onChange={saveData}></textarea>
                             </div>
 
                             <div className="form-inner">
                               <label class="control-label">experience (en ans ) dans ce domaine *</label>
-                              <input name="experience" type="number" placeholder="son experience dans ce domaine" onChange={saveData} />
+                              <input name="experience" type="number" placeholder="son experience dans ce domaine" defaultValue={experience} onChange={saveData} />
                             </div>
 
                           </div>
@@ -465,7 +469,7 @@ function gestionServices() {
 
 
                           <td data-label="Action">
-                            <a href="#" className="btn btn-danger" onClick={() => deleteAnnouncement(id)} ><i class="bi bi-trash"></i></a>
+                            <a href="#" className="btn btn-danger" data-bs-toggle="modal" onClick={() => deleteAnnouncement(id)}><i class="bi bi-trash"></i></a>
                             <a href="#" className="btn btn-success p-1.5" data-bs-toggle="modal" data-bs-target={`#updateService-${id}`} > <i class="bi bi-pencil text-black"></i></a>
                           </td>
 

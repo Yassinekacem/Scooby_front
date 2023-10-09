@@ -2,9 +2,10 @@ import React from "react";
 import Layout from "../layout/Layout";
 import { useState , useEffect } from "react";
 import jwtDecode from "jwt-decode"
-import Link from "next/link";
+import { toast } from 'react-toastify';
 import axios from "axios";
-function checOutPage() {
+
+function ProfilPage() {
   const [connectedUser, setConnectedUser] = useState('')
   const getConnectedUserData = () => {
     const token = localStorage.getItem("token");
@@ -40,7 +41,7 @@ function checOutPage() {
   const beforeUpdate = {
     firstName: user.firstName,
     lastName: user.lastName,
-    role: user.password,
+    role: user.role,
     email: user.email,
     password: user.password,
     photo: user.photo,
@@ -49,8 +50,9 @@ function checOutPage() {
     updatedAt: formattedDate,
   }
 
-
-
+  useEffect(() => {
+    setUserData(beforeUpdate)
+  }, [user])
   const handleImageSelect = async (e) => {
     setFile(e.target.files[0]);
     setImageUploading(true);
@@ -76,16 +78,20 @@ function checOutPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      let photoUrl = user.photo; // par défaut, utiliser l'URL de la photo existante
+      if (imageUrl !== "") { // si une nouvelle photo a été choisie, utiliser son URL
+        photoUrl = imageUrl;
+      }
       const response = await axios.put(
         `http://localhost:2001/auth/${connectedUser}`,
         {
           ...userData,
-          photo: imageUrl
+          photo: photoUrl
         }
       );
-      console.log(response.data); 
-
-
+      console.log(response.data);
+      getUser(); 
+      toast.success("Informations modifiées avec succées");
     } catch (error) {
       console.error(error);
     }
@@ -93,6 +99,8 @@ function checOutPage() {
 
   return (
     <Layout>
+{          console.log(userData)
+}
       <div className="checkout-section pt-120 pb-120">
         <div className="container">
           <div className="row g-4">
@@ -109,14 +117,16 @@ function checOutPage() {
 
               <div className="product-info">
                 <h5 className="product-title">
-                  <center><a href="#"> {user.firstName} {" "} {user.lastName}</a></center>
+                  <center><a style={{ fontWeight: 'bold',fontSize : "24px" }} href="#"> {user.firstName} {" "} {user.lastName}</a></center>
                 </h5>
-                <h6>{user.role}</h6>
+                <h5 >{user.role === "petSeller" ? "Vendeur des animaux" : user.role === "petTrainer" ? "Dresseur Des Animaux" : user.role === "petGroomer" ? "Toiletteur des animaux" : user.role === "veterinary" ? "Véterinaire" : "Admin" }</h5>
+                
               </div>
 
             </li>
 
           </ul>
+          
         </div>
       </aside>
       <div className="col-lg-7">
@@ -139,7 +149,7 @@ function checOutPage() {
                   <input type="text" name="lastName" defaultValue={user.lastName}  onChange={saveData} />
                 </div>
               </div>
-              <div className="col-12">
+              <div className="col-6">
                 <div className="form-inner">
                   <label>Email</label>
                   <input
@@ -150,7 +160,7 @@ function checOutPage() {
                   />
                 </div>
               </div>
-              <div className="col-12">
+              <div className="col-6">
                 <div className="form-inner">
                   <label>Mot de passe</label>
                   <input
@@ -166,7 +176,7 @@ function checOutPage() {
                   <input name="photo" type="file" onChange={handleImageSelect} />
                 </div>
               </div>
-              <div className="col-12">
+              <div className="col-6">
                 <div className="form-inner">
                  <label> Statut  :</label> 
                           <select name="role" onChange={saveData} >
@@ -184,7 +194,7 @@ function checOutPage() {
                 </div>
               </div>
 
-              <div className="col-12">
+              <div className="col-6">
                 <div className="form-inner">
                   <label>Numéro de telephone</label>
                   <input
@@ -199,8 +209,7 @@ function checOutPage() {
               <div className="shop-quantity d-flex flex-wrap align-items-center justify-content-start mb-5">
                   <button className="primary-btn3" style={{padding: '6px 6px'}}>Modifier profil</button>
               </div>
-
-
+            
             </div>
 
 
@@ -221,4 +230,4 @@ function checOutPage() {
   );
 }
 
-export default checOutPage;
+export default ProfilPage;

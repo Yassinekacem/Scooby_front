@@ -123,7 +123,7 @@ function CreatePet() {
         {console.log(connectedUser)}
 
         {console.log(PetData.status)}
-        <Breadcrumb pageName="Proposition d'animal" pageTitle="Proposition d'animal" />
+        <Breadcrumb pageName="Proposition d'animal" pageTitle="Proposition d'animal" src1="" src=""/>
         <div className="createPet-section pt-120 pb-120">
           <div className="container">
             <div className="row d-flex justify-content-center">
@@ -142,16 +142,16 @@ function CreatePet() {
                     disabled={imageUploading}
                   >                   
                   <div className="row">
-                      <div className="col-md-9">
+                      <div className="col-md-6">
                         <div className="form-group">
-                          <label htmlFor="species">Espece d'animal * <br /></label>
+                          <label htmlFor="species">Espèce d'animal* <br /></label>
                           <select
                             className="form-control"
                             id="species"
                             name="species"
                             onChange={saveData}
                           >
-                            <option disabled selected hidden value="">Sélectionnez un espece</option>
+                            <option disabled selected hidden value="">Sélectionnez un espèce</option>
                             <option value="chat">chat</option>
                             <option value="chien">chien</option>
 
@@ -159,39 +159,39 @@ function CreatePet() {
                           <br />
                         </div>
                       </div>
-                      <div className="col-md-9">
+                      <div className="col-md-6">
                         <div className="form-inner">
-                          <label>race:</label>
-                          <input name="race" type="text" placeholder="race of pet" onChange={saveData} />
+                          <label>race animal*</label>
+                          <input name="race" type="text" placeholder="race de l'animal" onChange={saveData} />
                         </div>
                       </div>
-                      <div className="col-md-9">
+                      <div className="col-md-6">
                         <div className="form-inner">
-                          <label>nom animal:</label>
-                          <input name="name" type="text"  onChange={saveData} />
+                          <label>nom animal*</label>
+                          <input name="name" type="text"placeholder="nom de l'animal"  onChange={saveData} />
                         </div>
                       </div>
-                      <div className="col-md-9">
+                      <div className="col-md-6">
                         <div className="form-inner">
-                          <label>date de naissance:</label>
+                          <label>date de naissance*</label>
                           <input name="dateOfBirth" type="date"  onChange={saveData} />
                         </div>
                       </div>
-                      <div className="col-md-9">
+                      <div className="col-md-12">
                         <div className="form-inner">
                           <label>description: *</label>
-                          <textarea name="description" placeholder="description of the animal" onChange={saveData}></textarea>
+                          <textarea name="description" placeholder="description de l'animal" onChange={saveData}></textarea>
                         </div>
                       </div>
-                      <div className="col-md-9">
+                      <div className="col-md-6">
                         <div className="form-inner">
                           <label>Importez l'image de votre animal *</label>
                           <input name="image" type="file" onChange={handleImageSelect} />
                         </div>
                       </div>
-                      <div className="col-md-9">
+                      <div className="col-md-6">
                         <div className="form-group">
-                          <label htmlFor="gender">sexe de l'animal * <br /></label>
+                          <label htmlFor="gender">sexe de l'animal* <br /></label>
                           <select
                             className="form-control"
                             id="gender"
@@ -207,14 +207,14 @@ function CreatePet() {
                         </div>
                       </div>
 
-                      <div className="col-md-9">
+                      <div className="col-md-12">
                         <div className="form-inner">
                           <label> age *</label>
-                          <input name="age" type="number" placeholder="Enter his age" onChange={saveData} />
+                          <input name="age" type="number" placeholder="Entrer son age" onChange={saveData} />
                         </div>
                       </div>
 
-                      <div className="col-md-9">
+                      <div className="col-md-6">
                         <div className="form-inner">
                           <label>dréssé(e) ? </label>
                           <input
@@ -229,7 +229,7 @@ function CreatePet() {
                           />
                         </div>
                       </div>
-                      <div className="col-md-9">
+                      <div className="col-md-6">
                         <div className="form-inner">
                           <label>vacciné(e) ? </label>
                           <input

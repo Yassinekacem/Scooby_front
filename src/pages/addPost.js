@@ -4,9 +4,11 @@ import Breadcrumb from "../components/breadcrumb/Breadcrumb";
 import Layout from "../layout/Layout";
 import axios from "axios";
 import jwtDecode from "jwt-decode"
+import { useRouter } from "next/router";
 
 
 function addPostPage() {
+  const router = useRouter();
   const [connectedUser, setConnectedUser] = useState({})
   const getConnectedUserData = () => {
     const token = localStorage.getItem("token");
@@ -28,6 +30,8 @@ function addPostPage() {
   const initialState = {
     firstName: connectedUser.firstName,
     lastName: connectedUser.lastName,
+    photoUser : connectedUser.userImage,
+    subject : "",
     content: "",
     image: "",
     createdAt: formattedDate,
@@ -81,6 +85,7 @@ function addPostPage() {
           }
         );
         console.log(response.data);
+        router.push ("/forum")
       } catch (error) {
         console.error(error);
       }
@@ -110,19 +115,45 @@ function addPostPage() {
                     className="w-100"
                     onSubmit={handleSubmit}
                     disabled={imageUploading}
-                  >                    <div className="row">
-                   
-                      <div className="col-md-9">
+                  >                    
+                  <div className="row">
+                  <div className="col-md-12">
+                        <div className="form-group">
+                          <label htmlFor="subject">Sujet de la publication * <br /></label>
+                          <select
+                            className="form-control"
+                            id="subject"
+                            name="subject"
+                            onChange={saveData}
+                          >
+                            <option disabled selected hidden value="">Sélectionnez le sujet de votre publication</option>
+                            <option value="maladie">Maladie</option>
+                            <option value="alimentation">Alimentation</option>
+                            <option value="blessure">Blessure</option>
+                            <option value="comportement">Comportement</option>
+                            <option value="dressage">Dressage</option>
+                            <option value="sauvetage">Sauvetage</option>
+                            <option value="amusement">Amusement</option>
+                            <option value="autre">Autre sujet </option>
+
+
+
+
+                          </select>
+                          <br />
+                        </div>
+                      </div>
+                      <div className="col-md-12">
                         <div className="form-inner">
-                          <label> contenu de post </label>
+                          <label> Publication * </label>
                           <textarea name="content" type="text" onChange={saveData} />
                         </div>
                       </div>
 
 
-                      <div className="col-md-9">
+                      <div className="col-md-12">
                         <div className="form-inner">
-                          <label> importer l'image de la publication :  </label>
+                          <label> importer l'image de la publication : *  </label>
                           <input name="image" type="file" onChange={handleImageSelect} />
                         </div>
                       </div>

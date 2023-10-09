@@ -34,7 +34,8 @@ function FoundDetails(props) {
           <div className="shop-details-content" align="center">
           <h4>Annonce de trouveille d'un : </h4> <br />  
 
-            <h3> {props.foundDeclaration.animal==="cat" ? "chat" : "chien" } {props.foundDeclaration.race} </h3> 
+            <h3> {props.foundDeclaration.animal
+             } {props.foundDeclaration.race} </h3> 
 
             <ul className="shopuct-review2 d-flex flex-row align-items-center mb-25">
               

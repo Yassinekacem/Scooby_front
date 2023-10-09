@@ -49,7 +49,17 @@ function lostDeclaration() {
   useEffect(() => {
     getlostDeclarations()
   }, [])
-
+  const deleteDeclaration = async (DeclarationID) => {
+    const response = await fetch(`http://localhost:2001/lostDeclarations/${DeclarationID}`, {
+      method: "DELETE",
+    })
+    const data = await response.json()
+    console.log(data)
+    setlostDeclarations(lostDeclarations.filter(lostDeclarations => lostDeclarations.id !== DeclarationID))
+    toast.success(`déclaration supprimé supprimé`);
+  }
+  
+  
   const handleIsYours = (event) => {
     setIsYours(event.target.checked);
   };
@@ -142,7 +152,7 @@ function lostDeclaration() {
   return (
     <Layout>
       {console.log(lostDeclarations)}
-      <Breadcrumb pageName="Toutes les déclarations de perte d'animaux" pageTitle="Déclarations de perte" src1="" src="" />
+      <Breadcrumb pageName="Toutes les déclarations de perte d'animaux" pageTitle="Déclarations de perte" src1="" src = "../../../assets/images/bg/inner-banner-img3.png" />
       <div className="shop-page pt-120 mb-120">
         <div className="container">
           <div className="row">
@@ -219,7 +229,7 @@ function lostDeclaration() {
                           onChange={handleMonthChange} />                           <span className="checkmark" />
                       </label>
                       <label className="containerss">
-                        cet année
+                        cette année
                         <input type="checkbox" checked={isYearChecked}
                           onChange={handleYearChange} />                           <span className="checkmark" />
                       </label>
@@ -258,7 +268,7 @@ function lostDeclaration() {
               </div>
               <div className="row g-4 justify-content-center">
                 {dataPerPage.map((item, index) =>
-                  <LostDeclarationCard item={item} key={index} />
+                  <LostDeclarationCard item={item} key={index}  handleDelete={deleteDeclaration} handleGet={getlostDeclarations}/>
                 )}
               </div>
               <div className="row pt-70">

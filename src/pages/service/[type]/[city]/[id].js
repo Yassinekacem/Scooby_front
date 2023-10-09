@@ -3,19 +3,48 @@ import { useState, useEffect, React } from "react";
 import axios from "axios";
 import Layout from "../../../../layout/Layout";
 import Breadcrumb from "../../../../components/breadcrumb/Breadcrumb";
-function ServiceDetail(props) {
+import jwtDecode from "jwt-decode"
 
+function ServiceDetail(props) {
+    const [connectedUser, setConnectedUser] = useState({})
+    const getConnectedUserData = () => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        const decodedToken = jwtDecode(token);
+        setConnectedUser(decodedToken);
+      }
+    };
+    useEffect(() => {
+      getConnectedUserData()
+    }, [])
+  
+
+
+    const [comments, setComments] = useState([])
+
+    const getComments = async () => {
+        const response = await fetch(`http://localhost:2001/comments/${props.announcement.id}`);
+        const data = await response.json();
+        setComments(data)
+    };
+    useEffect(() => {
+        getComments()
+    }, [])
     const now = new Date();
     const formattedDate = now.toLocaleString("fr-FR");
-    const [commentData, setCommentData] = useState({
-        firstName: "",
-        lastName: "",
+    const [commentData, setCommentData] = useState({});
+    const initialState = {
+        firstName: connectedUser.firstName,
+        lastName: connectedUser.lastName,
         message: "",
         stars: 0,
-        userId: 1,
+        userId: connectedUser.userId,
         createdAt: formattedDate,
         announcementId: props.announcement.id,
-    });
+    }
+    useEffect(() => {
+        setCommentData(initialState)
+      }, [connectedUser])
 
     const saveData = (e) => {
         e.preventDefault();
@@ -30,7 +59,8 @@ function ServiceDetail(props) {
 
 
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         try {
             const response = await axios.post(
                 `http://localhost:2001/comments`,
@@ -39,20 +69,13 @@ function ServiceDetail(props) {
                 }
             );
             console.log(response.data);
+            setComments([...comments , response.data])
+            getAvgStars();
         } catch (error) {
             console.error(error);
         }
     };
-    const [comments, setComments] = useState([])
 
-    const getComments = async () => {
-        const response = await fetch(`http://localhost:2001/comments/${props.announcement.id}`);
-        const data = await response.json();
-        setComments(data)
-    };
-    useEffect(() => {
-        getComments()
-    }, [])
 
 
     const [avgStars, setAvgStars] = useState([])
@@ -73,6 +96,8 @@ function ServiceDetail(props) {
             <Breadcrumb pageName="Détaille d'une annonce pour un service" pageTitle="Détaille annonce" src="" src1="" />
             {console.log(avgStars)
             }
+            {console.log(commentData)
+            }
 
             <div className="shop-details-page pt-120 mb-120">
                 <div className="container">
@@ -88,7 +113,7 @@ function ServiceDetail(props) {
                                     className="img-fluid rounded-circle"
                                     src={props.announcement.image}
                                     alt=""
-                                    style={{ width: "500px", height: "550px", borderRadius: "50%" }}
+                                    style={{ width: "485px", height: "500px", borderRadius: "50%" }}
                                 />
                             </div>
 
@@ -128,6 +153,11 @@ function ServiceDetail(props) {
                                     </h4>
                                 </div>
                                 <br />
+
+                                <div className="model-number">
+                                    <h4>Contact: {<u>{props.announcement.contact}</u>}</h4>
+                                </div>
+                                <br />
                                 <i><h5 style={{ fontWeight: 'bold', color: 'black' }}>
                                     Ville : {props.announcement.ville}-{props.announcement.city}
                                 </h5></i>
@@ -138,9 +168,7 @@ function ServiceDetail(props) {
 
 
                                 <br />
-                                <div className="model-number">
-                                    <h4>Contact: {props.announcement.contact}</h4>
-                                </div>
+                               
 
                                 <p>
                                     {props.announcement.description}.{" "}
@@ -149,9 +177,7 @@ function ServiceDetail(props) {
 
 
                                 </div>
-                                <h4 style={{ fontFamily: "Montserrat, sans-serif" }}>
-                                    contactez moi pour plus d'informations :
-                                </h4>
+                               
                                 <br />
                                 <div className="buy-now-btn">
                                     <Link legacyBehavior href={`tel:+216${props.announcement.contact}`}>
@@ -298,19 +324,11 @@ function ServiceDetail(props) {
                                                     <form onSubmit={handleSubmit}
                                                     >
                                                         <div className="row">
+                                                          
+                                                         
                                                             <div className="col-lg-12">
                                                                 <div className="form-inner mb-20">
-                                                                    <input type="text" name="firstName" placeholder="votre nom*" required onChange={saveData} />
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-lg-12">
-                                                                <div className="form-inner mb-20">
-                                                                    <input type="text" name="lastName" placeholder="votre prenom*" required onChange={saveData} />
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-lg-12">
-                                                                <div className="form-inner mb-20">
-                                                                    <textarea type="text" name="message" placeholder="votre commentaire*" required onChange={saveData} />
+                                                                    <textarea type="text" name="message" placeholder="Donner votre avis ici *" required onChange={saveData} />
                                                                 </div>
                                                             </div>
                                                             <div className="col-lg-12">

@@ -17,7 +17,7 @@ function Footer1() {
                 </div>
                 <div className="hotline-info">
                   <h6 className="mb-10">
-                    <a href="tel:+8801761111456">+216 95 716 180</a>
+                    <a href="tel:+21695716180">+216 95 716 180</a>
                   </h6>
                   
                 </div>

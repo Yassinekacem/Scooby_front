@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
-function Breadcrumb({ pageName = "Page Name", pageTitle = "Page Title" , src = "../../../assets/images/bg/inner-banner-img.png"  , src1="../../../assets/images/bg/inner-banner-vec.png"}) {
+function Breadcrumb({ pageName = "Page Name", pageTitle = "Page Title", src = "../../../assets/images/bg/inner-banner-img.png", src1 = "../../../assets/images/bg/inner-banner-vec.png" }) {
   return (
     <div className="inner-page-banner">
       <div className="breadcrumb-vec-btm">
@@ -50,7 +50,10 @@ function Breadcrumb({ pageName = "Page Name", pageTitle = "Page Title" , src = "
                 className="img-fluid"
                 src={src}
                 alt=""
+                height={353}
+                weight={1000}
               />
+
             </div>
           </div>
         </div>

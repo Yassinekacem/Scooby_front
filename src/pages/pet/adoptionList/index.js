@@ -137,7 +137,7 @@ function animal() {
         autoClose={100}
       />
       {console.log(animals)}
-      <Breadcrumb pageName="Liste des animaux à adopter" pageTitle="liste d'adoption"  src1="" />
+      <Breadcrumb pageName="Liste des animaux à adopter" pageTitle="liste d'adoption"  src1=""  src = "../../../assets/images/bg/inner-banner-img1.png"/>
       <div className="shop-page pt-120 mb-120">
         <div className="container">
           <div className="row">
@@ -237,7 +237,7 @@ function animal() {
               </div>
               <div className="row">
                 {dataPerPage
-                  .map((item, index) => <AnimalAdoptCard item={item} key={item.id} handleDelete={deleteAnimal}  />)}
+                  .map((item, index) => <AnimalAdoptCard item={item} key={item.id} handleDelete={deleteAnimal} handleGet={getAnimals}  />)}
               </div>
               <div className="row pt-70">
                 <div className="col-lg-12 d-flex justify-content-center">

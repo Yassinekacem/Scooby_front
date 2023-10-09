@@ -5,35 +5,29 @@ function BlogTagWidget() {
   return (
     <div className="single-widgets widget_egns_tag mb-30">
       <div className="widget-title">
-        <h3>All Tag</h3>
+      <center><h3>Les sujets du forum de communication </h3></center>  
       </div>
       <p className="wp-block-tag-cloud">
         <Link legacyBehavior href="/blog-grid">
-          <a>Grooming</a>
+          <a>#Maladie & Blessure</a>
         </Link>
         <Link legacyBehavior href="/blog-grid">
-          <a>Walking</a>
+          <a>#Alimentation</a>
         </Link>
         <Link legacyBehavior href="/blog-grid">
-          <a>Pet Care</a>
+          <a>#Dressage</a>
         </Link>
         <Link legacyBehavior href="/blog-grid">
-          <a>Daycare</a>
+          <a>#Sauvetage</a>
         </Link>
         <Link legacyBehavior href="/blog-grid">
-          <a>Bording</a>
+          <a>#Comportement</a>
         </Link>
         <Link legacyBehavior href="/blog-grid">
-          <a>Madical</a>
+          <a>#Amusement</a>
         </Link>
         <Link legacyBehavior href="/blog-grid">
-          <a>Vakcine</a>
-        </Link>
-        <Link legacyBehavior href="/blog-grid">
-          <a>Education</a>
-        </Link>
-        <Link legacyBehavior href="/blog-grid">
-          <a>Services</a>
+          <a>#Autres ...</a>
         </Link>
       </p>
     </div>

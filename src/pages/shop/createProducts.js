@@ -129,7 +129,7 @@ function CreateProduct() {
                     disabled={imageUploading}
                   >                    <div className="row">
 
-                      <div className="col-md-9">
+                      <div className="col-md-6">
                         <div className="form-group">
                           <label htmlFor="category">Categorie * <br /></label>
                           <select
@@ -145,7 +145,7 @@ function CreateProduct() {
                           <br />
                         </div>
                       </div>
-                      <div className="col-md-9">
+                      <div className="col-md-6">
                         <div className="form-group">
                           <label htmlFor="category">animal destinataire *</label>
                           <select className="form-control" name="animalCible" onChange={saveData}>
@@ -163,19 +163,19 @@ function CreateProduct() {
 
 
 
-                      <div className="col-md-9">
+                      <div className="col-md-6">
                         <div className="form-inner">
                           <label>Importez l'image du produit *</label>
                           <input name="image" type="file" onChange={handleImageSelect} />
                         </div>
                       </div>
-                      <div className="col-md-6">
+                      <div className="col-md-12">
                         <div className="form-inner">
                           <label>Description *</label>
                           <textarea name="description" rows="5" cols="30" placeholder="Description" onChange={saveData}></textarea>
                         </div>
                       </div>
-                      <div className="col-md-9">
+                      <div className="col-md-6">
                         <div className="form-inner">
                           <label>marque *</label>
                           <input name="brandProduct" type="text" placeholder="Enter Your price" onChange={saveData} />
@@ -183,14 +183,14 @@ function CreateProduct() {
                       </div>
 
 
-                      <div className="col-md-9">
+                      <div className="col-md-6">
                         <div className="form-inner">
                           <label>prix *</label>
                           <input name="price" type="number" placeholder="Enter Your price" onChange={saveData} />
                         </div>
                       </div>
 
-                      <div className="col-md-9">
+                      <div className="col-md-6">
                         <div className="form-inner">
                           <label>disponible ? </label>
                           <input

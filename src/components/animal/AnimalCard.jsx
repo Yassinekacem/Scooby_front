@@ -15,7 +15,7 @@ const deleteAnimal = async (animalId) => {
     const data = await response.json();
     console.log(data);
     toast.success("Animal supprimé avec succès!");
-    <ToastContainer  />
+    <ToastContainer />
   } catch (error) {
     console.error(error);
     toast.error("Une erreur s'est produite lors de la suppression de l'animal.");
@@ -32,23 +32,36 @@ function AnimalCard({ item: { id,
   status,
   isVaccinated,
   isEducated,
+  dateOfBirth,
+  description,
   userId
-} , handleDelete }) {
+}, handleDelete , handleGet}) {
+  const [animal, setAnimal] = useState([]);
+  const getAnimal = async () => {
+    const response = await fetch(`http://localhost:2001/animals/${id}`);
+    const data = await response.json();
+    setAnimal(data);
+  };
+  useEffect(() => {
+    getAnimal();
+  }, []);
   const [file, setFile] = useState(null)
   const [imageUrl, setImageUrl] = useState("");
   const [imageUploading, setImageUploading] = useState(false);
   const [animalData, setAnimalData] = useState({
-    id ,
     species,
-    race ,
+    race,
     status,
     age,
     isVaccinated,
+    dateOfBirth,
+    name,
+    description,
     isEducated,
     gender,
     image,
     price,
-    userId: 3
+    userId,
 
   });
   const [connectedUser, setConnectedUser] = useState('')
@@ -105,18 +118,24 @@ function AnimalCard({ item: { id,
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-
+      let photoUrl = animal.image;
+      if (imageUrl !== "") { 
+        photoUrl = imageUrl;
+      }
       const response = await axios.put(
         `http://localhost:2001/animals/${id}`,
         {
           ...animalData,
-          image: imageUrl
+          image: photoUrl
         }
       );
 
-      console.log(response.data); // log the response data for debugging purposes
-      // TODO: Redirect to a success page or display a success message to the user
+      console.log(response.data); 
+      handleGet();
+      toast.success(" Votre animal éditée avec succées")
     } catch (error) {
+      toast.error("Erreur de modification")
+
       console.error(error);
     }
   };
@@ -124,17 +143,34 @@ function AnimalCard({ item: { id,
   return (
     <>
       {console.log(animalData)}
- 
+      <div className="modal" id={`deleteSell-${id}`} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">Supprimer un animal à vendre</h5>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div className="modal-body ">
+              <center><h4><strong>Vous êtes sûr de supprimer cet animal ?</strong></h4></center>
+            </div>
+            <div className="modal-footer justify-content-center">
+              <button type="button" className="btn btn-success" data-bs-dismiss="modal" onClick={() => handleDelete(id)}
+              ><strong> Supprimer </strong></button>
+              <button type="button" className="btn btn-danger" data-bs-dismiss="modal" > <strong> Annuler </strong></button>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="modal fade" id={`detail-${id}`} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title"> mis à jour cette annonce</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-header">
+              <h5 class="modal-title"> Modifier votre animal</h5>
+              <button type="button" className="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
               <form role="form" method="POST" action="" onSubmit={handleSubmit}
-                    disabled={imageUploading}>
+                disabled={imageUploading}>
                 <div class="form-group">
                   <label class="control-label">animal</label>
                   <input type="text" class="form-control input-lg" name="species" defaultValue={species} onChange={saveData} />
@@ -147,25 +183,25 @@ function AnimalCard({ item: { id,
                   <label class="control-label">age</label>
                   <input type="number" class="form-control input-lg" name="age" defaultValue={age} onChange={saveData} />
                 </div>
-                
+
                 <div class="form-group">
-                  <label class="control-label">gender</label>
+                  <label class="control-label">sexe</label>
                   <input name="gender" type="text" placeholder="Enter the sex of your animal" class="form-control input-lg" defaultValue={gender} onChange={saveData} />
                 </div>
                 <div class="form-group">
-                  <label class="control-label">price</label>
+                  <label class="control-label">prix</label>
                   <input name="price" type="number" placeholder="Enter the price of your animal" class="form-control input-lg" defaultValue={price} onChange={saveData} />
                 </div>
 
                 <div class="form-group">
-                  <label class="control-label">status</label>
+                  <label class="control-label">statut</label>
                   <input name="status" type="text" placeholder="Enter your phone Number" class="form-control input-lg" defaultValue={status} onChange={saveData} />
                 </div>
 
                 <div class="form-group">
                   <label class="control-label">image</label>
                   <div>
-                  <input name="image" type="file" onChange={handleImageSelect} />                  </div>
+                    <input name="image" type="file" onChange={handleImageSelect} />                  </div>
                 </div>
                 <div className="form-group">
                   <div className="form-inner">
@@ -235,13 +271,13 @@ function AnimalCard({ item: { id,
                 <a>View Details</a>
               </Link>
             </div>
-            {(connectedUser === userId || connectedUser1==="admin")? (<ul className="cart-icon-list">
-            <li>
-            <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target={`#detail-${id}`}><i class="bi bi-pencil text-black"></i></a>
+            {(connectedUser === userId || connectedUser1 === "admin") ? (<ul className="cart-icon-list">
+              <li>
+                <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target={`#detail-${id}`}><i class="bi bi-pencil text-black"></i></a>
               </li>
 
               <li>
-              <a href="#" class="btn btn-danger" onClick={() => handleDelete(id)}><i class="bi bi-trash"></i></a>
+                <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target={`#deleteSell-${id}`}><i class="bi bi-trash"></i></a>
               </li>
             </ul>) : (<ul></ul>)}
 

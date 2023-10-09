@@ -53,8 +53,8 @@ function gestionutilisateurs() {
     let value = e.target.value;
     setUserData({ ...userData, [name]: value });
   };
-  const handleSubmit1 = async () => {
-    // e.preventDefault();
+  const handleSubmit1 = async (e) => {
+    e.preventDefault();
     try {
       const response = await axios.post(
         `http://localhost:2001/auth/signUp`,
@@ -64,10 +64,14 @@ function gestionutilisateurs() {
         }
       );
       console.log(response.data);
+      getUsers();
       toast.success(`utilisateur ajouté avec succées`)
+
 
     } catch (error) {
       console.error(error);
+      toast.error(`Erreur d'ajout`)
+
     }
   };
 
@@ -104,7 +108,7 @@ function gestionutilisateurs() {
     const data = await response.json()
     console.log(data)
     setUsers(users.filter(user => user.id !== userId))
-    toast.success(`Utilisateur ${id} supprimé`);
+    toast.success(`Utilisateur supprimé avec succées`);
   }
 
 
@@ -129,18 +133,18 @@ function gestionutilisateurs() {
               <div className="table-wrapper" style={{ backgroundColor: '#fef5ff' }}>
                 <div className="d-flex justify-content-center mb-3">
 
-                  <h1>gestion des utilisateurs</h1> </div> <br />
+                  <h1>Gestion des utilisateurs</h1> </div> <br />
                 <div className="d-flex justify-content-center mb-3">
                   <button className="btn btn-adduser" data-bs-toggle="modal" data-bs-target={`#exampleModal`} >
                     Ajouter  utilisateur
                   </button>
                 </div>
-                
+
                 <div class="modal fade" id={`exampleModal`} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title">ajout d'un nouvel utilisateur</h5>
+                        <h5 class="modal-title">Ajout d'un nouvel utilisateur</h5>
                       </div>
                       <div class="modal-body">
                         <form role="form" method="POST" action=""
@@ -148,30 +152,40 @@ function gestionutilisateurs() {
                           disabled={imageUploading}
                         >
                           <div class="form-group">
-                            <label class="control-label">Nom </label>
-                            <input type="text" class="form-control input-lg" placeholder="entrer le nom" name="firstName" onChange={saveData1}  />
+                            <label class="control-label">Nom * </label>
+                            <input type="text" class="form-control input-lg"  name="firstName" onChange={saveData1} />
                           </div>
                           <div class="form-group">
-                            <label class="control-label">Prénom</label>
-                            <input type="text" class="form-control input-lg" placeholder="entrer le prénom" name="lastName" onChange={saveData1}  />
+                            <label class="control-label">Prénom *</label>
+                            <input type="text" class="form-control input-lg"  name="lastName" onChange={saveData1} />
                           </div>
 
                           <div class="form-group">
-                            <label class="control-label">Email</label>
-                            <input name="email" type="text" placeholder="entrer l'email" class="form-control input-lg"  onChange={saveData1} />
+                            <label class="control-label">Email*</label>
+                            <input name="email" type="text"  class="form-control input-lg" onChange={saveData1} />
                           </div>
                           <div class="form-group">
-                            <label class="control-label">Mot de passe </label>
-                            <input name="password" type="text" placeholder="entrer le mot de passe" onChange={saveData1} class="form-control input-lg" />
+                            <label class="control-label">Mot de passe *</label>
+                            <input name="password" type="password"  onChange={saveData1} class="form-control input-lg" />
                           </div>
                           <div class="form-group">
-                            <label class="control-label">numero de telephone </label>
-                            <input name="phoneNumber" type="text" placeholder="entrer son contact" onChange={saveData1} class="form-control input-lg" />
+                            <label class="control-label">Numero de téléphone *</label>
+                            <input name="phoneNumber" type="text"   onChange={saveData1} class="form-control input-lg" />
                           </div>
-                          <div class="form-group">
-                            <label class="control-label">statut</label>
-                            <input name="role" type="text" placeholder="entrer le statut de cet utilisateur" class="form-control input-lg" onChange={saveData1} />
-
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label>  Statut *</label> <br />
+                              <select className="form-select" name="role" onChange={saveData1}>
+                                <option disabled selected hidden value="" > Sélectionnez votre statut </option>
+                                <option value="veterinary">Vétérinaire</option>
+                                <option value="petTrainer">Dresseur d'animaux de compagnie</option>
+                                <option value="petSitter">Garde d'animaux de compagnie</option>
+                                <option value="petGroomer">Toiletteur d'animaux de compagnie</option>
+                                <option value="petShop">Magasin d'animaux de compagnie</option>
+                                <option value="petSeller">éleveur d'animaux </option>
+                                <option value="client">passionné d animaux</option>
+                              </select>
+                            </div>
                           </div>
 
 
@@ -188,7 +202,7 @@ function gestionutilisateurs() {
                           <div class="form-group">
                             <div>
                               <center><button type="submit" class="primary-btn1" data-bs-dismiss="modal">
-                                Ajouter Utilisateur
+                                Ajouter cet Utilisateur
                               </button></center>
                             </div>
                           </div>
@@ -207,7 +221,7 @@ function gestionutilisateurs() {
                       <th>Nom et prénom</th>
                       <th>Rôle</th>
                       <th>Date de création</th>
-                      <th> dernière mise à jour</th>
+                      <th>Dernière mise à jour</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -217,6 +231,7 @@ function gestionutilisateurs() {
                         id,
                         firstName,
                         lastName,
+                        phoneNumber,
                         photo,
                         password,
                         email,
@@ -246,8 +261,8 @@ function gestionutilisateurs() {
                         let value = e.target.value;
                         setUserData({ ...userData, [name]: value });
                       };
-                      const handleSubmit = async () => {
-                        // e.preventDefault();
+                      const handleSubmit = async (e) => {
+                         e.preventDefault();
                         try {
                           const response = await axios.put(
                             `http://localhost:2001/auth/${id}`,
@@ -257,21 +272,23 @@ function gestionutilisateurs() {
                             }
                           );
                           console.log(response.data);
-                          toast.success(`utilisateur ${id} édité avec succées`)
+                          getUsers()
+;                          toast.success(`utilisateur édité avec succées`)
 
                         } catch (error) {
                           console.error(error);
+                          toast.error("Erreur de modification de cet utilisateur")
                         }
                       };
                       return (
                         <tr>
                           <td data-label="ID">
-                            <div className="delete-icon">
+                            <div >
                               {id}
                             </div>
                           </td>
                           <td data-label="Image">
-                            {photo.length > 0 ? (<img src={photo} alt="" />) : (<img src="assets/images/bg/team/unkown.png" alt="" />)}
+                            {photo !== "" ? (<img src={photo} alt="" />) : (<img src="assets/images/bg/team/unkown.png" alt="" />)}
                           </td>
                           <td data-label="Email">
                             {email}
@@ -280,18 +297,31 @@ function gestionutilisateurs() {
                             {firstName} {lastName}
                           </td>
 
-                          <td data-label="statut">{role}</td>
+                          <td data-label="statut">{role === "veterinary" ? "Vétérinaire" : role === "petSeller" ? "Vendeur des animaux" : role === "petShop" ? "Propriétaire d'animalerie" : role === "petTrainer" ? "Dresseur des animaux" : role === "petGroomer" ? "Toiletteur des animaux" : "Passionné d'animaux"}</td>
 
                           <td data-label="date de création">{createdAt}</td>
                           <td data-label="dernière mise à jour">{updatedAt}</td>
 
 
 
+
+
+
+
+
+
+
+                          <td data-label="Action">
+                            <a href="#" className="btn btn-danger" onClick={() => deleteUser(id, setUsers, users)} ><i class="bi bi-trash"></i></a>
+                            <a href="#" className="btn btn-success p-1.5" data-bs-toggle="modal" data-bs-target={`#exampleModal-${id}`} > <i class="bi bi-pencil text-black"></i></a>
+                          </td>
+
+
                           <div class="modal fade" id={`exampleModal-${id}`} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-xl" role="document">
+                            <div class="modal-dialog modal-lg" role="document">
                               <div class="modal-content">
                                 <div class="modal-header">
-                                  <h5 class="modal-title"> mis à jour cette annonce</h5>
+                                  <h5 class="modal-title">Modification d'un utilisateur</h5>
                                 </div>
                                 <div class="modal-body">
                                   <form role="form" method="POST" action=""
@@ -299,30 +329,40 @@ function gestionutilisateurs() {
                                     disabled={imageUploading}
                                   >
                                     <div class="form-group">
-                                      <label class="control-label">nom </label>
-                                      <input type="text" class="form-control input-lg" name="firstName" onChange={saveData} defaultValue={lastName} />
+                                      <label class="control-label">Nom *</label>
+                                      <input type="text" class="form-control input-lg" name="firstName" onChange={saveData} defaultValue={firstName} />
                                     </div>
                                     <div class="form-group">
-                                      <label class="control-label">prénom</label>
+                                      <label class="control-label">Prénom *</label>
                                       <input type="text" class="form-control input-lg" name="lastName" onChange={saveData} defaultValue={lastName} />
                                     </div>
 
                                     <div class="form-group">
-                                      <label class="control-label">email</label>
+                                      <label class="control-label">Email *</label>
                                       <input name="email" type="text" class="form-control input-lg" defaultValue={email} onChange={saveData} />
                                     </div>
                                     <div class="form-group">
-                                      <label class="control-label">password </label>
-                                      <input name="password" type="text" onChange={saveData} class="form-control input-lg" />
+                                      <label class="control-label">Mot de passe *</label>
+                                      <input name="password" type="password" defaultValue={password} onChange={saveData} class="form-control input-lg" />
                                     </div>
                                     <div class="form-group">
-                                      <label class="control-label">numero de telephone </label>
-                                      <input name="phoneNumber" type="text" onChange={saveData} class="form-control input-lg" />
+                                      <label class="control-label">Numero de téléphone *</label>
+                                      <input name="phoneNumber" type="text" onChange={saveData} class="form-control input-lg"  defaultValue={phoneNumber}/>
                                     </div>
-                                    <div class="form-group">
-                                      <label class="control-label">rôle</label>
-                                      <input name="role" type="text" defaultValue={role} class="form-control input-lg" onChange={saveData} />
-
+                                    <div class="col-md-12">
+                                      <div class="form-group">
+                                        <label> Statut *</label> <br />
+                                        <select className="form-select" name="role" onChange={saveData1}>
+                                          <option disabled selected hidden value="" > Sélectionnez nouvelle statut </option>
+                                          <option value="veterinary">Vétérinaire</option>
+                                          <option value="petTrainer">Dresseur d'animaux de compagnie</option>
+                                          <option value="petSitter">Garde d'animaux de compagnie</option>
+                                          <option value="petGroomer">Toiletteur d'animaux de compagnie</option>
+                                          <option value="petShop">Magasin d'animaux de compagnie</option>
+                                          <option value="petSeller">éleveur d'animaux </option>
+                                          <option value="client">passionné d animaux</option>
+                                        </select>
+                                      </div>
                                     </div>
 
 
@@ -339,7 +379,7 @@ function gestionutilisateurs() {
                                     <div class="form-group">
                                       <div>
                                         <center><button type="submit" class="primary-btn1" data-bs-dismiss="modal" onClick={handleSubmit}>
-                                          enregistrer ces modifications
+                                          Enregistrer ces modifications
                                         </button></center>
                                       </div>
                                     </div>
@@ -349,13 +389,6 @@ function gestionutilisateurs() {
                               </div>
                             </div>
                           </div>
-
-
-                          <td data-label="Action">
-                            <a href="#" className="btn btn-danger" onClick={() => deleteUser(id, setUsers, users)}><i class="bi bi-trash"></i></a>
-                            <a href="#" className="btn btn-success p-1.5" data-bs-toggle="modal" data-bs-target={`#exampleModal-${id}`} > <i class="bi bi-pencil text-black"></i></a>
-                          </td>
-
 
                         </tr>
 

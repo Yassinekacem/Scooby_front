@@ -3,10 +3,22 @@
 import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import jwtDecode from "jwt-decode"
 import axios from "axios"
 
 function gestionDeclarations() {
+  const [connectedUser, setConnectedUser] = useState('')
+  const getConnectedUserData = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setConnectedUser(decodedToken.userId);
+    }
+  };
 
+  useEffect(() => {
+    getConnectedUserData()
+  }, [])
   //  get all found Declarations
   const [foundDeclarations, setFoundDeclarations] = useState([])
   const getFoundDeclarations = async () => {
@@ -20,15 +32,20 @@ function gestionDeclarations() {
 
   // update Found Declaration 
 
-  const [foundDeclarationData, setFoundDeclarationData] = useState({
+  const [foundDeclarationData, setFoundDeclarationData] = useState({});
+  const initialState = {
     animal: "",
     race: "",
     description: "",
     image: "",
     dateFound: "",
     placeFound: "",
-    phoneNumber: ""
-  });
+    phoneNumber: "",
+    userId : connectedUser
+  }
+  useEffect(() => {
+    setFoundDeclarationData(initialState)
+  }, [connectedUser])
   const handleImageSelect = async (e) => {
     setFile(e.target.files[0]);
     setImageUploading(true);
@@ -65,10 +82,13 @@ function gestionDeclarations() {
         }
       );
 
-      console.log(response.data); // log the response data for debugging purposes
-      // TODO: Redirect to a success page or display a success message to the user
+      console.log(response.data); 
+      getFoundDeclarations()
+      toast.success("Déclaration de trouvaille ajoutée avec succées")
     } catch (error) {
       console.error(error);
+      toast.error("Erreur d'ajout")
+
     }
   };
 
@@ -88,7 +108,9 @@ function gestionDeclarations() {
   const [file, setFile] = useState(null)
   const [imageUrl, setImageUrl] = useState("");
   const [imageUploading, setImageUploading] = useState(false);
-  const [lostDeclarationData, setLostDeclarationData] = useState({
+  const [lostDeclarationData, setLostDeclarationData] = useState();
+const initialState1 = 
+  {
     animal: "",
     race: "",
     description: "",
@@ -96,8 +118,15 @@ function gestionDeclarations() {
     dateLost: "",
     withReward: "",
     placeLost: "",
-    phoneNumber: ""
-  });
+    phoneNumber: "" ,
+    userId : connectedUser
+  
+}
+useEffect(() => {
+  setLostDeclarationData(initialState1)
+}, [connectedUser])
+
+
   const handleImageSelect1 = async (e) => {
     setFile(e.target.files[0]);
     setImageUploading(true);
@@ -135,10 +164,12 @@ function gestionDeclarations() {
         }
       );
 
-      console.log(response.data); // log the response data for debugging purposes
-      // TODO: Redirect to a success page or display a success message to the user
+      console.log(response.data); 
+      getLostDeclarations()
+      toast.success("Déclaration de perte ajoutée avec succées")
     } catch (error) {
       console.error(error);
+      toast.error("Erreur d'ajout")
     }
   };
 
@@ -183,6 +214,9 @@ function gestionDeclarations() {
         position="top-center"
         autoClose={100}
       />
+            {console.log(lostDeclarationData)}
+            {console.log(foundDeclarationData)}
+
 
       <div className="cart-section2 pt-120 pb-120" id="gestiondeclaration">
         <div className="container">
@@ -190,7 +224,7 @@ function gestionDeclarations() {
             <div className="col-12">
               <div className="table-wrapper" style={{ backgroundColor: '#fef5f0' }}>
                 <div className="d-flex justify-content-center mb-3">
-                  <h1 id="gestion-declarations">gestion des déclarations de perte d'animaux</h1>
+                  <h1 id="gestion-declarations">Gestion des déclarations de perte d'animaux</h1>
                 </div>
                 <br />
                 <div className="d-flex justify-content-center mb-3">
@@ -335,10 +369,12 @@ function gestionDeclarations() {
                             }
                           );
 
-                          console.log(response.data); // log the response data for debugging purposes
-                          // TODO: Redirect to a success page or display a success message to the user
+                          console.log(response.data); 
+                          getLostDeclarations();
+                          toast.success("Déclaration de perte modifiée avec succées")
                         } catch (error) {
                           console.error(error);
+                          toast.error("Erreur de modification")
                         }
                       };
 
@@ -361,12 +397,15 @@ function gestionDeclarations() {
                             <img src={image} alt="" />
                           </td>
                           <td data-label="animal">
-                            {animal === "cat" ? "chat" : "chien"} {race}
+                            {animal} {race}
                           </td>
                           <td data-label="lieu de perte">{placeLost}</td>
                           <td data-label="date de perte">{dateLost}</td>
                           <td data-label="contact">{phoneNumber}</td>
                           <td data-label="avec récompense">{withReward ? "oui" : "non"}</td>
+
+                        
+
 
                           <div class="modal fade" id={`updateLost-${id}`} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-xl" role="document">
@@ -442,7 +481,7 @@ function gestionDeclarations() {
                           </div>
 
                           <td data-label="Action">
-                            <a href="#" className="btn btn-danger" onClick={() => deleteLostDeclaration(id)}>
+                            <a href="#" className="btn btn-danger"  onClick={() => deleteLostDeclaration(id)} >
                               <i className="bi bi-trash"></i>
                             </a>
                             <a className="btn btn-success p-1.5" data-bs-toggle="modal" data-bs-target={`#updateLost-${id}`}>
@@ -495,7 +534,7 @@ function gestionDeclarations() {
               <div className="table-wrapper" style={{ backgroundColor: '#fef5f0' }}>
                 <div className="d-flex justify-content-center mb-3">
 
-                  <h1>gestion des déclarations de trouvaille d'animaux</h1> </div> <br />
+                  <h1>Gestion des déclarations de trouvaille d'animaux</h1> </div> <br />
                 <div className="d-flex justify-content-center mb-3">
                   <button className="btn btn-adduser" data-bs-toggle="modal" data-bs-target={`#foundDeclaration`}>
                     Ajouter  déclaration de trouvaille
@@ -621,10 +660,12 @@ function gestionDeclarations() {
                             }
                           );
 
-                          console.log(response.data); // log the response data for debugging purposes
-                          // TODO: Redirect to a success page or display a success message to the user
+                          console.log(response.data); 
+                          getFoundDeclarations();
+                          toast.success("Déclaration de trouvaille modifiée avec succées")
                         } catch (error) {
                           console.error(error);
+                          toast.error("Erreur de modification")
                         }
                       };
 
@@ -657,7 +698,7 @@ function gestionDeclarations() {
                             {dateFound}
                           </td>
                           <td data-label="contact">{phoneNumber}</td>
-
+                          
                           <div class="modal fade" id={`updateFound-${id}`} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-xl" role="document">
                               <div class="modal-content">
@@ -706,7 +747,7 @@ function gestionDeclarations() {
                                     <div class="form-group">
                                       <div>
                                         <center><button type="submit" class="primary-btn1" data-bs-dismiss="modal">
-                                          enregistrer ces modifications
+                                          Enregistrer ces modifications
                                         </button></center>
                                       </div>
                                     </div>

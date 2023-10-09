@@ -177,7 +177,7 @@ function animalAvendre() {
         autoClose={100}
       />
       {console.log(animals)}
-      <Breadcrumb pageName="liste des animaux à vendre" pageTitle="liste des animaux"  src1=""/>
+      <Breadcrumb pageName="liste des animaux à vendre" pageTitle="liste des animaux"  src = "../../../assets/images/bg/inner-banner-img.png" src1=""/>
       <div className="shop-page pt-120 mb-120">
         <div className="container">
           <div className="row">
@@ -324,7 +324,7 @@ function animalAvendre() {
               </div>
               <div className="row">
                 {dataPerPage.filter((item) => item.status === "toSell")
-                  .map((item, index) => <AnimalCard item={item} key={index} handleDelete={deleteAnimal} />)}
+                  .map((item, index) => <AnimalCard item={item} key={index} handleDelete={deleteAnimal}  handleGet={getAnimals}  />)}
               </div>
               <div className="row pt-70">
                 <div className="col-lg-12 d-flex justify-content-center">
@@ -362,7 +362,6 @@ function animalAvendre() {
 }
 
 export default animalAvendre;
-
 
 
 

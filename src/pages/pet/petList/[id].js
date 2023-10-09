@@ -1,13 +1,12 @@
 import Link from "next/link";
 import React from "react";
 import Breadcrumb from "../../../components/breadcrumb/Breadcrumb";
-import ProductDetails from "../../../components/shop/ProductDetails";
 import Layout from "../../../layout/Layout";
 
 function ShopDetails(props) {
   return (
     <Layout>
-      <Breadcrumb pageName="Détaille d'une annonce d'animal à vendre" pageTitle="Détaille animal" />
+      <Breadcrumb pageName="Détaille d'une annonce d'animal à vendre" pageTitle="Détaille animal" src1=""/>
       <div className="shop-details-page pt-120 mb-120">
         <div className="container">
         <div className="row g-lg-4 gy-5 mb-120">

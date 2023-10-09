@@ -27,22 +27,35 @@ function ShopCard({ item: {
   userId,
   description,
   isDispo,
-} }) {
-
+} , handleDelete }) {
+  const [connectedUser, setConnectedUser] = useState({})
+  const getConnectedUserData = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setConnectedUser(decodedToken);
+    }
+  };
+  useEffect(() => {
+    getConnectedUserData()
+  }, [])
   const [file, setFile] = useState(null)
   const [imageUrl, setImageUrl] = useState("");
   const [imageUploading, setImageUploading] = useState(false);
-  const [productData, setProductData] = useState({
+  const [productData, setProductData] = useState({});
+  const initialState = {
     animalCible: animalCible,
     category: category,
     description: description,
     brandProduct: brandProduct,
     image: "",
     price: price,
-    userId: 3,
+    userId: connectedUser.userId,
     isDispo: isDispo
-  });
-
+  }
+  useEffect(() => {
+    setProductData(initialState)
+  }, [connectedUser])
 
   const handleImageSelect = async (e) => {
     setFile(e.target.files[0]);
@@ -89,27 +102,34 @@ function ShopCard({ item: {
       console.error(error);
     }
   };
-  const [connectedUser, setConnectedUser] = useState({})
-  const getConnectedUserData = () => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      const decodedToken = jwtDecode(token);
-      setConnectedUser(decodedToken);
-    }
-  };
-  useEffect(() => {
-    getConnectedUserData()
-  }, [])
+  
   return (
     <>
       {console.log(productData)}
 
-
+      <div className="modal" id={`deleteProduit-${id}`} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">Supprimer un produit</h5>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div className="modal-body ">
+              <center><h4><strong>Vous êtes sûr de supprimer ce produit ?</strong></h4></center>
+            </div>
+            <div className="modal-footer justify-content-center">
+              <button type="button" className="btn btn-success" data-bs-dismiss="modal" onClick={() => handleDelete(id)}
+              ><strong> Supprimer </strong></button>
+              <button type="button" className="btn btn-danger" data-bs-dismiss="modal" > <strong> Annuler </strong></button>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="modal fade" id={`detail-${id}`} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-xl" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title"> mis à jour cette annonce </h5>
+              <h5 class="modal-title"> mis à jour ce produit </h5>
             </div>
             <div class="modal-body">
               <form role="form" method="POST" action="" onSubmit={handleSubmit}
@@ -208,13 +228,13 @@ function ShopCard({ item: {
               </li>
 
               <li>
-                <a href="#" class="btn btn-danger" onClick={() => deleteProduct(id)}><i class="bi bi-trash"></i></a>
+                <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target={`#deleteProduit-${id}`}><i class="bi bi-trash"></i></a>
               </li>
             </ul>) : (<ul></ul>)}
           </div>
           <div className="collection-content text-center">
             <h4>
-              <Link legacyBehavior href="/shop-details">
+              <Link legacyBehavior href={`shop/${id}`}>
                 <a>{brandProduct}</a>
               </Link>
             </h4> <br />

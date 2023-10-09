@@ -6,7 +6,6 @@ import axios from "axios";
 
 
 function gestionanimals() {
-  // savoir l id de l utilisateur connecté
   const [connectedUser, setConnectedUser] = useState('')
   const getConnectedUserData = () => {
     const token = localStorage.getItem("token");
@@ -54,6 +53,9 @@ function gestionanimals() {
     race: "",
     age: 0,
     gender: "",
+    name: "",
+    dateOfBirth: "",
+    description: "",
     status: "toSell",
     price: 0,
     image: "",
@@ -104,9 +106,13 @@ function gestionanimals() {
         }
       );
 
-      console.log(response.data); // log the response data for debugging purposes
+      console.log(response.data);
+      getAnimal();
+      toast.success("animal ajouté avec succées")
     } catch (error) {
       console.error(error);
+      toast.error("Erreur d'ajout")
+
     }
   };
 
@@ -118,11 +124,13 @@ function gestionanimals() {
   // update Animal To Adopt
   const [PetData1, setPetData1] = useState({});
   const initialState1 = {
-
     species: "",
     race: "",
     age: 0,
     gender: "",
+    description: "",
+    name: "",
+    dateOfBirth: "",
     status: "toAdopt",
     price: 0,
     image: "",
@@ -177,8 +185,12 @@ function gestionanimals() {
       );
 
       console.log(response.data);
+      getAnimals();
+      toast.success("Animal ajouté avec succées")
     } catch (error) {
       console.error(error);
+      toast.error("Erreur d'ajout")
+
     }
   };
 
@@ -233,6 +245,7 @@ function gestionanimals() {
         autoClose={100}
       />
       {console.log(PetData1)}
+
       <div className="cart-section7 pt-120 pb-120" id="gestion-animaux">
         <div className="container">
           <div className="row">
@@ -241,7 +254,7 @@ function gestionanimals() {
               <div className="table-wrapper" id="gestion-animauxA" style={{ backgroundColor: '#fef5f0' }}>
                 <div className="d-flex justify-content-center mb-3">
 
-                  <h1 >gestion des animaux pour adoption</h1> </div> <br />
+                  <h1 >Gestion des animaux pour adoption</h1> </div> <br />
                 <div className="d-flex justify-content-center mb-3">
                   <button className="btn btn-adduser" data-bs-toggle="modal" data-bs-target={`#adoptAnimal`} >
                     Ajouter  animal pour adoption
@@ -260,6 +273,7 @@ function gestionanimals() {
                             <label class="control-label">animal</label>
                             <input type="text" class="form-control input-lg" name="species" placeholder="animal pour adoption" onChange={saveData1} />
                           </div>
+
                           <div class="form-group">
                             <label class="control-label">race</label>
                             <input type="text" class="form-control input-lg" name="race" placeholder="race de l'animal" onChange={saveData1} />
@@ -269,16 +283,37 @@ function gestionanimals() {
                             <input type="number" class="form-control input-lg" name="age" placeholder="age de l'animal" onChange={saveData1} />
                           </div>
 
-                          <div class="form-group">
-                            <label class="control-label">sexe</label>
-                            <input name="gender" type="text" placeholder="sexe de l'animal" class="form-control input-lg" onChange={saveData1} />
+                          <div className="col-md-12">
+                            <div className="form-group">
+                              <label htmlFor="gender">sexe de l'animal  <br /></label>
+                              <select
+                                className="form-control"
+                                id="gender"
+                                name="gender"
+                                onChange={saveData1}
+                              >
+                                <option disabled selected hidden value="">sexe</option>
+                                <option value="male">male</option>
+                                <option value="female">femelle</option>
+
+                              </select>
+                              <br />
+                            </div>
                           </div>
-                         
 
                           <div class="form-group">
-                            <label class="control-label">statut de l'animal</label>
-                            <input name="status" type="text" placeholder="Entrer le statut de l'animal (toSell ou toAdopt)" class="form-control input-lg" onChange={saveData1} />
+                            <label class="control-label">nom</label>
+                            <input type="text" class="form-control input-lg" name="name" placeholder="nom de l'animal" onChange={saveData1} />
                           </div>
+                          <div class="form-group">
+                            <label class="control-label">date de naissance</label>
+                            <input type="date" class="form-control input-lg" name="dateOfBirth" onChange={saveData1} />
+                          </div> <br />
+                          <div class="form-group">
+                            <label class="control-label">description</label>
+                            <textarea class="form-control input-lg" name="description" placeholder="description de l'animal" onChange={saveData1} />
+                          </div>
+
 
                           <div class="form-group">
                             <label class="control-label">image</label>
@@ -399,6 +434,7 @@ function gestionanimals() {
                           );
 
                           console.log(response.data);
+                          getAnimals();
                         } catch (error) {
                           console.error(error);
                         }
@@ -428,10 +464,10 @@ function gestionanimals() {
                             {species} {race}
                           </td>
                           <td data-label="Sexe">
-                            {gender}
+                            {gender === "female" ? "femelle" : "male"}
                           </td>
                           <td data-label="Agr">
-                            {age}
+                            {age} ans
                           </td>
                           <td data-label="id utilisateur Price">{userId}</td>
 
@@ -457,21 +493,43 @@ function gestionanimals() {
                                       <input type="number" class="form-control input-lg" name="age" defaultValue={age} onChange={saveData1} />
                                     </div>
 
-                                    <div class="form-group">
-                                      <label class="control-label">sexe</label>
-                                      <input name="gender" type="text" placeholder="Enter the sex of your animal" class="form-control input-lg" defaultValue={gender} onChange={saveData1} />
-                                    </div>
-                                 
+                                    <div className="col-md-12">
+                        <div className="form-group">
+                          <label htmlFor="gender">sexe   <br /></label>
+                          <select
+                            className="form-control"
+                            id="gender"
+                            name="gender"
+                            onChange={saveData1}
+                          >
+                            <option disabled selected hidden value="">sexe</option>
+                            <option value="male">male</option>
+                            <option value="female">femelle</option>
+                            
+                          </select>
+                          <br />
+                        </div>
+                      </div>
 
-                                    <div class="form-group">
-                                      <label class="control-label">statut</label>
-                                      <input name="status" type="text" placeholder="Enter your phone Number" class="form-control input-lg" defaultValue={status} onChange={saveData1} />
-                                    </div>
+
+                                  
 
                                     <div class="form-group">
                                       <label class="control-label">image</label>
                                       <div>
                                         <input name="image" type="file" onChange={handleImageSelect1} />                  </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="control-label">nom</label>
+                                      <input type="text" class="form-control input-lg" name="name" placeholder="nom de l'animal" onChange={saveData1} />
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="control-label">date de naissance</label>
+                                      <input type="date" class="form-control input-lg" name="dateOfBirth" onChange={saveData1} />
+                                    </div> <br />
+                                    <div class="form-group">
+                                      <label class="control-label">description</label>
+                                      <textarea class="form-control input-lg" name="description" placeholder="description de l'animal" onChange={saveData1} />
                                     </div>
                                     <div className="form-group">
                                       <div className="form-inner">
@@ -509,7 +567,7 @@ function gestionanimals() {
                                     <div class="form-group">
                                       <div>
                                         <center><button type="submit" class="primary-btn1" data-bs-dismiss="modal">
-                                          enregistrer cet  animal
+                                          Enregistrer ces  modifications
                                         </button></center>
                                       </div>
                                     </div>
@@ -572,7 +630,7 @@ function gestionanimals() {
               <div className="table-wrapper" style={{ backgroundColor: '#fef5f0' }}>
                 <div className="d-flex justify-content-center mb-3">
 
-                  <h1 id="gestion-animauxV">gestion des animaux à vendre</h1> </div> <br />
+                  <h1 id="gestion-animauxV">Gestion des animaux à vendre</h1> </div> <br />
                 <div className="d-flex justify-content-center mb-3">
                   <button className="btn btn-adduser" data-bs-toggle="modal" data-bs-target={`#sellAnimal`} >
                     Ajouter  animal à vendre
@@ -600,18 +658,39 @@ function gestionanimals() {
                             <input type="number" class="form-control input-lg" placeholder="age de l'animal" name="age" onChange={saveData} />
                           </div>
 
-                          <div class="form-group">
-                            <label class="control-label">sexe</label>
-                            <input name="gender" type="text" placeholder="sexe de l'animal" class="form-control input-lg" onChange={saveData} />
-                          </div>
+                          <div className="col-md-6">
+                        <div className="form-group">
+                          <label htmlFor="gender">sexe  <br /></label>
+                          <select
+                            className="form-control"
+                            id="gender"
+                            name="gender"
+                            onChange={saveData}
+                          >
+                            <option disabled selected hidden value="">sexe</option>
+                            <option value="male">male</option>
+                            <option value="female">femelle</option>
+                            
+                          </select>
+                          <br />
+                        </div>
+                      </div>
                           <div class="form-group">
                             <label class="control-label">prix</label>
                             <input name="price" type="number" placeholder="prix de cet animal" class="form-control input-lg" onChange={saveData} />
                           </div>
 
                           <div class="form-group">
-                            <label class="control-label">statut</label>
-                            <input name="status" type="text" placeholder="à vendre ou pour adoption" class="form-control input-lg" onChange={saveData} />
+                            <label class="control-label">nom animal</label>
+                            <input type="text" class="form-control input-lg" name="name" placeholder="nom de l'animal" onChange={saveData} />
+                          </div>
+                          <div class="form-group">
+                            <label class="control-label">date de naissance</label>
+                            <input type="date" class="form-control input-lg" name="dateOfBirth" onChange={saveData} />
+                          </div> <br />
+                          <div class="form-group">
+                            <label class="control-label">description</label>
+                            <textarea class="form-control input-lg" name="description" placeholder="description de l'animal" onChange={saveData} />
                           </div>
 
                           <div class="form-group">
@@ -619,6 +698,7 @@ function gestionanimals() {
                             <div>
                               <input name="image" type="file" onChange={handleImageSelect} />                  </div>
                           </div>
+
                           <div className="form-group">
                             <div className="form-inner">
                               <label class="control-label">Vacciné ? </label>
@@ -733,9 +813,13 @@ function gestionanimals() {
                             }
                           );
 
-                          console.log(response.data); // log the response data for debugging purposes
+                          console.log(response.data);
+                          toast.success("animal modifié avec succées")
+                          getAnimal();
                         } catch (error) {
                           console.error(error);
+                          toast.error("Erreur de modification")
+
                         }
                       };
 
@@ -753,7 +837,7 @@ function gestionanimals() {
                       return (
                         <tr>
                           <td data-label="id">
-                            <div className="delete-icon">
+                            <div>
                               {id}
                             </div>
                           </td>
@@ -764,11 +848,14 @@ function gestionanimals() {
                             {species} {race}
                           </td>
                           <td data-label="sexe">
-                            {gender}
+                            {gender === "female" ? "femelle" : "male"}
                           </td>
 
-                          <td data-label="Age">{age}</td>
-                          <td data-label="Prix">{price}</td>
+                          <td data-label="Age">{age} ans</td>
+                          <td data-label="Prix">{price} TND</td>
+
+
+
                           <div class="modal fade" id={`exempleModal-${id}`} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-xl" role="document">
                               <div class="modal-content">
@@ -791,9 +878,22 @@ function gestionanimals() {
                                       <input type="number" class="form-control input-lg" name="age" defaultValue={age} onChange={saveData} />
                                     </div>
 
-                                    <div class="form-group">
-                                      <label class="control-label">sexe</label>
-                                      <input name="gender" type="text" placeholder="Enter the sex of your animal" class="form-control input-lg" defaultValue={gender} onChange={saveData} />
+                                    <div className="col-md-12">
+                                      <div className="form-group">
+                                        <label htmlFor="gender">sexe  <br /></label>
+                                        <select
+                                          className="form-control"
+                                          id="gender"
+                                          name="gender"
+                                          onChange={saveData}
+                                        >
+                                          <option disabled selected hidden value="">sexe</option>
+                                          <option value="male">male</option>
+                                          <option value="female">femelle</option>
+
+                                        </select>
+                                        <br />
+                                      </div>
                                     </div>
                                     <div class="form-group">
                                       <label class="control-label">prix</label>
@@ -801,14 +901,22 @@ function gestionanimals() {
                                     </div>
 
                                     <div class="form-group">
-                                      <label class="control-label">statut</label>
-                                      <input name="status" type="text" placeholder="Enter your phone Number" class="form-control input-lg" defaultValue={status} onChange={saveData} />
-                                    </div>
-
-                                    <div class="form-group">
                                       <label class="control-label">image</label>
                                       <div>
                                         <input name="image" type="file" onChange={handleImageSelect} />                  </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label class="control-label">nom</label>
+                                      <input type="text" class="form-control input-lg" name="name" placeholder="nom de l'animal" onChange={saveData} />
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="control-label">date de naissance</label>
+                                      <input type="date" class="form-control input-lg" name="dateOfBirth" onChange={saveData} />
+                                    </div> <br />
+                                    <div class="form-group">
+                                      <label class="control-label">description</label>
+                                      <textarea class="form-control input-lg" name="description" placeholder="description de l'animal" onChange={saveData} />
                                     </div>
                                     <div className="form-group">
                                       <div className="form-inner">
@@ -857,7 +965,7 @@ function gestionanimals() {
                             </div>
                           </div>
                           <td data-label="Action">
-                            <a href="#" className="btn btn-danger" onClick={() => deleteAnimalSell(id, setAnimalToSell, animalToSell)}><i class="bi bi-trash"></i></a>
+                            <a href="#" className="btn btn-danger" onClick={() => deleteAnimalSell(id)} ><i class="bi bi-trash"></i></a>
                             <a href="#" className="btn btn-success p-1.5" data-bs-toggle="modal" data-bs-target={`#exempleModal-${id}`} > <i class="bi bi-pencil text-black"></i></a>
 
                           </td>

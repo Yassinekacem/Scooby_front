@@ -19,7 +19,7 @@ function ServiceByCityAndType(props) {
               <div className="row mb-50">
                 <div className="col-lg-12">
                   <div className="multiselect-bar">
-                    <h6>Liste des {props.type==="petSitting" ? "gardeur d'animaux" : props.type==="petTraining" ? "dresseur d'animaux" : props.type==="veterinaryCaring" ? "véterinaire" : "toiletteur d'animaux"} dans votre ville : </h6>
+                    <h6>Liste des {props.type==="petSitting" ? "gardeurs d'animaux" : props.type==="petTraining" ? "dresseurs d'animaux" : props.type==="veterinaryCaring" ? "véterinaires" : "toiletteurs d'animaux"} en {props.city} : </h6>
                     
                   </div>
                 </div>
@@ -47,7 +47,8 @@ export async function getServerSideProps(context) {
   return {
     props: {
       announcements: data,
-      type : context.params.type
+      type : context.params.type,
+      city : context.params.city
     },
   };
 }

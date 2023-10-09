@@ -106,15 +106,26 @@ function addFoundDeclaration() {
                     disabled={imageUploading}
                   >
                     <div className="row">
-                      <div className="col-md-6">
-                        <div className="form-inner">
-                          <label>animal: *</label>
-                          <input name="animal" type="text" placeholder="species of animal" onChange={saveData} />
+                    <div className="col-md-6">
+                        <div className="form-group">
+                          <label htmlFor="animal">animal *<br /></label>
+                          <select
+                            className="form-control"
+                            id="animal"
+                            name="animal"
+                            onChange={saveData}
+                          >
+                            <option disabled selected hidden value="">animal </option>
+                            <option value="chat">chat</option>
+                            <option value="chien">chien</option>
+
+                          </select>
+                          <br />
                         </div>
                       </div>
                       <div className="col-md-6">
                         <div className="form-inner">
-                          <label>race: * </label>
+                          <label>race * </label>
                           <input name="race" type="text" placeholder="race of animal" onChange={saveData} />
                         </div>
                       </div>

@@ -34,7 +34,7 @@ function ServiceDetails() {
 
     return (
         <Layout>
-            <Breadcrumb pageName="Services pour animaux" pageTitle="Services pour animaux" src="" />
+            <Breadcrumb pageName="Services pour animaux" pageTitle="Services pour animaux" src1="" src = "../../../assets/images/bg/inner-banner-img5.png" />
             <div className="services-details-area pt-120 mb-120">
                 <div className="container">
                 <div className="row mb-50">

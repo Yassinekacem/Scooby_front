@@ -2,6 +2,9 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
+import jwtDecode from "jwt-decode"
+
 
 const deleteDeclaration = async (DeclarationID) => {
   const response = await fetch(`http://localhost:2001/lostDeclarations/${DeclarationID}`, {
@@ -21,21 +24,56 @@ function LostDeclarationCard({ item: { id,
   placeLost,
   description,
   phoneNumber,
-  withReward } }) {
+  withReward ,userId}, handleDelete , handleGet}) {
+    const [connectedUser, setConnectedUser] = useState('')
+    const getConnectedUserData = () => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        const decodedToken = jwtDecode(token);
+        setConnectedUser(decodedToken.userId);
+      }
+    };
+    useEffect(() => {
+      getConnectedUserData()
+    }, [])
+    const [connectedUser1, setConnectedUser1] = useState('')
+    const getConnectedUserData1 = () => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        const decodedToken = jwtDecode(token);
+        setConnectedUser1(decodedToken.userRole);
+      }
+    };
+    useEffect(() => {
+      getConnectedUserData1()
+    }, [])
+
+
+
   const [file, setFile] = useState(null)
   const [imageUrl, setImageUrl] = useState("");
   const [imageUploading, setImageUploading] = useState(false);
   const [lostDeclarationData, setLostDeclarationData] = useState({
-    animal: animal,
-    race: race,
-    description: description,
-    image: "",
-    dateLost: dateLost,
-    withReward: withReward,
-    placeLost: placeLost,
-    phoneNumber: phoneNumber
-  });
+    animal,
+    race,
+    description,
+    image,
+    dateLost,
+    withReward,
+    placeLost,
+    phoneNumber,
+    userId
 
+  });
+  const [declaration, setDeclaration] = useState([]);
+  const getDeclaration = async () => {
+    const response = await fetch(`http://localhost:2001/lostDeclarations/${id}`);
+    const data = await response.json();
+    setDeclaration(data);
+  };
+  useEffect(() => {
+    getDeclaration();
+  }, []);
 
   const handleImageSelect = async (e) => {
     setFile(e.target.files[0]);
@@ -65,18 +103,25 @@ function LostDeclarationCard({ item: { id,
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-
+    
+        let photoUrl = declaration.image;
+        if (imageUrl !== "") { 
+          photoUrl = imageUrl;
+        }
       const response = await axios.put(
         `http://localhost:2001/lostDeclarations/${id}`,
         {
           ...lostDeclarationData,
-          image: imageUrl
+          image: photoUrl
         }
       );
-
-      console.log(response.data); // log the response data for debugging purposes
-      // TODO: Redirect to a success page or display a success message to the user
+      console.log(response.data);
+      handleGet();
+    toast.success(" Votre Déclaration de perte éditée avec succées")
+      
     } catch (error) {
+      toast.error("Erreur de modification")
+
       console.error(error);
     }
   };
@@ -85,13 +130,30 @@ function LostDeclarationCard({ item: { id,
     <>
       {console.log(lostDeclarationData)}
 
-
+      <div className="modal" id={`deleteLost-${id}`} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">Supprimer une déclaration de perte</h5>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div className="modal-body ">
+              <center><h4><strong>Vous êtes sûr de supprimer cette déclarartion ?</strong></h4></center>
+            </div>
+            <div className="modal-footer justify-content-center">
+              <button type="button" className="btn btn-success" data-bs-dismiss="modal" onClick={() => handleDelete(id)}
+              ><strong> Supprimer </strong></button>
+              <button type="button" className="btn btn-danger" data-bs-dismiss="modal" > <strong> Annuler </strong></button>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="modal fade" id={`detail-${id}`} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title"> mis à jour cette déclaration</h5>
-            </div>
+              <button type="button" className="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>            </div>
             <div class="modal-body">
               <form role="form" method="POST" action="" onSubmit={handleSubmit}
                 disabled={imageUploading}>
@@ -125,7 +187,7 @@ function LostDeclarationCard({ item: { id,
                 <div class="form-group">
                   <label class="control-label">image</label>
                   <div>
-                  <input name="image" type="file" onChange={handleImageSelect} />                  </div>
+                    <input name="image" type="file" onChange={handleImageSelect} />                  </div>
                 </div>
                 <br />
                 <div className="form-group">
@@ -174,27 +236,27 @@ function LostDeclarationCard({ item: { id,
               <div className="plus-icon">
                 <i className="bi bi-plus" />
               </div>
-           
+
               <Link legacyBehavior href={`/declaration/lostDeclarations/${id}`}>
                 <a>View Details</a>
               </Link>
             </div>
-            <ul className="cart-icon-list">
-            <li>
-              <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target={`#detail-${id}`}><i class="bi bi-pencil text-black"></i>
-                </a>
+            {(connectedUser === userId || connectedUser1 === "admin") ? (<ul className="cart-icon-list">
+              <li>
+                <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target={`#detail-${id}`}><i class="bi bi-pencil text-black"></i></a>
               </li>
 
               <li>
-              <a href="#" class="btn btn-danger" onClick={() => deleteDeclaration(id)}><i class="bi bi-trash"></i></a>
+                <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target={`#deleteLost-${id}`}><i class="bi bi-trash"></i></a>
               </li>
-
-            </ul>
+            </ul>) : (<ul></ul>)}
+            
+            
 
           </div>
           <div className="collection-content text-center">
             <h4>
-              <Link legacyBehavior href="/shop-details">
+              <Link legacyBehavior href={`/declaration/lostDeclarations/${id}`}>
                 <a>{animal === "chat" ? "chat" : "chien"} {race}</a>
               </Link>
             </h4>

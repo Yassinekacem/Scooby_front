@@ -128,8 +128,8 @@ function CreatePet() {
 
         {console.log(connectedUser)}
 
-        {console.log(PetData.status)}
-        <Breadcrumb pageName="Vente d'animal" pageTitle="Vente d'animal" />
+        {console.log(PetData)}
+        <Breadcrumb pageName="Vente d'animal" pageTitle="Vente d'animal" src1="" src="" />
         <div className="createPet-section pt-120 pb-120">
           <div className="container">
             <div className="row d-flex justify-content-center">
@@ -150,7 +150,7 @@ function CreatePet() {
 
                      
                     <div className="row">
-                      <div className="col-md-9">
+                      <div className="col-md-6">
                         <div className="form-group">
                           <label htmlFor="species">Espece d'animal * <br /></label>
                           <select
@@ -169,37 +169,37 @@ function CreatePet() {
                           <br />
                         </div>
                       </div>
-                      <div className="col-md-9">
+                      <div className="col-md-6">
                         <div className="form-inner">
                           <label>race:</label>
-                          <input name="race" type="text" placeholder="race of pet" onChange={saveData} />
+                          <input name="race" type="text" placeholder="race de l'animal" onChange={saveData} />
                         </div>
                       </div>
-                      <div className="col-md-9">
+                      <div className="col-md-6">
                         <div className="form-inner">
                           <label>nom animal:</label>
-                          <input name="name" type="text"  onChange={saveData} />
+                          <input name="name" type="text" placeholder="nom de l'animal"  onChange={saveData} />
                         </div>
                       </div>
-                      <div className="col-md-9">
+                      <div className="col-md-6">
                         <div className="form-inner">
                           <label>date de naissance:</label>
                           <input name="dateOfBirth" type="date"  onChange={saveData} />
                         </div>
                       </div>
-                      <div className="col-md-9">
+                      <div className="col-md-12">
                         <div className="form-inner">
                           <label>description: *</label>
-                          <textarea name="description" placeholder="description of the animal" onChange={saveData}></textarea>
+                          <textarea name="description" placeholder="description de l'animal" onChange={saveData}></textarea>
                         </div>
                       </div>
-                      <div className="col-md-9">
+                      <div className="col-md-6">
                         <div className="form-inner">
                           <label>Importez l'image de votre animal *</label>
                           <input name="image" type="file" onChange={handleImageSelect} />
                         </div>
                       </div>
-                      <div className="col-md-9">
+                      <div className="col-md-6">
                         <div className="form-group">
                           <label htmlFor="gender">sexe de l'animal * <br /></label>
                           <select
@@ -219,20 +219,20 @@ function CreatePet() {
 
 
 
-                      <div className="col-md-9">
+                      <div className="col-md-6">
                         <div className="form-inner">
                           <label>prix *</label>
                           <input name="price" type="number" placeholder="Enter Your price" onChange={saveData} />
                         </div>
                       </div>
-                      <div className="col-md-9">
+                      <div className="col-md-6">
                         <div className="form-inner">
                           <label>age *</label>
                           <input name="age" type="number" placeholder="Enter his age" value={PetData.age} onChange={saveData} />
                         </div>
                       </div>
 
-                      <div className="col-md-9">
+                      <div className="col-md-6">
                         <div className="form-inner">
                           <label>dréssé(e) ? </label>
                           <input
@@ -247,7 +247,7 @@ function CreatePet() {
                           />
                         </div>
                       </div>
-                      <div className="col-md-9">
+                      <div className="col-md-6">
                         <div className="form-inner">
                           <label>vacciné(e) ?</label>
                           <input

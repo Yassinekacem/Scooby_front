@@ -3,6 +3,9 @@ import Breadcrumb from "../../components/breadcrumb/Breadcrumb";
 import Layout from "../../layout/Layout";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
+
+
 import jwtDecode from "jwt-decode"
 
 function CreatePet() {
@@ -19,21 +22,21 @@ function CreatePet() {
 
 
     useEffect(() => {
-        getConnectedUserData(),protectRoute()
+        getConnectedUserData(), protectRoute()
     }, [])
 
 
     const protectRoute = () => {
         const token = localStorage.getItem("token");
         if (!token) {
-          router.push("/");
-        } else {
-          const decodedToken = jwtDecode(token);
-          if (decodedToken.userRole !== "petTrainer" && decodedToken.userRole !== "petGroomer" &&decodedToken.userRole !== "petTrainer" && decodedToken.userRole!=="petSitter" && decodedToken.userRole !== "veterinary"&&decodedToken.userRole !== "admin") {
             router.push("/");
-          }
+        } else {
+            const decodedToken = jwtDecode(token);
+            if (decodedToken.userRole !== "petTrainer" && decodedToken.userRole !== "petGroomer" && decodedToken.userRole !== "petTrainer" && decodedToken.userRole !== "petSitter" && decodedToken.userRole !== "veterinary" && decodedToken.userRole !== "admin") {
+                router.push("/");
+            }
         }
-      }
+    }
 
 
 
@@ -105,9 +108,13 @@ function CreatePet() {
                 }
             );
 
-            console.log(response.data); // log the response data for debugging purposes
+            console.log(response.data); 
+            toast.success("Service annoncé avec succées")
+            router.push("/service")
         } catch (error) {
             console.error(error);
+            toast.error("Erreur d'ajout")
+
         }
     };
 
@@ -117,7 +124,7 @@ function CreatePet() {
             <Layout>
 
                 {console.log(serviceData)}
-                <Breadcrumb pageName="annonce votre service" pageTitle="ajout d'un service" />
+                <Breadcrumb pageName="annonce votre service" pageTitle="ajout d'un service" src = "../../../assets/images/bg/inner-banner-img5.png"  src1=""/>
                 <div className="createPet-section pt-120 pb-120">
                     <div className="container">
                         <div className="row d-flex justify-content-center">
@@ -128,7 +135,7 @@ function CreatePet() {
                                     data-wow-delay=".2s"
                                 >
                                     <div className="form-title">
-                                        <h3> annocer votre service sur notre plateforme</h3>
+                                        <h3> Annoncer votre service sur notre plateforme</h3>
                                     </div>
                                     <form
                                         className="w-100"
@@ -138,9 +145,9 @@ function CreatePet() {
 
 
                                         <div className="row">
-                                            <div className="col-md-9">
+                                            <div className="col-md-6">
                                                 <div className="form-group">
-                                                    <label htmlFor="type">type du service * <br /></label>
+                                                    <label htmlFor="type">Type du service* <br /></label>
                                                     <select
                                                         className="form-control"
                                                         id="type"
@@ -157,9 +164,9 @@ function CreatePet() {
                                                     <br />
                                                 </div>
                                             </div>
-                                            <div className="col-md-9">
+                                            <div className="col-md-6">
                                                 <div className="form-group">
-                                                    <label htmlFor="level">level du service * <br /></label>
+                                                    <label htmlFor="level">Level de votre service* <br /></label>
                                                     <select
                                                         className="form-control"
                                                         id="level"
@@ -176,56 +183,59 @@ function CreatePet() {
                                                 </div>
                                             </div>
 
-                                            <div className="col-md-9">
+                                            <div className="col-md-6">
                                                 <div className="form-inner">
-                                                    <label>ton nom:</label>
+                                                    <label>Ton nom*</label>
                                                     <input name="firstName" type="text" placeholder="nom" onChange={saveData} />
                                                 </div>
                                             </div>
-                                            <div className="col-md-9">
+                                            <div className="col-md-6">
                                                 <div className="form-inner">
-                                                    <label>ton prénom:</label>
+                                                    <label>Ton prénom*</label>
                                                     <input name="lastName" type="text" placeholder="prénom" onChange={saveData} />
                                                 </div>
                                             </div>
-                                            <div className="col-md-9">
+                                            <div className="col-md-6">
                                                 <div className="form-inner">
-                                                    <label>ton numéro de téléphone:</label>
+                                                    <label>Ton numéro de téléphone*</label>
                                                     <input name="contact" type="text" placeholder="contact" onChange={saveData} />
                                                 </div>
                                             </div>
-                                            <div className="col-md-9">
+                                            <div className="col-md-6">
                                                 <div className="form-inner">
-                                                    <label>ton gouvernement:</label>
+                                                    <label>Ton gouvernement*</label>
                                                     <input name="city" type="text" onChange={saveData} />
                                                 </div>
                                             </div>
-                                            <div className="col-md-9">
+                                            <div className="col-md-6">
                                                 <div className="form-inner">
-                                                    <label>ta ville:</label>
+                                                    <label>Ta ville:</label>
                                                     <input name="ville" type="text" placeholder="ville" onChange={saveData} />
                                                 </div>
                                             </div>
-                                            <div className="col-md-9">
+                                            <div className="col-md-6">
                                                 <div className="form-inner">
-                                                    <label>Importez votre image *</label>
+                                                    <label>Importez votre image*</label>
                                                     <input name="image" type="file" onChange={handleImageSelect} />
                                                 </div>
                                             </div>
+
+
                                             <div className="col-md-6">
-                        <div className="form-inner">
-                          <label>Description *</label>
-                          <textarea name="description" rows="5" cols="30" placeholder="Description" onChange={saveData}></textarea>
-                        </div>
-                      </div>
-                                         
-                                            <div className="col-md-9">
                                                 <div className="form-inner">
-                                                    <label>experience (en ans ) dans ce domaine*</label>
+                                                    <label>Experience (en ans) dans ce domaine*</label>
                                                     <input name="experience" type="number" placeholder="Enter Your experience" onChange={saveData} />
                                                 </div>
                                             </div>
-                                            
+                                            <div className="col-md-6">
+                                                <div className="form-inner">
+                                                    <label>Description *</label>
+                                                    <textarea name="description" rows="5" cols="30" placeholder="Description" onChange={saveData}></textarea>
+                                                </div>
+                                            </div>
+
+                                         
+
                                         </div>
                                         <button className="account-btn" > ajoute votre service</button>
                                     </form>

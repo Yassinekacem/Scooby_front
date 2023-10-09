@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Breadcrumb from "../components/breadcrumb/Breadcrumb";
 import Layout from "../layout/Layout";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
 import { useRouter } from "next/router";
 
 function signUpPage() {
@@ -15,7 +16,7 @@ function signUpPage() {
   const [userData, setUserData] = useState({
     firstName: "",
     lastName: "",
-    role: "admin",
+    role: "",
     email: "",
     password: "",
     photo: "",
@@ -62,10 +63,13 @@ function signUpPage() {
       );
       console.log(response.data);
       router.push("/login");
+      toast.success('Votre compte a été créé avec succès')
 
 
     } catch (error) {
       console.error(error);
+      toast.error(error.response.data)
+
     }
   };
 
@@ -100,54 +104,66 @@ function signUpPage() {
                   >                    <div className="row">
                       <div className="col-md-9">
                         <div className="form-inner">
-                          <label> Votre nom </label>
-                          <input name="firstName" type="text" onChange={saveData} />
+                          <label style={{ fontSize: "21px" }}> Entrez votre Votre nom * </label>
+                          <input style={{ fontSize: "17px" }} name="firstName" placeholder="nom" type="text" onChange={saveData} />
                         </div>
                       </div>
                       <div className="col-md-9">
                         <div className="form-inner">
-                          <label>Votre prénom </label>
-                          <input name="lastName" type="text" onChange={saveData} />
+                          <label style={{ fontSize: "21px" }}>Entrez votre Votre prénom *</label>
+                          <input style={{ fontSize: "17px" }} name="lastName" placeholder="prénom" type="text" onChange={saveData} />
                         </div>
                       </div>
                       <div className="col-md-9">
                         <div className="form-inner">
-                          <label> Numéro de téléphone </label>
-                          <input name="phoneNumber" type="text" onChange={saveData} />
-                        </div>
-                      </div>
-                      <div class="col-md-9">
-                        <div class="form-inner">
-                          <label> Statut  :</label> <br />
-                          <select className="form-select" name="role" onChange={saveData}>
-                            <option disabled selected hidden value="" > Sélectionnez votre statut </option>
-                            <option value="veterinary">Vétérinaire</option>
-                            <option value="petTrainer">Dresseur d'animaux de compagnie</option>
-                            <option value="petSitter">Garde d'animaux de compagnie</option>
-                            <option value="petGroomer">Toiletteur d'animaux de compagnie</option>
-                            <option value="petShop">Magasin d'animaux de compagnie</option>
-                            <option value="petSeller">éleveur d'animaux </option>
-                            <option value="client">passionné d animaux</option>
-                          </select>
+                          <label style={{ fontSize: "21px" }}>Entrez votre votre Numéro de téléphone *</label>
+                          <input style={{ fontSize: "17px" }} name="phoneNumber" placeholder="Num tel" type="tel" onChange={saveData} />
                         </div>
                       </div>
 
                       <div className="col-md-9">
                         <div className="form-inner">
-                          <label> choisissez votre photo :  </label>
+                          <label style={{ fontSize: "21px" }}>Entrez votre votre Statut *</label> <br />
+                          <select className="form-select" name="role" onChange={saveData} style={{ fontSize: "14px" }}>
+                            <option disabled selected hidden value="">Sélectionnez votre statut</option>
+                            <option value="veterinary" style={{ fontSize: "19px" }}>Vétérinaire</option>
+                            <option value="petTrainer" style={{ fontSize: "19px" }}>Dresseur d'animaux de compagnie</option>
+                            <option value="petSitter" style={{ fontSize: "19px" }}>Garde d'animaux de compagnie</option>
+                            <option value="petGroomer" style={{ fontSize: "19px" }}>Toiletteur d'animaux de compagnie</option>
+                            <option value="petShop" style={{ fontSize: "19px" }}>Magasin d'animaux de compagnie</option>
+                            <option value="petSeller" style={{ fontSize: "19px" }}>Éleveur d'animaux</option>
+                          </select>
+                        </div>
+                      </div>
+
+
+                      <div className="col-md-9">
+                        <div className="form-inner">
+                          <label style={{ fontSize: "21px" }}> choisissez votre photo *  </label>
                           <input name="photo" type="file" onChange={handleImageSelect} />
                         </div>
                       </div>
                       <div className="col-md-9">
                         <div className="form-inner">
-                          <label>Email *</label>
-                          <input name="email" type="email" onChange={saveData} />
+                          <label style={{ fontSize: "21px" }}>Entrez votre votre Email *</label>
+                          <input style={{ fontSize: "17px" }} name="email" placeholder="Email" type="email" onChange={saveData} />
                         </div>
                       </div>
                       <div className="col-md-9">
                         <div className="form-inner">
-                          <label>mot de passe *</label>
-                          <input name="password" type={showPassword ? "text" : "password"}
+                          <label style={{ fontSize: "21px" }}>Entrez votre mot de passe *</label>
+                          <input style={{ fontSize: "17px" }} name="password" placeholder="Mot de passe" type={showPassword ? "text" : "password"}
+                            onChange={saveData} />
+                          <i
+                            className={`bi bi-${showPassword ? "eye" : "eye-slash"}`}
+                            onClick={toggleShowPassword}
+                          />
+                        </div>
+                      </div>
+                      <div className="col-md-9">
+                        <div className="form-inner">
+                          <label style={{ fontSize: "21px" }}>Confirmez votre mot de passe *</label>
+                          <input style={{ fontSize: "17px" }} name="password" placeholder="Mot de passe" type={showPassword ? "text" : "password"}
                             onChange={saveData} />
                           <i
                             className={`bi bi-${showPassword ? "eye" : "eye-slash"}`}
@@ -158,7 +174,7 @@ function signUpPage() {
 
 
                     </div>
-                    <button className="account-btn" >Créer compte</button>
+                    <button className="account-btn" >Créer votre compte</button>
                   </form>
 
 

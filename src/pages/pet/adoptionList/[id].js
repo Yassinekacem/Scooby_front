@@ -7,7 +7,7 @@ function AdoptionDetails(props) {
   return (
     <Layout>
 
-      <Breadcrumb pageName="détaille d'une annonce d'animal pour adoption" pageTitle="Détaille animal" />
+      <Breadcrumb pageName="détaille d'une annonce d'animal pour adoption" pageTitle="Détaille animal" src1="" />
       <div className="shop-details-page pt-120 mb-120">
         <div className="container">
           <div className="row g-lg-4 gy-5 mb-120">

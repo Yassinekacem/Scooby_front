@@ -4,6 +4,8 @@ import Breadcrumb from "../../components/breadcrumb/Breadcrumb"
 import Layout from "../../layout/Layout"
 import Link from "next/link"
 import jwtDecode from "jwt-decode"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function productList() {
   const [connectedUser, setConnectedUser] = useState({})
@@ -42,7 +44,16 @@ function productList() {
   useEffect(() => {
     getProducts();
   }, []);
-
+ 
+  const deleteProduct = async (ProductId) => {
+    const response = await fetch(`http://localhost:2001/products/${ProductId}`, {
+      method: "DELETE",
+    })
+    const data = await response.json()
+    console.log(data)
+    setProducts(products.filter(products => products.id !== ProductId))
+    toast.success(`produit supprimé`);
+  }
   
   const handleIsYours = (event) => {
     setIsYours(event.target.checked);
@@ -145,7 +156,7 @@ function productList() {
   return (
     <Layout>
       {console.log(products)}
-      <Breadcrumb pageName="liste des produits pour animaux" pageTitle=" produits pour animaux"  src=""/>
+      <Breadcrumb pageName="liste des produits pour animaux" pageTitle=" produits pour animaux"  src1="" src = "../../../assets/images/bg/inner-banner-img2.png"/>
       <div className="shop-page pt-120 mb-120">
         <div className="container">
           <div className="row">
@@ -272,7 +283,7 @@ function productList() {
               </div>
               <div className="row">
                 {dataPerPage.map((item, index) =>
-                  <ShopCard item={item} key={index} />
+                  <ShopCard item={item} key={index} handleDelete={deleteProduct} />
                 )}
               </div>
               <div className="row pt-70">

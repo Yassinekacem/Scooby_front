@@ -7,7 +7,6 @@ import jwtDecode from "jwt-decode"
 import axios from "axios";
 
 function GestionProduitss() {
-
   // get all products
   const [products, setProducts] = useState([])
   const getProducts = async () => {
@@ -122,9 +121,13 @@ function GestionProduitss() {
       );
 
       console.log(response.data);
-      router.push('/shop')
+      getProducts();
+      toast.success("Produit ajouté avec succées")
+
     } catch (error) {
+      toast.error("Erreur d'ajout")
       console.error(error);
+
     }
   };
 
@@ -144,7 +147,7 @@ function GestionProduitss() {
               <div className="table-wrapper" style={{ backgroundColor: '#fef5f0' }}>
                 <div className="d-flex justify-content-center mb-3">
 
-                  <h1 id="gestion-produits">gestion des produits pour animaux</h1> </div> <br />
+                  <h1 id="gestion-produits">Gestion des produits pour animaux</h1> </div> <br />
                 <div className="d-flex justify-content-center mb-3">
                   <button className="btn btn-adduser" data-bs-toggle="modal" data-bs-target={`#exampleModal1`}>
                     Ajouter  produit
@@ -188,7 +191,7 @@ function GestionProduitss() {
                           <br />
                           <div class="form-group">
                             <label class="control-label">description</label>
-                            <textarea name="description" rows="5" cols="30"  placeholder="description du produit" class="form-control input-lg" onChange={saveData1}></textarea>
+                            <textarea name="description" rows="5" cols="30" placeholder="description du produit" class="form-control input-lg" onChange={saveData1}></textarea>
                           </div>
                           <div class="form-group">
                             <label class="control-label">marque</label>
@@ -212,7 +215,7 @@ function GestionProduitss() {
                             <div className="form-inner">
                               <label class="control-label">disponible ?</label>
                               <input
-                              defaultChecked
+                                defaultChecked
                                 type="checkbox"
                                 name="isDispo"
                                 onChange={(e) =>
@@ -308,9 +311,12 @@ function GestionProduitss() {
                           );
 
                           console.log(response.data);
-                          router.push('/shop')
+                          getProducts();
+                          toast.success("Produit modifié avec succées")
                         } catch (error) {
                           console.error(error);
+                          toast.error("Erreur de modification")
+
                         }
                       };
 
@@ -438,7 +444,7 @@ function GestionProduitss() {
 
 
                           <td data-label="Action">
-                            <a class="btn btn-danger" onClick={() => deleteProduct(id)}><i class="bi bi-trash"></i></a>
+                            <a class="btn btn-danger" onClick={() => deleteProduct(id)}  ><i class="bi bi-trash"></i></a>
                             <a className="btn btn-success p-1.5" data-bs-toggle="modal" data-bs-target={`#produit-${id}`} > <i class="bi bi-pencil text-black"></i></a>
                           </td>
                         </tr>

@@ -10,7 +10,36 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function BlogDetailsPage() {
-  const router = useRouter();
+  const [isMaladie, setIsMaladie] = useState(false);
+  const [isComportement, setIsComportement] = useState(false);
+  const [isSauvetage, setIsSauvetage] = useState(false);
+  const [isAutre, setIsAutre] = useState(false);
+  const [isAmusement, setIsAmusement] = useState(false);
+  const [isAlimentation, setIsAlimentation] = useState(false);
+  const [isDressage, setIsDressage] = useState(false);
+
+  const handleMaladieChange = (event) => {
+    setIsMaladie(event.target.checked);
+  };
+  const handleComportementChange = (event) => {
+    setIsComportement(event.target.checked);
+  };
+  const handleAmusementChange = (event) => {
+    setIsAmusement(event.target.checked);
+  };
+  const handleAutreChange = (event) => {
+    setIsAutre(event.target.checked);
+  };
+  const handleSauvetgeChange = (event) => {
+    setIsSauvetage(event.target.checked);
+  };
+  const handleAlimentationChange = (event) => {
+    setIsAlimentation(event.target.checked);
+  };
+  const handleDressageChange = (event) => {
+    setIsDressage(event.target.checked);
+  };
+
   const [connectedUser, setConnectedUser] = useState({})
   const getConnectedUserData = () => {
     const token = localStorage.getItem("token");
@@ -91,7 +120,27 @@ function BlogDetailsPage() {
 
 
 
-
+  const filtredPosts = posts.filter((post) => {
+    let showPost = false;
+    if (isMaladie && post.subject === "maladie") {
+      showPost = true;
+    } else if (isAlimentation && post.subject === "alimentation") {
+      showPost = true;
+    } else if (isDressage && post.subject === "dressage") {
+      showPost = true;
+    } else if (isSauvetage && post.subject === "sauvetage") {
+      showPost = true;
+    } else if (isComportement && post.subject === "comportement") {
+      showPost = true;
+    } else if (isAmusement && post.subject === "amusement") {
+      showPost = true;
+    } else if (isAutre && post.subject === "autre") {
+      showPost = true;
+    }
+    else if (!isMaladie && !isDressage && !isAlimentation && !isSauvetage && !isComportement && !isAmusement && !isAutre) {
+      showPost = true;
+    } return showPost;
+  });
   return (
 
     <Layout>
@@ -102,7 +151,7 @@ function BlogDetailsPage() {
         position="top-center"
         autoClose={900}
       />
-      <Breadcrumb pageName="forum de communication entre les passionnées des animaux" pageTitle="Forum de communication" src="" />
+      <Breadcrumb pageName="forum de communication entre les passionnées des animaux" pageTitle="Forum de communication" src="../../../assets/images/bg/forum.png" src1="" />
       <div className="blog-details-pages pt-120 mb-120">
         <div className="container">
           <div className="row mb-50">
@@ -121,8 +170,6 @@ function BlogDetailsPage() {
                       onClick={() => {
                         toast.error("Veuillez vous connectez pour ajouter un post");
                       }}
-
-
                     >
                       Créer un post
                     </button>)}
@@ -130,14 +177,51 @@ function BlogDetailsPage() {
               </div>
             </div>
           </div> <br /> <br />
+          <div className="col-lg-20 d-flex justify-content-center align-items-center">
+            <div className="widget-area">
+              <div className="single-widgets widget_egns_tag mb-30">
+                <div className="widget-title">
+                 <center><h3 style={{ fontFamily: "Caveat, cursive" , align:"center" }}>    Vous pouvez sélectionner les sujets du forum qui vous intéressent
+                  </h3></center> 
+                </div>
+                <p className="wp-block-tag-cloud">
+
+                  <h6 style={{ fontSize: "19px", color: "#424340" }} >Maladies & Blessures</h6> {" "}
+                  <input className="custom-checkbox" type="checkbox" checked={isMaladie}
+                    onChange={handleMaladieChange} />
+
+                  <h6 style={{ fontSize: "19px", color: "#424340" }} > Alimentations</h6>
+                  <input className="custom-checkbox" type="checkbox" checked={isAlimentation}
+                    onChange={handleAlimentationChange} />
+
+                  <h6 style={{ fontSize: "19px", color: "#424340" }}>Dressage</h6>
+                  <input className="custom-checkbox" type="checkbox" checked={isDressage}
+                    onChange={handleDressageChange} />
+                  <h6 style={{ fontSize: "19px", color: "#424340" }}>Comportement</h6>
+                  <input className="custom-checkbox" type="checkbox" checked={isComportement}
+                    onChange={handleComportementChange} />
+                  <h6 style={{ fontSize: "19px", color: "#424340" }}>Amusement</h6>
+                  <input className="custom-checkbox" type="checkbox" checked={isAmusement}
+                    onChange={handleAmusementChange} />
+                  <h6 style={{ fontSize: "19px", color: "#424340" }}>Autres sujets</h6>
+                  <input className="custom-checkbox" type="checkbox" checked={isAutre}
+                    onChange={handleAutreChange} />
+                </p>
+              </div>
+            </div>
+          </div>
+
           <div className="row g-lg-4 gy-5 justify-content-center mb-70">
-            {posts.map((item) => {
+
+
+            {filtredPosts.map((item) => {
               const {
                 id,
                 firstName,
                 lastName,
                 content,
                 image,
+                photoUser,
                 createdAt,
 
               } = item;
@@ -179,17 +263,20 @@ function BlogDetailsPage() {
                     <div className="post-thum">
                       <div className="blog-meta">
                         <ul>
+                          <li>  <div className="author-area">
+                            <div className="author-img">
+                              <img src={photoUser !== "" ?  (photoUser) : ("assets/images/bg/team/unkown.png" )} style={{ width: "70px", height: "70px", borderRadius: "50%" }} alt="" />
+                            </div>
 
+
+                          </div></li>
                           <li>
-                            <Link legacyBehavior href="">
-                              <a style={{ fontSize: "25px", color: "blue" }}>par  {firstName} {lastName}</a>
 
-                            </Link>
+                            <a style={{ fontSize: "25px" }}> {firstName} {lastName}</a>
+
                           </li>
                           <li>
-                            <Link legacyBehavior href="">
-                              <a style={{ fontSize: "18px" }}>le {createdAt}</a>
-                            </Link>
+                            <a style={{ fontSize: "18px", color: "#868686" }}>Publié le {createdAt}</a>
                           </li>
                         </ul>
                       </div>
@@ -280,7 +367,7 @@ function BlogDetailsPage() {
                                       <div className="replay-btn" >
                                         <a href="#reply" id="reply" data-bs-toggle="modal" data-bs-target={`#exampleModal-${id}`}>
                                           <img src="assets/images/icon/replay-icon.svg" alt="" />{" "}
-                                          Reply
+                                          Répond
                                         </a>
                                       </div>
                                     </div>
@@ -304,7 +391,7 @@ function BlogDetailsPage() {
                                         >
 
                                           <div class="form-group">
-                                            <label class="control-label">Votre rponse : </label>
+                                            <label class="control-label">Votre réponse : </label>
                                             <textarea type="text" name="reply" class="form-control input-lg" placeholder="écrivez votre réponse" onChange={saveData} />
 
                                           </div>
@@ -392,14 +479,16 @@ function BlogDetailsPage() {
                     </div>
                     <div className="comment-form">
                       <div className="comments-title">
-                        <h3 style={{ fontSize: "25px" }} >Ecrire un commentaire </h3>
-                      </div>
+                        <h3 style={{ fontSize: "25px", color: "blue" }}>Ecrire votre commentaire Ici {" "} <i className="bi bi-arrow-down"></i>
+
+                        </h3></div>
+
 
                       <form onSubmit={handleSubmit}>
                         <div className="row">
                           <div className="col-lg-9">
                             <div className="form-inner mb-10">
-                              <textarea placeholder="Commentez Ici" name="response" style={{ width: "800px", height: "10px", minHeight: "90px" }} onChange={saveData} />
+                              <textarea placeholder={`Commentez en tant que ${connectedUser.firstName} ${connectedUser.lastName} `} name="response" style={{ width: "800px", height: "10px", minHeight: "90px" }} onChange={saveData} />
                             </div>
                           </div>
                           <div className="col-lg-12">

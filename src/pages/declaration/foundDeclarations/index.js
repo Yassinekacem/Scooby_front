@@ -6,7 +6,8 @@ import Link from "next/link";
 import moment from "moment";
 import axios from 'axios';
 import jwtDecode from "jwt-decode"
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function FoundDeclaration() {
   const [connectedUser, setConnectedUser] = useState({})
@@ -26,13 +27,13 @@ function FoundDeclaration() {
   // check animal
   const [isCatChecked, setIsCatChecked] = useState(false);
   const [isDogChecked, setIsDogChecked] = useState(false);
-  
+
 
   const [isYours, setIsYours] = useState(false);
   const [isNotYours, setIsNotYours] = useState(false);
 
- 
-// check date
+
+  // check date
   const [isTodayChecked, setIsTodayChecked] = useState(false);
   const [isWeekChecked, setIsWeekChecked] = useState(false);
   const [isMonthChecked, setIsmonthChecked] = useState(false);
@@ -49,11 +50,24 @@ function FoundDeclaration() {
       console.error(error);
     }
   };
-  
+
 
   useEffect(() => {
     getFoundDeclarations()
   }, [])
+
+
+  const deleteDeclaration = async (DeclarationID) => {
+    const response = await fetch(`http://localhost:2001/foundDeclarations/${DeclarationID}`, {
+      method: "DELETE",
+    })
+    const data = await response.json()
+    console.log(data)
+    setFoundDeclarations(FoundDeclarations.filter(FoundDeclarations => FoundDeclarations.id !== DeclarationID))
+    toast.success(`déclaration supprimé supprimé`);
+  }
+
+
   const handleCatChange = (event) => {
     setIsCatChecked(event.target.checked);
   };
@@ -79,16 +93,16 @@ function FoundDeclaration() {
   };
   const filteredAnimals = FoundDeclarations.filter((FoundDeclaration) => {
     let showFoundDeclaration = true;
-    
+
     // Filter by animal
-    if ((isCatChecked && FoundDeclaration.animal !== "cat") ||
-        (isDogChecked && FoundDeclaration.animal !== "dog")) {
+    if ((isCatChecked && FoundDeclaration.animal !== "chat") ||
+      (isDogChecked && FoundDeclaration.animal !== "chien")) {
       showFoundDeclaration = false;
-    } 
-    
-    const  yourDeclaration = FoundDeclaration.userId === connectedUser.userId
-    if (isYours && !yourDeclaration)  {
-      showFoundDeclaration = false ; 
+    }
+
+    const yourDeclaration = FoundDeclaration.userId === connectedUser.userId
+    if (isYours && !yourDeclaration) {
+      showFoundDeclaration = false;
     }
 
     // Filter by date
@@ -104,10 +118,10 @@ function FoundDeclaration() {
     if (isYearChecked && !moment(FoundDeclaration.dateFound).isSame(moment(), "year")) {
       showFoundDeclaration = false;
     }
-    
+
     return showFoundDeclaration;
   });
-  
+
   // pagination 
   const items = 8;
   const [current, setCurrent] = useState(1);
@@ -130,14 +144,14 @@ function FoundDeclaration() {
   return (
     <Layout>
       {console.log(FoundDeclarations)}
-      <Breadcrumb pageName="Toutes les déclarations de trouvaille d'animaux" pageTitle="Déclarations de trouvaille" src1="" src="" />
+      <Breadcrumb pageName="Toutes les déclarations de trouvaille d'animaux" pageTitle="Déclarations de trouvaille" src1="" src = "../../../assets/images/bg/inner-banner-img4.png" />
       <div className="shop-page pt-120 mb-120">
         <div className="container">
           <div className="row">
             <div className="col-lg-3">
               <div className="shop-sidebar">
-              <div className="shop-widget">
-                  
+                <div className="shop-widget">
+
                   <div className="check-box-item">
                     <div className="checkbox-container">
                       <label className="containerss">
@@ -172,38 +186,38 @@ function FoundDeclaration() {
                 </div>
                 <div className="shop-widget">
                   <div className="check-box-item">
-                    <h5 className="shop-widget-title">perdu</h5>
+                    <h5 className="shop-widget-title">Date de trouvaille</h5>
                     <div className="checkbox-container">
                       <label className="containerss">
                         Aujourd'hui
                         <input type="checkbox" checked={isTodayChecked}
-                          onChange={handleTodayChange} />                           
-                          <span className="checkmark" />
+                          onChange={handleTodayChange} />
+                        <span className="checkmark" />
                       </label>
                       <label className="containerss">
                         cette semaine
                         <input type="checkbox" checked={isWeekChecked}
-                          onChange={handleWeekChange} />  
+                          onChange={handleWeekChange} />
                         <span className="checkmark" />
-  
+
                       </label>
 
                       <label className="containerss">
                         ce mois
                         <input type="checkbox" checked={isMonthChecked}
-                          onChange={handleMonthChange} /> 
+                          onChange={handleMonthChange} />
                         <span className="checkmark" />
                       </label>
                       <label className="containerss">
                         cet année
                         <input type="checkbox" checked={isYearChecked}
-                          onChange={handleYearChange} />                 
+                          onChange={handleYearChange} />
                         <span className="checkmark" />
                       </label>
                     </div>
                   </div>
                 </div>
-                
+
 
               </div>
             </div>
@@ -214,18 +228,27 @@ function FoundDeclaration() {
                     <h6>Déclarations de trouveille </h6>
                     <div className="multiselect-area">
                       <h5>voulez vous aidez quelqu'un a trouver son animal ? cliquez ici :</h5>
-
+                      {connectedUser.userId ? (
                         <Link legacyBehavior href={`/declaration/addFoundDeclaration`}>
                           <button className="primary-btn0">J'ai trouvé un animal
                           </button>
                         </Link>
+                      ) : (
+                        <button
+                          className="primary-btn0"
+                          onClick={() => {
+                            toast.error("Veuillez vous connectez pour déclarer une trouveille");
+                          }}
+                        >
+                          J'ai trouvé un animal                    </button>)}
+
                     </div>
                   </div>
                 </div>
               </div>
               <div className="row g-4 justify-content-center">
                 {dataPerPage.map((item, index) =>
-                  <FoundDeclarationCard item={item} key={index} />
+                  <FoundDeclarationCard item={item} key={index} handleDelete={deleteDeclaration} handleGet={getFoundDeclarations} />
                 )}
               </div>
               <div className="row pt-70">
@@ -233,7 +256,7 @@ function FoundDeclaration() {
                   <div className="paginations-area">
                     <nav aria-label="Page navigation example">
                       <ul className="pagination">
-                      <li className="page-item" onClick={goToPrevPage}>
+                        <li className="page-item" onClick={goToPrevPage}>
                           <a className="page-link" href="#">
                             <i className="bi bi-arrow-left-short" />
                           </a>
@@ -245,8 +268,8 @@ function FoundDeclaration() {
                             </a>
                           </li>
                         })}
-                      
-                      <li className="page-item" onClick={goToNextPage}>
+
+                        <li className="page-item" onClick={goToNextPage}>
                           <a className="page-link" href="#">
                             <i className="bi bi-arrow-right-short" />
                           </a>
